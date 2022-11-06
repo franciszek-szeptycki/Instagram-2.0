@@ -1,4 +1,4 @@
-const dataCorrectStatus = (data): boolean | string => {
+const dataCorrectStatus = (data, passwordAgain=null): boolean | string => {
 	// if (!email || !username || !password) {
 	// 	return "empty fields"
 	// }

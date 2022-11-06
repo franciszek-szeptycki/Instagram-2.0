@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, {useState} from "react";
 import dataCorrectStatus from "./dataCorrectStatus";
 import Label from "./Label";
@@ -25,19 +26,19 @@ const LoginPanel = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const preparedData: loginDataInterface = {
+        const data: loginDataInterface = {
 			email,
 			password,
 		};
 		
-		dataCorrectStatus(preparedData)
+		dataCorrectStatus(data)
 
-        console.log(preparedData);
+        axios.post("http://localhost:5000/log-in")
     };
 
     return (
         <div className="login-background">
-            <div className="login panel">
+            <div className="login-panel panel">
                 <p className="panel__title">Title</p>
                 <form
                     className="form panel__form"

@@ -2,6 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 import dataCorrectStatus from "./dataCorrectStatus";
 import Label from "./Label";
+import axios from 'axios'
 
 interface registerDataInterface {
     email: string;
@@ -33,15 +34,17 @@ const RegisterPanel = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const preparedData: registerDataInterface = {
+        const data: registerDataInterface = {
 			email,
 			username,
             password,
 		};
 		
-		dataCorrectStatus(preparedData)
+		dataCorrectStatus(data, passwordAgain)
 
-        console.log(preparedData);
+        axios.post('http://localhost:5000/sign-up', {
+            data
+        }).then(res => console.log(res))
     };
 
     return (
