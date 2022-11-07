@@ -25,6 +25,7 @@ def sign_up():
     if not password:
         return jsonify({"msg": "Password is required"}), 400
 
+    # Check if the passwords match
     if password != password_confirm:
         return jsonify({"msg": "Passwords are not equal"}), 400
 
