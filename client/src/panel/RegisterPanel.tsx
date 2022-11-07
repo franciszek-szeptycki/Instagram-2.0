@@ -65,14 +65,15 @@ const RegisterPanel = () => {
                                 handleInput={handleInput}
                             />
                         ))}
-                        <label className="form__label">
+                        <div className="panel__buttons">
                             <input
-                                className="form__label-submit"
+                                className="panel__button-one"
                                 type="submit"
                                 value="sign up"
                                 data-testid="submit"
                             />
-                        </label>
+                            <a className="panel__button-two" href="/">log in</a>
+                        </div>
                     </form>
                 </div>
             </div>
