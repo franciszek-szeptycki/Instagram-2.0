@@ -27,12 +27,12 @@ def sign_up():
 
     # Check if the passwords match
     if password != password_confirm:
-        return jsonify({"msg": "Passwords are not equal"}), 400
+        return jsonify({"msg": "Passwords are not equal"}), 401
 
     # Check if user already exists
     user = models.User.query.filter_by(email=email).first()
     if user:
-        return jsonify({"msg": "User already exists"}), 400
+        return jsonify({"msg": "User already exists"}), 401
 
     # Hash password
     password = hashlib.sha256(password.encode()).hexdigest()
@@ -59,12 +59,12 @@ def sign_in():
     # Check if user exists
     user = models.User.query.filter_by(email=email).first()
     if not user:
-        return jsonify({"msg": "User does not exist"}), 400
+        return jsonify({"msg": "User does not exist"}), 401
 
     # Check if password is correct
     password = hashlib.sha256(password.encode()).hexdigest()
     if password != user.password:
-        return jsonify({"msg": "Wrong password"}), 400
+        return jsonify({"msg": "Wrong password"}), 401
 
     # Generate token
     token = create_access_token(identity=user.username)
