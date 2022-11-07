@@ -68,12 +68,12 @@ const RegisterPanel = () => {
                         ))}
                         <div className="panel__buttons">
                             <input
-                                className="panel__button-one"
+                                className="panel__button panel__button-register"
                                 type="submit"
                                 value="sign up"
                                 data-testid="submit"
                             />
-                            <a className="panel__button-two" href="/">log in</a>
+                            <a className="panel__button" href="/">log in</a>
                         </div>
                     </form>
                 </div>

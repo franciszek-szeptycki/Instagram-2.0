@@ -47,14 +47,14 @@ const LoginPanel = () => {
                                 handleInput={handleInput}
                             />
                         ))}
-                        <label className="form__label panel__buttons">
+                        <div className="panel__buttons">
                             <input
-                                className="form__label-submit"
+                                className="panel__button panel__button-login"
                                 type="submit"
                                 value="log in"
                             />
-                            <a className="panel__another-panel" href="/sign-up">sign up</a>
-                        </label>
+                            <a className="panel__button" href="/sign-up">sign up</a>
+                        </div>
                     </form>
                 </div>
                 <div className="panel-aside"></div>
