@@ -42,7 +42,7 @@ const RegisterPanel = () => {
 		
 		dataCorrectStatus(data, passwordAgain)
 
-        axios.post('http://localhost:5000/sign-up', {
+        axios.post('http://localhost:5000/auth/sign-up', {
             data
         }).then(res => console.log(res))
     };

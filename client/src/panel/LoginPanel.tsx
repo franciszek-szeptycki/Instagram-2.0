@@ -33,7 +33,7 @@ const LoginPanel = () => {
 		
 		dataCorrectStatus(data)
 
-        axios.post("http://localhost:5000/log-in")
+        axios.post("http://localhost:5000/auth/log-in")
     };
 
     return (
