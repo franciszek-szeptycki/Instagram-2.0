@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useState } from "react";
-import dataCorrectStatus from "./dataCorrectStatus";
 import Label from "./Label";
 import "./Panel.sass";
 

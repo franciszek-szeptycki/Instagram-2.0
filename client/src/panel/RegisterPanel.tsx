@@ -1,10 +1,9 @@
 import * as React from "react";
 import { useState } from "react";
-import dataCorrectStatus from "./dataCorrectStatus";
+import ErrorReport from "./ErrorReport";
 import Label from "./Label";
-import axios from "axios";
-
 import "./Panel.sass";
+import { sendRegisterForm } from "./sendRequest";
 
 interface registerDataInterface {
     email: string;
@@ -35,6 +34,7 @@ const RegisterPanel = () => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        console.log("hello there")
 
         const data: registerDataInterface = {
             email,
@@ -42,11 +42,13 @@ const RegisterPanel = () => {
             password,
         };
 
-        dataCorrectStatus(data, passwordAgain);
-
-        axios.post('http://localhost:5000/auth/sign-up', {
-            data
-        }).then(res => console.log(res))
+        const errors = new ErrorReport(data)
+        switch (errors.noErrors) {
+            case true:
+                return sendRegisterForm(data)
+            case false:
+                return console.log(errors)
+        }
     };
 
     return (
@@ -68,6 +70,7 @@ const RegisterPanel = () => {
                                 className="form__label-submit"
                                 type="submit"
                                 value="sign up"
+                                data-testid="submit"
                             />
                         </label>
                     </form>

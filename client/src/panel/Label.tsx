@@ -9,6 +9,7 @@ const Label = ({ data, handleInput }) => (
             type={data.includes("password") ? "password" : "text"}
             className="form__label-input"
             onChange={(e) => handleInput(e.target)}
+            data-testid={data}
         />
     </label>
 );
