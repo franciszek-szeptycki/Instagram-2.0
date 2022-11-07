@@ -68,13 +68,27 @@
 
 						&:focus
 							outline: none
+				
+				.panel__buttons
+					display: flex
 
-					&-submit
+					.panel__button-one
 						width: 30%
 						padding: 5px
 						border: none
 						border-radius: 5px
 						cursor: pointer
+						transition: 0.2s
 
 						&:hover
-							background-image: darken(black, 100)
+							background-color: lightgray
+
+					.panel__button-two	
+						background-color: rgb(245, 245, 245)
+						padding: 5px
+						border-radius: 5px
+						width: 30%
+
+						&:hover
+							background-color: rgb(230, 230, 230)
+						

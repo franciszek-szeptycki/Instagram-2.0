@@ -34,7 +34,6 @@ const RegisterPanel = () => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log("hello there")
 
         const data: registerDataInterface = {
             email,
@@ -42,14 +41,16 @@ const RegisterPanel = () => {
             password,
         };
 
-        const errors = new ErrorReport(data)
-        switch (errors.noErrors) {
-            case true:
-                return sendRegisterForm(data)
-            case false:
-                return console.log(errors)
+        // W E R Y F I K A C J A   D A N Y C H
+        // const errors = new ErrorReport(data)
+        // switch (errors.noErrors) {
+        //     case true:
+        //         return sendRegisterForm(data)
+        //     case false:
+        //         return console.log(errors)
+
+        sendRegisterForm(data)
         }
-    };
 
     return (
         <div className="panel-background">
@@ -65,14 +66,15 @@ const RegisterPanel = () => {
                                 handleInput={handleInput}
                             />
                         ))}
-                        <label className="form__label">
+                        <div className="panel__buttons">
                             <input
-                                className="form__label-submit"
+                                className="panel__button-one"
                                 type="submit"
                                 value="sign up"
                                 data-testid="submit"
                             />
-                        </label>
+                            <a className="panel__button-two" href="/">log in</a>
+                        </div>
                     </form>
                 </div>
             </div>

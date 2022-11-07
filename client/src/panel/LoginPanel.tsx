@@ -1,7 +1,7 @@
-import axios from "axios";
 import React, { useState } from "react";
 import Label from "./Label";
 import "./Panel.sass";
+import { sendLoginForm } from "./sendRequest";
 
 interface loginDataInterface {
     email: string;
@@ -31,7 +31,7 @@ const LoginPanel = () => {
             password,
         };
 
-        axios.post("/auth/log-in")
+        sendLoginForm(data)
     }
 
     return (
@@ -47,12 +47,13 @@ const LoginPanel = () => {
                                 handleInput={handleInput}
                             />
                         ))}
-                        <label className="form__label">
+                        <label className="form__label panel__buttons">
                             <input
                                 className="form__label-submit"
                                 type="submit"
                                 value="log in"
                             />
+                            <a className="panel__another-panel" href="/sign-up">sign up</a>
                         </label>
                     </form>
                 </div>
