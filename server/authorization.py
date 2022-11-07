@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 
 import hashlib
 
-from flask_jwt_extended import create_access_token, set_access_cookies
+from flask_jwt_extended import create_access_token, set_access_cookies, jwt_required, current_user
 
 import models
 
@@ -74,3 +74,11 @@ def sign_in():
     })
     set_access_cookies(response, token)
     return response, 200
+
+@auth_blueprint.route("/who_am_i", methods=["GET"])
+@jwt_required()
+def protected():
+    # We can now access our sqlalchemy User object via `current_user`.
+    return jsonify(
+        "TEST"
+    )
