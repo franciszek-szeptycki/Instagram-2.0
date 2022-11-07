@@ -1,7 +1,7 @@
-import axios from "axios";
 import React, { useState } from "react";
 import Label from "./Label";
 import "./Panel.sass";
+import { sendLoginForm } from "./sendRequest";
 
 interface loginDataInterface {
     email: string;
@@ -31,7 +31,7 @@ const LoginPanel = () => {
             password,
         };
 
-        axios.post("http://localhost:5000/auth/log-in")
+        sendLoginForm(data)
     }
 
     return (
