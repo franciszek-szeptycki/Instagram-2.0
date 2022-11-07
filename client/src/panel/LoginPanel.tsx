@@ -1,14 +1,15 @@
 import axios from "axios";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import dataCorrectStatus from "./dataCorrectStatus";
 import Label from "./Label";
+import "./Panel.sass";
 
 interface loginDataInterface {
-	email: string,
-	password: string,
+    email: string;
+    password: string;
 }
 
-const labels: string[] = ["email", "username"];
+const labels: string[] = ["email", "password"];
 
 const LoginPanel = () => {
     const [email, setEmail] = useState<string>();
@@ -27,38 +28,39 @@ const LoginPanel = () => {
         e.preventDefault();
 
         const data: loginDataInterface = {
-			email,
-			password,
-		};
-		
-		dataCorrectStatus(data)
+            email,
+            password,
+        };
 
         axios.post("http://localhost:5000/auth/log-in")
-    };
+    }
 
     return (
-        <div className="login-background">
+        <div className="panel-background">
             <div className="login-panel panel">
-                <p className="panel__title">Title</p>
-                <form
-                    className="form panel__form"
-                    onSubmit={(e) => handleSubmit(e)}
-                >
-                    {labels.map((item: string, index: number) => (
-                        <Label
-                            key={index}
-                            data={item}
-                            handleInput={handleInput}
-                        />
-                    ))}
-                    <label className="form__label">
-                        <input className="form__label-submit" type="submit" />
-                    </label>
-                </form>
+                <div className="panel-main">
+                    <p className="panel__title">Welcome back! Please login to your account.</p>
+                    <form className="form" onSubmit={(e) => handleSubmit(e)}>
+                        {labels.map((item: string, index: number) => (
+                            <Label
+                                key={index}
+                                data={item}
+                                handleInput={handleInput}
+                            />
+                        ))}
+                        <label className="form__label">
+                            <input
+                                className="form__label-submit"
+                                type="submit"
+                                value="log in"
+                            />
+                        </label>
+                    </form>
+                </div>
+                <div className="panel-aside"></div>
             </div>
         </div>
     );
-
 };
 
 export default LoginPanel;

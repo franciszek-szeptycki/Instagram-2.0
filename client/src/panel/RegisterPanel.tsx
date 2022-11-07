@@ -2,7 +2,9 @@ import * as React from "react";
 import { useState } from "react";
 import dataCorrectStatus from "./dataCorrectStatus";
 import Label from "./Label";
-import axios from 'axios'
+import axios from "axios";
+
+import "./Panel.sass";
 
 interface registerDataInterface {
     email: string;
@@ -35,12 +37,12 @@ const RegisterPanel = () => {
         e.preventDefault();
 
         const data: registerDataInterface = {
-			email,
-			username,
+            email,
+            username,
             password,
-		};
-		
-		dataCorrectStatus(data, passwordAgain)
+        };
+
+        dataCorrectStatus(data, passwordAgain);
 
         axios.post('http://localhost:5000/auth/sign-up', {
             data
@@ -48,24 +50,28 @@ const RegisterPanel = () => {
     };
 
     return (
-        <div className="register-background">
-            <div className="register panel">
-                <p className="panel__title">Title</p>
-                <form
-                    className="form panel__form"
-                    onSubmit={(e) => handleSubmit(e)}
-                >
-                    {labels.map((item: string, index: number) => (
-                        <Label
-                            key={index}
-                            data={item}
-                            handleInput={handleInput}
-                        />
-                    ))}
-                    <label className="form__label">
-                        <input className="form__label-submit" type="submit" />
-                    </label>
-                </form>
+        <div className="panel-background">
+            <div className="register-panel panel">
+                <div className="panel-aside"></div>
+                <div className="panel-main">
+                    <p className="panel__title">Welcome to Instagram 2.0</p>
+                    <form className="form" onSubmit={(e) => handleSubmit(e)}>
+                        {labels.map((item: string, index: number) => (
+                            <Label
+                                key={index}
+                                data={item}
+                                handleInput={handleInput}
+                            />
+                        ))}
+                        <label className="form__label">
+                            <input
+                                className="form__label-submit"
+                                type="submit"
+                                value="sign up"
+                            />
+                        </label>
+                    </form>
+                </div>
             </div>
         </div>
     );

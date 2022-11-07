@@ -1,0 +1,79 @@
+@import "../lib/mixins"
+@import "../lib/variables"
+
+.panel-background
+	width: 100vw
+	height: 100vh
+
+@media (min-width: 1001px)
+	.login-panel
+		.panel-aside
+			background-image: url("../assets/img/autumn.webp")
+
+	.register-panel
+		.panel-aside
+			background-image: url("../assets/img/winter.webp")
+
+	.panel-background
+		background-color: whitesmoke
+
+		.panel
+			background-color: white
+			box-shadow: 0 0  40px 0px lightgray
+			border-radius: 20px
+			overflow: hidden
+			width: 75vw
+			height: 50vw
+			min-width: 1000px
+			min-height: 666px 
+			max-width: 1320px
+			max-height: 880px
+			@include position-center
+			position: absolute
+			display: flex
+
+			.panel-aside
+				width: 50%
+				background-size: 100% auto
+
+			.panel-main
+				width: 50%
+				display: flex
+				flex-direction: column
+				align-items: center
+				justify-content: center
+				padding: 0px 100px
+
+			.panel__title
+				font-size: 2.2rem
+				margin-bottom: 20px
+
+			.form
+				width: 100%
+
+				.form__label
+					width: inherit
+					display: block
+					margin: 20px 0
+
+					&-name
+						color: gray
+					
+					&-input
+						border: none
+						border-bottom: 1px lightgray solid
+						width: 60%
+						font-size: 1.2rem
+
+						&:focus
+							outline: none
+					
+					&-submit
+						width: 30%
+						padding: 5px
+						border: none
+						border-radius: 5px
+						cursor: pointer
+
+						&:hover
+							background-image: darken(black, 100)
