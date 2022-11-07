@@ -1,12 +1,12 @@
-from core import db
+import core
 
 
-class User(db.Model):
+class User(core.db.Model):
     __tablename__ = 'Users'
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(128), unique=True, nullable=False)
-    username = db.Column(db.String(128), unique=True, nullable=False)
-    password = db.Column(db.String(128), unique=False, nullable=False)
+    id = core.db.Column(core.db.Integer, primary_key=True)
+    email = core.db.Column(core.db.String(128), unique=True, nullable=False)
+    username = core.db.Column(core.db.String(128), unique=True, nullable=False)
+    password = core.db.Column(core.db.String(128), unique=False, nullable=False)
 
     def __init__(self, email, username, password):
         self.email = email

@@ -1,16 +1,16 @@
+import core
+import models
+
 from flask import Blueprint, request, jsonify
+from flask_jwt_extended import create_access_token, set_access_cookies, jwt_required
 
 import hashlib
 
-from flask_jwt_extended import create_access_token, set_access_cookies, jwt_required, current_user
-
-import models
-
 auth_blueprint = Blueprint('auth', __name__, )
+
 
 @auth_blueprint.route('/sign-up', methods=['POST'])
 def sign_up():
-
     # Get the request data
     email = request.json.get("email", None)
     username = request.json.get("username", None)
@@ -38,15 +38,13 @@ def sign_up():
 
     # Create new user
     user = models.User(email=email, username=username, password=password)
-    models.db.session.add(user)
-    models.db.session.commit()
+    core.db.session.add(user)
+    core.db.session.commit()
     return jsonify({"msg": "User created successfully"}), 201
-
 
 
 @auth_blueprint.route('/sign-in', methods=['POST'])
 def sign_in():
-
     # Get the request data
     email = request.json.get("email", None)
     password = request.json.get("password", None)
@@ -74,6 +72,7 @@ def sign_in():
     })
     set_access_cookies(response, token)
     return response, 200
+
 
 @auth_blueprint.route("/who_am_i", methods=["GET"])
 @jwt_required()
