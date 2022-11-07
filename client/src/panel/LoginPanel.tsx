@@ -31,7 +31,7 @@ const LoginPanel = () => {
             password,
         };
 
-        axios.post("http://localhost:5000/auth/log-in")
+        axios.post("/auth/log-in")
     }
 
     return (
