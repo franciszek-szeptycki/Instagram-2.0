@@ -59,13 +59,16 @@
 			.form
 				width: 100%
 
+				&__label-name
+					color: gray
+
 				.form__label
 					width: inherit
 					display: block
-					margin: 20px 0
-
-					&-name
-						color: gray
+					margin:  0 0 20px
+					
+					display: flex
+					align-items: center
 					
 					&-input
 						border: none
@@ -76,6 +79,20 @@
 
 						&:focus
 							outline: none
+
+					.form__notification
+						opacity: 0
+						width: 20px
+						height: 20px
+						border-radius: 50%
+						box-shadow: 0 0 3px 0 gray
+						margin-left: 30px
+						
+						display: flex
+						align-items: center
+						justify-content: center
+						color: gray
+						background-color: whitesmoke
 				
 				.panel__buttons
 					display: flex

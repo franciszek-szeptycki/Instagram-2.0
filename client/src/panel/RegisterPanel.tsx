@@ -1,8 +1,7 @@
 import * as React from "react";
+import "./Panel.sass";
 import { useState } from "react";
 import ErrorReport from "./ErrorReport";
-import Label from "./Label";
-import "./Panel.sass";
 import { sendRegisterForm } from "./sendRequest";
 
 interface registerDataInterface {
@@ -10,8 +9,6 @@ interface registerDataInterface {
     username: string;
     password: string;
 }
-
-const labels: string[] = ["email", "username", "password", "password again"];
 
 const RegisterPanel = () => {
     const [email, setEmail] = useState("");
@@ -64,13 +61,63 @@ const RegisterPanel = () => {
                 <div className="panel-main">
                     <p className="panel__title">Welcome to Instagram 2.0</p>
                     <form className="form" onSubmit={(e) => handleSubmit(e)}>
-                        {labels.map((elem: string, index: number) => (
-                            <Label
-                                key={index}
-                                data={elem}
-                                handleInput={handleInput}
+                        {/* email */}
+                        <p className="form__label-name">email</p>
+                        <label className="form__label">
+                            <input
+                                id="email"
+                                name="email"
+                                type="text"
+                                className="form__label-input"
+                                onChange={(e) => handleInput(e.target)}
+                                data-testid="email"
+                                value={email}
                             />
-                        ))}
+                        </label>
+
+                        {/* username */}
+                        <p className="form__label-name">username</p>
+                        <label className="form__label">
+                            <input
+                                id="username"
+                                name="username"
+                                type="text"
+                                className="form__label-input"
+                                onChange={(e) => handleInput(e.target)}
+                                data-testid="username"
+                                value={username}
+                            />
+                        </label>
+
+                        {/* password */}
+                        <p className="form__label-name">password</p>
+                        <label className="form__label form__label-wrong">
+                            <input
+                                id="password"
+                                name="password"
+                                type="password"
+                                className="form__label-input"
+                                onChange={(e) => handleInput(e.target)}
+                                data-testid="password"
+                                value={password}
+                            />
+                        </label>
+
+                        {/* password again */}
+                        <p className="form__label-name">password again</p>
+                        <label className="form__label form__label-wrong">
+                            <input
+                                id="password again"
+                                name="password again"
+                                type="password"
+                                className="form__label-input"
+                                onChange={(e) => handleInput(e.target)}
+                                data-testid="password again"
+                                value={passwordAgain}
+                            />
+                        </label>
+
+                        {/* submit and link */}
                         <div className="panel__buttons">
                             <input
                                 className="panel__button panel__button-register"
@@ -83,13 +130,6 @@ const RegisterPanel = () => {
                             </a>
                         </div>
                     </form>
-                    <div className="panel__alert">
-                        <p className="panel__alert-msg">
-                            {password === passwordAgain
-                                ? msg
-                                : "this username is to long to be the main captain of my ship"}
-                        </p>
-                    </div>
                 </div>
             </div>
         </div>

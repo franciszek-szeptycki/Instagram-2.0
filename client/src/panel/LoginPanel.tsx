@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Label from "./Label";
 import "./Panel.sass";
 import { sendLoginForm } from "./sendRequest";
 
@@ -31,29 +30,53 @@ const LoginPanel = () => {
             password,
         };
 
-        sendLoginForm(data)
-    }
+        sendLoginForm(data);
+    };
 
     return (
         <div className="panel-background">
             <div className="login-panel panel">
                 <div className="panel-main">
-                    <p className="panel__title">Welcome back! Please login to your account.</p>
+                    <p className="panel__title">
+                        Welcome back! Please login to your account.
+                    </p>
                     <form className="form" onSubmit={(e) => handleSubmit(e)}>
-                        {labels.map((elem: string, index: number) => (
-                            <Label
-                                key={index}
-                                data={elem}
-                                handleInput={handleInput}
+                        {/* email */}
+                        <p className="form__label-name">email</p>
+                        <label className="form__label">
+                            <input
+                                id="email"
+                                name="email"
+                                type="text"
+                                className="form__label-input"
+                                onChange={(e) => handleInput(e.target)}
+                                data-testid="email"
                             />
-                        ))}
+                        </label>
+
+                        {/* password */}
+                        <p className="form__label-name">password</p>
+                        <label className="form__label">
+                            <input
+                                id="password"
+                                name="password"
+                                type="text"
+                                className="form__label-input"
+                                onChange={(e) => handleInput(e.target)}
+                                data-testid="password"
+                            />
+                        </label>
+
+                        {/* submit and link */}
                         <div className="panel__buttons">
                             <input
                                 className="panel__button panel__button-login"
                                 type="submit"
                                 value="log in"
                             />
-                            <a className="panel__button" href="/sign-up">sign up</a>
+                            <a className="panel__button" href="/sign-up">
+                                sign up
+                            </a>
                         </div>
                     </form>
                 </div>
