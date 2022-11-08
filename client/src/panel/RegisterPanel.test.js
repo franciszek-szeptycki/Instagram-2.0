@@ -19,5 +19,3 @@ describe("is register form protected", () => {
     };
     it("", () => {});
 });
-
-describe("register")

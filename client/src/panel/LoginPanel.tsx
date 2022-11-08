@@ -40,10 +40,10 @@ const LoginPanel = () => {
                 <div className="panel-main">
                     <p className="panel__title">Welcome back! Please login to your account.</p>
                     <form className="form" onSubmit={(e) => handleSubmit(e)}>
-                        {labels.map((item: string, index: number) => (
+                        {labels.map((elem: string, index: number) => (
                             <Label
                                 key={index}
-                                data={item}
+                                data={elem}
                                 handleInput={handleInput}
                             />
                         ))}

@@ -14,21 +14,26 @@ interface registerDataInterface {
 const labels: string[] = ["email", "username", "password", "password again"];
 
 const RegisterPanel = () => {
-    const [email, setEmail] = useState<string>();
-    const [username, setUsername] = useState<string>();
-    const [password, setPassword] = useState<string>();
-    const [passwordAgain, setPasswordAgain] = useState<string>();
+    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [passwordAgain, setPasswordAgain] = useState("");
+    const [msg, setMsg] = useState("info");
 
     const handleInput = ({ name, value }): void => {
         switch (name) {
             case "email":
-                return setEmail(value);
+                setEmail(value);
+                break;
             case "username":
-                return setUsername(value);
+                setUsername(value);
+                break;
             case "password":
-                return setPassword(value);
+                setPassword(value);
+                break;
             case "password again":
-                return setPasswordAgain(value);
+                setPasswordAgain(value);
+                break;
         }
     };
 
@@ -49,8 +54,8 @@ const RegisterPanel = () => {
         //     case false:
         //         return console.log(errors)
 
-        sendRegisterForm(data)
-        }
+        sendRegisterForm(data);
+    };
 
     return (
         <div className="panel-background">
@@ -59,10 +64,10 @@ const RegisterPanel = () => {
                 <div className="panel-main">
                     <p className="panel__title">Welcome to Instagram 2.0</p>
                     <form className="form" onSubmit={(e) => handleSubmit(e)}>
-                        {labels.map((item: string, index: number) => (
+                        {labels.map((elem: string, index: number) => (
                             <Label
                                 key={index}
-                                data={item}
+                                data={elem}
                                 handleInput={handleInput}
                             />
                         ))}
@@ -73,9 +78,18 @@ const RegisterPanel = () => {
                                 value="sign up"
                                 data-testid="submit"
                             />
-                            <a className="panel__button" href="/">log in</a>
+                            <a className="panel__button" href="/">
+                                log in
+                            </a>
                         </div>
                     </form>
+                    <div className="panel__alert">
+                        <p className="panel__alert-msg">
+                            {password === passwordAgain
+                                ? msg
+                                : "this username is to long to be the main captain of my ship"}
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
