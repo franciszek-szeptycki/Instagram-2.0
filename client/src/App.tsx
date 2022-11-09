@@ -3,23 +3,19 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Container from "./container/Container";
 import LoginPanel from "./panel/LoginPanel";
 import RegisterPanel from "./panel/RegisterPanel";
-import { getToken } from "./utils/JWT";
-import { loginWithToken } from "./utils/loginRequests";
-
-const App = () => {
+import {useSelector} from "react-redux";
+import allReducers from "./redux/reducers";
     
-    const tokenStatus: any = getToken();
-    if (!tokenStatus.isTokenThere) {
-        // loginWithToken()
-    }
+type RootState = ReturnType<typeof allReducers>
+const App = () => {
+    const isLog = useSelector<RootState>((state) => state.isLogged)
 
-    const isLogged = false
 
     return (
         <div className="app">
             <BrowserRouter>
                 <Routes>
-                    {isLogged ? (
+                    {isLog ? (
                         <Route path="/*" element={<Container />} />
                     ) : (
                         <>
