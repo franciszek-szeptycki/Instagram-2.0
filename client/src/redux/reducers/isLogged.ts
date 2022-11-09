@@ -1,4 +1,5 @@
-import { LOG_IN, LOG_OUT, action } from "../actions/isLogged";
+import { LOG_IN, LOG_OUT } from "../actions/isLogged";
+import { action } from "./index";
 
 const isLogged = (state = false, action: action) => {
     switch (action.type) {

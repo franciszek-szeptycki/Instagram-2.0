@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { LOG_IN_FUNCTION } from "../redux/actions/isLogged";
 import "./Panel.sass";
 import { sendLoginForm } from "./sendRequest";
 
@@ -7,12 +9,12 @@ interface loginDataInterface {
     password: string;
 }
 
-const labels: string[] = ["email", "password"];
-
 const LoginPanel = () => {
     const [email, setEmail] = useState<string>();
     const [password, setPassword] = useState<string>();
-
+    
+    const dispatch = useDispatch()
+    
     const handleInput = ({ name, value }): void => {
         switch (name) {
             case "email":
@@ -22,7 +24,7 @@ const LoginPanel = () => {
         }
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
         const data: loginDataInterface = {
@@ -30,7 +32,7 @@ const LoginPanel = () => {
             password,
         };
 
-        sendLoginForm(data);
+        sendLoginForm(data, dispatch);
     };
 
     return (
@@ -60,7 +62,7 @@ const LoginPanel = () => {
                             <input
                                 id="password"
                                 name="password"
-                                type="text"
+                                type="password"
                                 className="form__label-input"
                                 onChange={(e) => handleInput(e.target)}
                                 data-testid="password"

@@ -1,3 +1,5 @@
+import { LOG_IN_FUNCTION } from '../redux/actions/isLogged'
+
 export const sendRegisterForm = (data: object) => {
     
     console.log("before fetch:")
@@ -20,7 +22,7 @@ export const sendRegisterForm = (data: object) => {
         });
 };
 
-export const sendLoginForm = (data: object) => {
+export const sendLoginForm = (data: object, dispatch) => {
 
     console.log("before fetch:")
     console.log(data)
@@ -36,6 +38,8 @@ export const sendLoginForm = (data: object) => {
         .then((res) => res.json())
         .then((data) => {
             console.log("ok:", data);
+            dispatch(LOG_IN_FUNCTION())
+
         })
         .catch((error) => {
             console.error("not ok:", error);

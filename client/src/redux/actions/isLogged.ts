@@ -1,14 +1,11 @@
 export const LOG_IN = "LOG_IN"
 export const LOG_OUT = "LOG_OUT"
+import { action } from "../reducers/index"
 
-export interface action {
-	type: string
-}
-
-export const handleLogin = (): action => {
+export const LOG_IN_FUNCTION = (): action => {
     return {type: LOG_IN}
 }
 
-export const handleLogout = (): action => {
+export const LOG_OUT_FUNCTION = (): action => {
     return {type: LOG_OUT}
 }
