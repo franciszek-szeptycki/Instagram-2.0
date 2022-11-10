@@ -1,6 +1,6 @@
 import isLogged from "./isLogged";
 import { combineReducers } from "redux";
-import addPostPanel from './addPostPanel'
+import createPostPanel from './createPostPanel'
 
 export interface action {
 	type: string
@@ -8,7 +8,7 @@ export interface action {
 
 const allReducers = combineReducers({
 	isLogged,
-	addPostPanel
+	createPostPanel
 });
 
 export default allReducers;

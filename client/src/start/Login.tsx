@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { LOG_IN_FUNCTION } from "../redux/actions/isLogged";
-import "./Panel.sass";
+import "./start.sass";
 import { sendLoginForm } from "./sendRequest";
 
 interface loginDataInterface {
@@ -9,9 +8,9 @@ interface loginDataInterface {
     password: string;
 }
 
-const LoginPanel = () => {
-    const [email, setEmail] = useState<string>();
-    const [password, setPassword] = useState<string>();
+const Login = () => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     
     const dispatch = useDispatch()
     
@@ -36,10 +35,10 @@ const LoginPanel = () => {
     };
 
     return (
-        <div className="panel-background">
-            <div className="login-panel panel">
-                <div className="panel-main">
-                    <p className="panel__title">
+        <div className="start-background">
+            <div className="login-start start">
+                <div className="start-main">
+                    <p className="start__title">
                         Welcome back! Please login to your account.
                     </p>
                     <form className="form" onSubmit={(e) => handleSubmit(e)}>
@@ -70,22 +69,22 @@ const LoginPanel = () => {
                         </label>
 
                         {/* submit and link */}
-                        <div className="panel__buttons">
+                        <div className="start__buttons">
                             <input
-                                className="panel__button panel__button-login"
+                                className="start__button start__button-login"
                                 type="submit"
                                 value="log in"
                             />
-                            <a className="panel__button" href="/sign-up">
+                            <a className="start__button" href="/sign-up">
                                 sign up
                             </a>
                         </div>
                     </form>
                 </div>
-                <div className="panel-aside"></div>
+                <div className="start-aside"></div>
             </div>
         </div>
     );
 };
 
-export default LoginPanel;
+export default Login;

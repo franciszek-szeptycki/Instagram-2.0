@@ -1,5 +1,5 @@
 import * as React from "react";
-import "./Panel.sass";
+import "./start.sass";
 import { useState } from "react";
 import ErrorReport from "./ErrorReport";
 import { sendRegisterForm } from "./sendRequest";
@@ -10,7 +10,7 @@ interface registerDataInterface {
     password: string;
 }
 
-const RegisterPanel = () => {
+const Register = () => {
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -55,11 +55,11 @@ const RegisterPanel = () => {
     };
 
     return (
-        <div className="panel-background">
-            <div className="register-panel panel">
-                <div className="panel-aside"></div>
-                <div className="panel-main">
-                    <p className="panel__title">Welcome to Instagram 2.0</p>
+        <div className="start-background">
+            <div className="register-start start">
+                <div className="start-aside"></div>
+                <div className="start-main">
+                    <p className="start__title">Welcome to Instagram 2.0</p>
                     <form className="form" onSubmit={(e) => handleSubmit(e)}>
                         {/* email */}
                         <p className="form__label-name">email</p>
@@ -118,14 +118,14 @@ const RegisterPanel = () => {
                         </label>
 
                         {/* submit and link */}
-                        <div className="panel__buttons">
+                        <div className="start__buttons">
                             <input
-                                className="panel__button panel__button-register"
+                                className="start__button start__button-register"
                                 type="submit"
                                 value="sign up"
                                 data-testid="submit"
                             />
-                            <a className="panel__button" href="/">
+                            <a className="start__button" href="/">
                                 log in
                             </a>
                         </div>
@@ -136,4 +136,4 @@ const RegisterPanel = () => {
     );
 };
 
-export default RegisterPanel;
+export default Register;

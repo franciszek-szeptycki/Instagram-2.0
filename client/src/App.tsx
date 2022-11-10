@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Container from "./Container";
-import LoginPanel from "./start/LoginPanel";
-import RegisterPanel from "./start/RegisterPanel";
+import LoginPanel from "./start/Login";
+import Register from "./start/Register";
 import {useSelector} from "react-redux";
 import allReducers from "./redux/reducers";
     
@@ -23,7 +23,7 @@ const App = () => {
                             <Route path="/*" element={<LoginPanel />} />
                             <Route
                                 path="/sign-up"
-                                element={<RegisterPanel />}
+                                element={<Register />}
                             />
                         </>
                     )}

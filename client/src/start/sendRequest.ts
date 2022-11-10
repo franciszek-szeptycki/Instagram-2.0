@@ -1,11 +1,6 @@
 import { LOG_IN_FUNCTION } from '../redux/actions/isLogged'
 
 export const sendRegisterForm = (data: object) => {
-    
-    console.log("before fetch:")
-    console.log(data)
-    console.log("after fetch:")
-    
     fetch("/auth/sign-up", {
         method: "POST",
         headers: {
@@ -23,10 +18,6 @@ export const sendRegisterForm = (data: object) => {
 };
 
 export const sendLoginForm = (data: object, dispatch) => {
-
-    console.log("before fetch:")
-    console.log(data)
-    console.log("after fetch:")
 
     fetch("/auth/log-in", {
         method: "POST",

@@ -1,15 +1,15 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { ADD_POST_ON, ADD_POST_ON_FUNCTION } from "../redux/actions/addPostPanel";
+import { CREATE_POST_ON, CREATE_POST_ON_FUNCTION } from "../redux/actions/createPostPanel";
 
 const Nav = () => {
 
 	const dispatch = useDispatch();
 
-	const handleAddPost = (e) => {
+	const handleCreatePost = (e) => {
 		e.preventDefault()
-		dispatch(ADD_POST_ON_FUNCTION())
+		dispatch(CREATE_POST_ON_FUNCTION())
 	}
 
     return (
@@ -26,7 +26,7 @@ const Nav = () => {
                         <NavLink to="/favourites">ulubione</NavLink>
                     </li>
                     <li className="nav__li">
-                        <button onClick={(e) => handleAddPost(e)}>
+                        <button onClick={(e) => handleCreatePost(e)}>
                             dodaj post
                         </button>
                     </li>
