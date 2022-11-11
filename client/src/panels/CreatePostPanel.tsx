@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { CREATE_POST_OFF_FUNCTION } from "../redux/actions/createPostPanel";
 import "./Panel.sass";
@@ -8,6 +8,7 @@ import { postCreatedPost } from "../utils/sendReqWithToken";
 const CreatePostPanel = () => {
     const dispatch = useDispatch();
 
+    const [fileURL, setFileURL] = useState("");
     const [file, setFile] = useState(null);
     const [description, setDescription] = useState("");
     const [hashtag1, setHashtag1] = useState("");
@@ -18,16 +19,28 @@ const CreatePostPanel = () => {
         dispatch(CREATE_POST_OFF_FUNCTION());
     };
 
-    const handlefile = (event) => {
-        setFile(event.target.files[0]);
+    // const handlefile = (e) => {
+    //     setFileURL(e.target.files[0]);
+    // };
+
+    const handleHashtag1 = (text) => {
+        setHashtag1(text.replace(" ", "_"));
+    };
+    const handleHashtag2 = (text) => {
+        setHashtag2(text.replace(" ", "_"));
+    };
+    const handleHashtag3 = (text) => {
+        setHashtag3(text.replace(" ", "_"));
     };
 
     const handleShareButton = () => {
-        postCreatedPost({
-            file,
-            description,
-            hashtags: [hashtag1, hashtag2, hashtag3],
-        });
+        const data = new FormData();
+        data.append("file", file);
+        data.append("description", description);
+        data.append("hashtags", `${hashtag1} ${hashtag2} ${hashtag3}`);
+        console.log(data)
+
+        postCreatedPost({ data });
     };
 
     return (
@@ -50,16 +63,16 @@ const CreatePostPanel = () => {
                 </div>
                 <div className="create-post__main">
                     <label className="create-post__upload">
-                        {file && (
+                        {/* {file && (
                             <img
                                 className="create-post__upload-show"
                                 src={URL.createObjectURL(file)}
                             />
-                        )}
+                        )} */}
                         <input
                             className="create-post__upload-input"
                             type="file"
-                            onChange={handlefile}
+                            onChange={(e) => setFile(e.target.files[0])}
                         />
                     </label>
                     <div className="create-post__info">
@@ -86,7 +99,7 @@ const CreatePostPanel = () => {
                                 <input
                                     id="0"
                                     onChange={(e) =>
-                                        setHashtag1(e.target.value)
+                                        handleHashtag1(e.target.value)
                                     }
                                     className="create-post__info-hashtag-input"
                                     type="text"
@@ -97,7 +110,7 @@ const CreatePostPanel = () => {
                                 <input
                                     id="1"
                                     onChange={(e) =>
-                                        setHashtag2(e.target.value)
+                                        handleHashtag2(e.target.value)
                                     }
                                     className="create-post__info-hashtag-input"
                                     type="text"
@@ -108,7 +121,7 @@ const CreatePostPanel = () => {
                                 <input
                                     id="2"
                                     onChange={(e) =>
-                                        setHashtag3(e.target.value)
+                                        handleHashtag3(e.target.value)
                                     }
                                     className="create-post__info-hashtag-input"
                                     type="text"
