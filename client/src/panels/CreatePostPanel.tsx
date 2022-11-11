@@ -8,7 +8,7 @@ import { postCreatedPost } from "../utils/sendReqWithToken";
 const CreatePostPanel = () => {
     const dispatch = useDispatch();
 
-    const [fileURL, setFileURL] = useState("");
+    // const [fileURL, setFileURL] = useState("");
     const [file, setFile] = useState(null);
     const [description, setDescription] = useState("");
     const [hashtag1, setHashtag1] = useState("");
