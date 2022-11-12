@@ -34,13 +34,18 @@ const CreatePostPanel = () => {
     };
 
     const handleShareButton = () => {
-        const data = new FormData();
-        data.append("image", file);
-        data.set("description", description)
-        data.append("hashtag", hashtag1)
-        data.append("hashtag", hashtag2)
-        data.append("hashtag", hashtag3)
-        
+        const fd = new FormData();
+        fd.append("image", file);
+        // fd.set("description", description)
+        // fd.append("hashtag", hashtag1)
+        // fd.append("hashtag", hashtag2)
+        // fd.append("hashtag", hashtag3)
+
+        const data = {
+            img: fd.get("image"),
+            description,
+            hashtag: [hashtag1, hashtag2, hashtag3],
+        };
         // console.log(data.get("image"))
         // console.log(data.get("description"))
         // console.log(data.getAll("hashtag"))
