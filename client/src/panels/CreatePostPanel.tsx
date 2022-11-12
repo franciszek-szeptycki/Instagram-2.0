@@ -45,6 +45,12 @@ const CreatePostPanel = () => {
         // console.log(data.get("description"))
         // console.log(data.getAll("hashtag"))
 
+        // console.log('wyprintowanie "data":')
+        // console.log(data)
+        // console.log("---")
+        // console.log('data.getAll("hashtag")')
+        // console.log(data.getAll("hashtag"))
+
         postCreatedPost({ data });
     };
 
@@ -68,12 +74,12 @@ const CreatePostPanel = () => {
                 </div>
                 <div className="create-post__main">
                     <label className="create-post__upload">
-                        {/* {file && (
+                        {file && (
                             <img
                                 className="create-post__upload-show"
                                 src={URL.createObjectURL(file)}
                             />
-                        )} */}
+                        )}
                         <input
                             className="create-post__upload-input"
                             type="file"
