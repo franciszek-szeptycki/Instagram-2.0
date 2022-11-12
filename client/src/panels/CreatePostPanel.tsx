@@ -35,10 +35,15 @@ const CreatePostPanel = () => {
 
     const handleShareButton = () => {
         const data = new FormData();
-        data.append("file", file);
-        data.append("description", description);
-        data.append("hashtags", `${hashtag1} ${hashtag2} ${hashtag3}`);
-        console.log(data)
+        data.append("image", file);
+        data.set("description", description)
+        data.append("hashtag", hashtag1)
+        data.append("hashtag", hashtag2)
+        data.append("hashtag", hashtag3)
+        
+        // console.log(data.get("image"))
+        // console.log(data.get("description"))
+        // console.log(data.getAll("hashtag"))
 
         postCreatedPost({ data });
     };
@@ -97,10 +102,10 @@ const CreatePostPanel = () => {
                             <div className="create-post__info-hashtag">
                                 #
                                 <input
-                                    id="0"
                                     onChange={(e) =>
                                         handleHashtag1(e.target.value)
                                     }
+                                    value={hashtag1}
                                     className="create-post__info-hashtag-input"
                                     type="text"
                                 />
@@ -108,10 +113,10 @@ const CreatePostPanel = () => {
                             <div className="create-post__info-hashtag">
                                 #
                                 <input
-                                    id="1"
                                     onChange={(e) =>
                                         handleHashtag2(e.target.value)
                                     }
+                                    value={hashtag2}
                                     className="create-post__info-hashtag-input"
                                     type="text"
                                 />
@@ -119,10 +124,10 @@ const CreatePostPanel = () => {
                             <div className="create-post__info-hashtag">
                                 #
                                 <input
-                                    id="2"
                                     onChange={(e) =>
                                         handleHashtag3(e.target.value)
                                     }
+                                    value={hashtag3}
                                     className="create-post__info-hashtag-input"
                                     type="text"
                                 />

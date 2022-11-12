@@ -1,7 +1,6 @@
 // import { getToken } from "./jwt";
 
 export const postCreatedPost = (data) => {
-    console.log(data)
 	fetch("/api/post/add", {
         method: "POST",
         headers: {
