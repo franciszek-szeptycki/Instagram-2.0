@@ -1,11 +1,9 @@
 // import { getToken } from "./jwt";
 
 export const postCreatedPost = (data) => {
-	fetch("/api/post/add", {
+    fetch("/api/post/add", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
+        headers: {},
         body: data,
     })
         .then((res) => res.json())
