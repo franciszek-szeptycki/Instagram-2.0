@@ -2,7 +2,7 @@
 
 export const postCreatedPost = (data) => {
     console.log(data)
-	fetch("/posts/create-new-post", {
+	fetch("/api/post/add", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

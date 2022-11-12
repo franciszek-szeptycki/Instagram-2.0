@@ -15,7 +15,6 @@ def sign_up():
     email = request.json.get("email", None)
     username = request.json.get("username", None)
     password = request.json.get("password", None)
-    password_confirm = request.json.get("password_confirm", None)
 
     # Check if all fields are filled
     if not email:
@@ -42,6 +41,7 @@ def sign_up():
 
 @auth_blueprint.route('/log-in', methods=['POST'])
 def sign_in():
+
     # Get the request data
     email = request.json.get("email", None)
     password = request.json.get("password", None)
