@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+
+    instagram-frontend:
+        build:
+            context: ./client
+            dockerfile: Dockerfile
+        container_name: Instagram-frontend
+        restart: unless-stopped
+        networks:
+            -   nginx_network
+            -   sezonowyogrod_network
+
+
+    instagram-backend:
+        build:
+            context: /server
+            dockerfile: Dockerfile
+        container_name: Instagram-backend
+        restart: unless-stopped
+        ports:
+            -   "5002:5002"
+        networks:
+            - nginx_network
+            - instagram_network
+
+
+networks:
+    nginx_network:
+        external: true
+    instagram_network:
