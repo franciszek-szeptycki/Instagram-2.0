@@ -7,7 +7,7 @@ export const postCreatedPost = (data) => {
         headers: {
             "Content-Type": "application/json",
         },
-        body: data,
+        body: JSON.stringify(data),
     })
         .then((res) => res.json())
         .then((data) => {
