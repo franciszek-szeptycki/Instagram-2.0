@@ -14,14 +14,19 @@ def create_db():
 def add_post():
     with core.app.app_context():
 
-        print(request.json)
 
-        file = request.json.get("file", None)
-        description = request.json.get("description", None)
-        hashtags = request.json.get("hashtags", None)
+        try:
 
-        # post = core.models.Post(1, 'test.jpg', description, hashtags)
-        # core.db.session.add(post)
-        # core.db.session.commit()
+            image = request.files
+            print(image)
+            filename = image['name'] or 'image.jpg'
+            print(filename)
+
+            # post = core.models.Post(1, 'test.jpg', description, hashtags)
+            # core.db.session.add(post)
+            # core.db.session.commit()
+
+        except Exception as e:
+            print(e)
 
         return jsonify({"msg": "Post added successfully"}), 201
