@@ -1,14 +1,14 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { CREATE_POST_OFF_FUNCTION } from "../redux/actions/createPostPanel";
 import "./Panel.sass";
 import ProfileIdentity from "../components/ProfileIdentity";
 import { postCreatedPost } from "../utils/sendReqWithToken";
+import {toByteArray} from 'base64-js'
 
 const CreatePostPanel = () => {
     const dispatch = useDispatch();
 
-    // const [fileURL, setFileURL] = useState("");
     const [file, setFile] = useState(null);
     const [description, setDescription] = useState("");
     const [hashtag1, setHashtag1] = useState("");
@@ -18,10 +18,6 @@ const CreatePostPanel = () => {
     const handleClosePanel = () => {
         dispatch(CREATE_POST_OFF_FUNCTION());
     };
-
-    // const handlefile = (e) => {
-    //     setFileURL(e.target.files[0]);
-    // };
 
     const handleHashtag1 = (text) => {
         setHashtag1(text.replace(" ", "_"));
@@ -34,22 +30,19 @@ const CreatePostPanel = () => {
     };
 
     const handleShareButton = async () => {
-        if (file === null) {
-            alert("Please select a file");
-        }
 
-        const formData = new FormData();
-        formData.append("image", file);
+        const reader = new FileReader();
 
-        let response = await fetch("/api/post/add",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: formData,
-            }
-        );
+        reader.readAsDataURL(file)
+
+        reader.addEventListener("load", () => {
+            const data = {
+                img: reader.result,
+                description,
+                hashtag: [hashtag1, hashtag2, hashtag3],
+            };
+            postCreatedPost({ data });
+        })
     };
 
     return (
