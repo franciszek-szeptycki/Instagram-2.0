@@ -1,14 +1,14 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { CREATE_POST_OFF_FUNCTION } from "../redux/actions/createPostPanel";
 import "./Panel.sass";
 import ProfileIdentity from "../components/ProfileIdentity";
 import { postCreatedPost } from "../utils/sendReqWithToken";
+import {toByteArray} from 'base64-js'
 
 const CreatePostPanel = () => {
     const dispatch = useDispatch();
 
-    // const [fileURL, setFileURL] = useState("");
     const [file, setFile] = useState(null);
     const [description, setDescription] = useState("");
     const [hashtag1, setHashtag1] = useState("");
@@ -18,10 +18,6 @@ const CreatePostPanel = () => {
     const handleClosePanel = () => {
         dispatch(CREATE_POST_OFF_FUNCTION());
     };
-
-    // const handlefile = (e) => {
-    //     setFileURL(e.target.files[0]);
-    // };
 
     const handleHashtag1 = (text) => {
         setHashtag1(text.replace(" ", "_"));
@@ -33,30 +29,20 @@ const CreatePostPanel = () => {
         setHashtag3(text.replace(" ", "_"));
     };
 
-    const handleShareButton = () => {
-        const fd = new FormData();
-        fd.append("image", file);
-        // fd.set("description", description)
-        // fd.append("hashtag", hashtag1)
-        // fd.append("hashtag", hashtag2)
-        // fd.append("hashtag", hashtag3)
+    const handleShareButton = async () => {
 
-        const data = {
-            img: fd.get("image"),
-            description,
-            hashtag: [hashtag1, hashtag2, hashtag3],
-        };
-        // console.log(data.get("image"))
-        // console.log(data.get("description"))
-        // console.log(data.getAll("hashtag"))
+        const reader = new FileReader();
 
-        // console.log('wyprintowanie "data":')
-        // console.log(data)
-        // console.log("---")
-        // console.log('data.getAll("hashtag")')
-        // console.log(data.getAll("hashtag"))
+        reader.readAsDataURL(file)
 
-        postCreatedPost({ data });
+        reader.addEventListener("load", () => {
+            const data = {
+                img: reader.result,
+                description,
+                hashtag: [hashtag1, hashtag2, hashtag3],
+            };
+            postCreatedPost({ data });
+        })
     };
 
     return (
