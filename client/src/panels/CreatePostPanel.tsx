@@ -33,30 +33,23 @@ const CreatePostPanel = () => {
         setHashtag3(text.replace(" ", "_"));
     };
 
-    const handleShareButton = () => {
-        const fd = new FormData();
-        fd.append("image", file);
-        // fd.set("description", description)
-        // fd.append("hashtag", hashtag1)
-        // fd.append("hashtag", hashtag2)
-        // fd.append("hashtag", hashtag3)
+    const handleShareButton = async () => {
+        if (file === null) {
+            alert("Please select a file");
+        }
 
-        const data = {
-            img: fd.get("image"),
-            description,
-            hashtag: [hashtag1, hashtag2, hashtag3],
-        };
-        // console.log(data.get("image"))
-        // console.log(data.get("description"))
-        // console.log(data.getAll("hashtag"))
+        const formData = new FormData();
+        formData.append("image", file);
 
-        // console.log('wyprintowanie "data":')
-        // console.log(data)
-        // console.log("---")
-        // console.log('data.getAll("hashtag")')
-        // console.log(data.getAll("hashtag"))
-
-        postCreatedPost({ data });
+        let response = await fetch("/api/post/add",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: formData,
+            }
+        );
     };
 
     return (

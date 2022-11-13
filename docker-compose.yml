@@ -15,7 +15,7 @@ services:
 
     instagram-backend:
         build:
-            context: /server
+            context: ./server
             dockerfile: Dockerfile
         container_name: Instagram-backend
         restart: unless-stopped

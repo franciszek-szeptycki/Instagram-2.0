@@ -17,16 +17,17 @@ def add_post():
 
         try:
 
-            image = request.files
-            print(image)
-            filename = image['name'] or 'image.jpg'
-            print(filename)
+            file = request.files['image']
+            filename = file.filename
 
             # post = core.models.Post(1, 'test.jpg', description, hashtags)
             # core.db.session.add(post)
             # core.db.session.commit()
 
+            return jsonify({'msg': 'Post added'}), 200
+
         except Exception as e:
-            print(e)
+            print("Error: ", e)
+            return jsonify({'error': 'Error while adding post to database - ' + str(e)}), 500
 
         return jsonify({"msg": "Post added successfully"}), 201
