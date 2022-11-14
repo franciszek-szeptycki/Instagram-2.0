@@ -2,7 +2,7 @@ import os
 import json
 from datetime import datetime, timezone, timedelta
 
-from flask_jwt_extended import jwt_required, get_jwt, get_jwt_identity, create_access_token
+from flask_jwt_extended import jwt_required, get_jwt, get_jwt_identity, create_access_token, verify_jwt_in_request
 
 import core
 import base64
@@ -19,6 +19,7 @@ api_blueprint = Blueprint('api', __name__, )
 def create_db():
     with core.app.app_context():
         core.db.create_all()
+
 
 @api_blueprint.route('/post/add', methods=['POST'])
 @jwt_required()
@@ -62,31 +63,30 @@ def add_post():
             post.file = str(post.id) + '.png'
             core.db.session.commit()
 
+            print("Post added successfully")
             return jsonify({"msg": "Post created successfully"}), 201
 
         except Exception as e:
             print("Error: ", e)
             return jsonify({'error': 'Error while adding post to database - ' + str(e)}), 500
 
-        return jsonify({"msg": "Post added successfully"}), 201
-
-
 
 # Define a function that will be called whenever access to a protected endpoint is attempted
 @api_blueprint.after_request
 def refresh_expiring_tokens(response):
     try:
-        exp_timestamp = get_jwt()['exp']
-        print(exp_timestamp)
-        now = datetime.now(timezone.utc)
-        target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
-        if target_timestamp > exp_timestamp:
-            access_token = create_access_token(identity=get_jwt_identity())
-            data = response.get_json()
-            if type(data) is dict:
-                data["access_token"] = access_token
-                response.data = json.dumps(data)
-            return response
+        print(get_jwt())
+        exp_timestamp = get_jwt()['exp'] or ""
+        return response
+    #     now = datetime.now(timezone.utc)
+    #     target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
+    #     if target_timestamp > exp_timestamp:
+    #         access_token = create_access_token(identity=get_jwt_identity())
+    #         data = response.get_json()
+    #         if type(data) is dict:
+    #             data["access_token"] = access_token
+    #             response.data = json.dumps(data)
+    #         return response
     except (RuntimeError, KeyError) as e:
         print(e)
         return

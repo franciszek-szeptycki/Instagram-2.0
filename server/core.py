@@ -15,6 +15,5 @@ jwt = JWTManager(app)
 app.register_blueprint(api.api_blueprint, url_prefix='/api')
 app.register_blueprint(authorization.auth_blueprint, url_prefix='/auth')
 
-
 if __name__ == "__main__":
     app.run(debug=True)

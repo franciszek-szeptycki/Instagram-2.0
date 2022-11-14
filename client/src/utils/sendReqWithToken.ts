@@ -1,5 +1,5 @@
 export const postCreatedPost = (data) => {
-    // console.log(localStorage.getItem('jwt'))
+    console.log(JSON.stringify(data))
 	fetch("/api/post/add", {
         method: "POST",
         headers: {
@@ -10,7 +10,9 @@ export const postCreatedPost = (data) => {
     })
         .then((res) => res.json())
         .then((data) => {
-            localStorage.setItem("access_token", data.access_token)
+            if (data.access_token) {
+                localStorage.setItem("access_token", data.access_token)
+            }
             console.log(data);
         })
         .catch((error) => {
