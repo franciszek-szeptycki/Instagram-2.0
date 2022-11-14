@@ -2,3 +2,4 @@ Flask~=2.2.2
 Flask_SQLAlchemy~=2.5.1
 Flask-Cors~=3.0.10
 MySQL==0.0.3
+Image==1.5.33

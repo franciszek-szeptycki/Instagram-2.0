@@ -9,6 +9,7 @@ TESTING = True
 DEBUG = True
 FLASK_ENV = 'development'
 SECRET_KEY = ''
+UPLOAD_FOLDER = 'Posts'
 JSON_SORT_KEYS = False
 
 
