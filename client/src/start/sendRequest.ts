@@ -26,9 +26,12 @@ export const sendLoginForm = (data: object, dispatch) => {
         },
         body: JSON.stringify(data),
     })
-        .then((res) => res.json())
+        .then((res) => {
+            if (res.status === 200) return res.json();
+            else return null
+        })
         .then((data) => {
-            console.log("ok:", data);
+            localStorage.setItem("jwt", data.access_token);
             dispatch(LOG_IN_FUNCTION())
 
         })
