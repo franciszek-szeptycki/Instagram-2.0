@@ -1,5 +1,6 @@
 # Backend
 /venv/
+/server/Images/
 !/server/config.py
 
 # Frontend

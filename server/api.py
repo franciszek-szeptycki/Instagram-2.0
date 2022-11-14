@@ -34,8 +34,11 @@ def add_post():
             if not hashtags:
                 return jsonify({"msg": "Hashtags are required"}), 400
 
+            # Pack hashtags into a string
+            hashtags = " ".join(hashtags)
+
             # Create new post
-            post = core.models.Post(user_id=1, description=description, hashtags="a")
+            post = core.models.Post(user_id=1, description=description, hashtags=hashtags)
             core.db.session.add(post)
             core.db.session.commit()
 
@@ -49,6 +52,10 @@ def add_post():
             image_data = bytes(image_data, encoding="ascii")
             im = Image.open(BytesIO(base64.b64decode(image_data)))
             im.save(core.app.config["UPLOAD_FOLDER"] + '/' + str(post.id) + '.png')
+
+            # Set Image Path in MySQL
+            post.file = str(post.id) + '.png'
+            core.db.session.commit()
 
             return jsonify({"msg": "Post created successfully"}), 201
 
