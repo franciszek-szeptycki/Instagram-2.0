@@ -1,6 +1,8 @@
 import os
+import json
+from datetime import datetime, timezone, timedelta
 
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt, get_jwt_identity, create_access_token
 
 import core
 import base64
@@ -67,3 +69,24 @@ def add_post():
             return jsonify({'error': 'Error while adding post to database - ' + str(e)}), 500
 
         return jsonify({"msg": "Post added successfully"}), 201
+
+
+
+# Define a function that will be called whenever access to a protected endpoint is attempted
+@api_blueprint.after_request
+def refresh_expiring_tokens(response):
+    try:
+        exp_timestamp = get_jwt()['exp']
+        print(exp_timestamp)
+        now = datetime.now(timezone.utc)
+        target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
+        if target_timestamp > exp_timestamp:
+            access_token = create_access_token(identity=get_jwt_identity())
+            data = response.get_json()
+            if type(data) is dict:
+                data["access_token"] = access_token
+                response.data = json.dumps(data)
+            return response
+    except (RuntimeError, KeyError) as e:
+        print(e)
+        return

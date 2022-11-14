@@ -10,7 +10,7 @@ export const postCreatedPost = (data) => {
     })
         .then((res) => res.json())
         .then((data) => {
-            localStorage.setItem("access_token", data.msg)
+            localStorage.setItem("access_token", data.access_token)
             console.log(data);
         })
         .catch((error) => {
