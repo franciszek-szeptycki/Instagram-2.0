@@ -31,7 +31,7 @@ const CreatePostPanel = () => {
 
     const handleShareButton = async () => {
 
-        return console.log(file.name)
+        // return console.log(file.name)
 
         const reader = new FileReader();
 
