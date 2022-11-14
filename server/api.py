@@ -1,5 +1,7 @@
 import os
 
+from flask_jwt_extended import jwt_required
+
 import core
 import base64
 
@@ -17,6 +19,7 @@ def create_db():
         core.db.create_all()
 
 @api_blueprint.route('/post/add', methods=['POST'])
+@jwt_required()
 def add_post():
     with core.app.app_context():
         try:

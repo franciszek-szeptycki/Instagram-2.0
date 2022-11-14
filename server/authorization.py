@@ -2,7 +2,7 @@ import core
 import models
 
 from flask import Blueprint, request, jsonify
-from flask_jwt_extended import create_access_token, set_access_cookies, jwt_required
+from flask_jwt_extended import create_access_token, jwt_required
 
 import hashlib
 
@@ -67,7 +67,6 @@ def sign_in():
     response = jsonify({
         "access_token": token,
     })
-    set_access_cookies(response, token)
     return response, 200
 
 
