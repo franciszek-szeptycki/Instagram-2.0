@@ -1,4 +1,4 @@
-import ErrorReport from "./ErrorReport";
+import ErrorReport from "../src/start/utils/ErrorReport";
 
 describe("is register form protected", () => {
     it("username empty fields", () => {

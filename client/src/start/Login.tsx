@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import "./start.sass";
-import { sendLoginForm } from "./sendRequest";
+import { LOG_IN_FUNCTION } from '../redux/actions/isLogged'
+import request, { reqType } from "../utils/request";
 
 interface loginDataInterface {
     email: string;
@@ -23,15 +24,18 @@ const Login = () => {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const data: loginDataInterface = {
+        const loginData: loginDataInterface = {
             email,
             password,
         };
 
-        sendLoginForm(data, dispatch);
+        const {status, msg, data}: reqType = await request("POST", loginData, "/auth/log-in")
+        if (status === 200) {
+            dispatch(LOG_IN_FUNCTION())
+        } 
     };
 
     return (

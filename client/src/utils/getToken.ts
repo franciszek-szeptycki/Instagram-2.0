@@ -1,10 +1,24 @@
 import { useState } from "react";
 import jwt_decode from "jwt-decode";
 
-export function getToken() {
-	const userToken = localStorage.getItem("access_token_cookie");
-	if (!userToken) return false;
-	else return userToken && userToken;
+interface token {
+	name: string;
+	exp: number;
+}
+
+const getToken = (): string | null => {
+	const userToken: string = localStorage.getItem("access_token_cookie");
+
+	const decodedToken = jwt_decode<token>(userToken)
+
+	console.log(decodedToken.exp)
+
+	if (decodedToken.exp * 1000 < Date.now ()) {
+		localStorage.removeItem("token");
+		return null;
+	} else {	
+		return userToken
+	}
 }
 
 
@@ -28,4 +42,4 @@ export function getToken() {
 //     };
 // }
 
-// export default useToken;
+export default getToken;

@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-  ]
+, "tests/ErrorReport.test.ts"  ]
 }

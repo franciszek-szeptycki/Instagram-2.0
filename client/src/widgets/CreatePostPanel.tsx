@@ -3,8 +3,7 @@ import { useDispatch } from "react-redux";
 import { CREATE_POST_OFF_FUNCTION } from "../redux/actions/createPostPanel";
 import "./Panel.sass";
 import ProfileIdentity from "../components/ProfileIdentity";
-import { postCreatedPost } from "../utils/sendReqWithToken";
-import {toByteArray} from 'base64-js'
+import request from "../utils/request"
 
 const CreatePostPanel = () => {
     const dispatch = useDispatch();
@@ -43,7 +42,7 @@ const CreatePostPanel = () => {
                 description,
                 hashtag: [hashtag1, hashtag2, hashtag3],
             };
-            postCreatedPost({ data });
+            request("POST", data, "/api/post/add");
         })
     };
 

@@ -1,8 +1,8 @@
 import * as React from "react";
 import "./start.sass";
 import { useState } from "react";
-import ErrorReport from "./ErrorReport";
-import { sendRegisterForm } from "./sendRequest";
+import ErrorReport from "./utils/ErrorReport";
+import { sendRegisterForm } from "./utils/request";
 
 interface registerDataInterface {
     email: string;
