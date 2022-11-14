@@ -10,10 +10,10 @@ export const sendRegisterForm = (data: object) => {
     })
         .then((res) => res.json())
         .then((data) => {
-            console.log("ok:", data);
+            console.log(data);
         })
         .catch((error) => {
-            console.error("not ok:", error);
+            console.error(error);
         });
 };
 
@@ -26,16 +26,13 @@ export const sendLoginForm = (data: object, dispatch) => {
         },
         body: JSON.stringify(data),
     })
-        .then((res) => {
-            if (res.status === 200) return res.json();
-            else return null
-        })
+        .then((res) => res.json())
         .then((data) => {
-            localStorage.setItem("jwt", data.access_token);
+            localStorage.setItem("access_token", data.access_token);
             dispatch(LOG_IN_FUNCTION())
 
         })
         .catch((error) => {
-            console.error("not ok:", error);
+            console.error(error);
         });
 };
