@@ -107,6 +107,7 @@ def get_posts(page):
 
 # Define a function that will be called whenever access to a protected endpoint is attempted
 @api_blueprint.after_request
+@jwt_required()
 def refresh_expiring_tokens(response):
     try:
         jwt = get_jwt()
