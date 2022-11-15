@@ -37,7 +37,6 @@ const Login = () => {
         if (status === 200) {
             dispatch(LOG_IN_FUNCTION())
         }
-        console.log(getToken())
     };
 
     return (

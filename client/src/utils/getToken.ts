@@ -10,7 +10,7 @@ const getToken = (): string | null => {
 	try {
         const userToken: string = localStorage.getItem("access_token");
         const decodedToken = jwt_decode<token>(userToken)
-        console.log(decodedToken.exp)
+        // console.log(decodedToken.exp)
         if (decodedToken.exp * 1000 < Date.now()) {
             localStorage.removeItem("token");
             return
