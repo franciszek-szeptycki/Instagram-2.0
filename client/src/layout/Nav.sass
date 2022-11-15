@@ -1,0 +1,54 @@
+@import '../sass/variables.sass'	
+
+@keyframes shake-icon
+	0%
+		transform: translate(0%, 0%)
+	50%
+		transform: translate(0%, -20%)
+	100%
+		transform: translate(0%, 0%)
+
+.header	
+	position: fixed
+	top: 0
+
+	.nav 
+		width: 100vw
+		background-color: whitesmoke
+
+		&__ul
+			display: flex
+			max-width: $max-page-width
+			margin: auto
+
+		&__li
+			width: 20vw
+			display: flex
+			height: $nav-height
+			padding: 10px
+			
+			&-content
+				height: 100%
+				width: 100%
+				
+				border: none
+				border-radius: 50px
+				background-color: inherit
+
+				display: flex
+				align-items: center
+				justify-content: center
+				cursor: pointer
+				transition: .2s
+				
+				&:hover
+					background-color: rgb(235, 235, 235)
+
+				i
+					text-transform: uppercase
+					font-size: $nav-height * .4
+					color: rgb(154, 154, 154)
+					transition: .2s
+
+				&:hover i
+					transform: scale(115%)
