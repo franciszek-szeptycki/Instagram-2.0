@@ -66,9 +66,9 @@ def add_post():
             print("Post added successfully")
             return jsonify({"msg": "Post created successfully"}), 201
 
-        except Exception as e:
-            print("Error: ", e)
-            return jsonify({'error': 'Error while adding post to database - ' + str(e)}), 500
+        except Exception as error:
+            print("[ERROR] add_post : ", error)
+            return jsonify({'msg': 'Error while adding post to database - ' + str(error)}), 500
 
 
 @api_blueprint.route('/posts/get/page=<int:page>', methods=['GET'])
@@ -76,6 +76,7 @@ def add_post():
 def get_posts(page):
     with core.app.app_context():
         try:
+
             # Get posts from database
             posts = core.models.Post.query.order_by(core.models.Post.id).paginate(page=page, per_page=10)
 
@@ -97,11 +98,11 @@ def get_posts(page):
                     })
 
             # Return posts
-            return jsonify(posts_list), 200
+            return jsonify({"data": posts_list}), 200
 
-        except Exception as e:
-            print("Error: ", e)
-            return jsonify({'error': 'Error while getting posts from database - ' + str(e)}), 500
+        except Exception as error:
+            print("[ERROR] get_posts : ", error)
+            return jsonify({'msg': 'Error while getting posts from database - ' + str(error)}), 500
 
 
 # Define a function that will be called whenever access to a protected endpoint is attempted
@@ -121,6 +122,6 @@ def refresh_expiring_tokens(response):
                 data["access_token"] = access_token
                 response.data = json.dumps(data)
             return response
-    except (RuntimeError, KeyError) as e:
-        print("[Error] refresh_expiring_tokens: ", e)
+    except (RuntimeError, KeyError) as error:
+        print("[ERROR] refresh_expiring_tokens: ", error)
         return response
