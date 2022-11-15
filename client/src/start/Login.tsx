@@ -33,7 +33,7 @@ const Login = () => {
             password,
         };
 
-        const {status, msg, data}: reqType = await reqServer("POST", loginData, "/auth/log-in")
+        const {status, msg, data}: reqType = await reqServer("POST", loginData, "/auth/log-in", false)
         if (status === 200) {
             dispatch(LOG_IN_FUNCTION())
         }

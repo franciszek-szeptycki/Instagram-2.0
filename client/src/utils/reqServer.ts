@@ -1,13 +1,21 @@
 import getToken from "./getToken";
 
-const reqServer = async (method: string, data: object, path: string) => {
+const reqServer = async (method: string, data: object, path: string, tokenRequired: boolean) => {
     console.log(data)
-    return await fetch(path, {
-        method,
-        headers: {
+
+    let headers: HeadersInit
+    if (tokenRequired) {
+        headers = {
             "Content-Type": "application/json",
             Authorization: `Bearer ${getToken()}`,
-        },
+        }
+    } else {
+        headers = { "Content-Type": "application/json", }
+    }
+
+    return await fetch(path, {
+        method,
+        headers,
         body: JSON.stringify(data),
         })
         .then(async (res) => {
