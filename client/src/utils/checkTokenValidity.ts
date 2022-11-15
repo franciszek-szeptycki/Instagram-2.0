@@ -1,7 +1,11 @@
 import reqServer from "./reqServer";
 import { LOG_IN_FUNCTION, LOG_OUT_FUNCTION } from "../redux/actions/isLogged";
+import getToken from "./getToken";
 
 const checkTokenValidity = async (setIsLoading, dispatch) => {
+	
+	if (!getToken()) return
+
     const { status } = await reqServer(
         "POST",
         null,

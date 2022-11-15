@@ -25,7 +25,7 @@ const reqServer = async (method: string, data: object, path: string, tokenRequir
             if (access_token) {
                 localStorage.setItem("access_token", access_token);
             }
-            
+
             console.log(data)
             return {
                 status,
@@ -34,7 +34,7 @@ const reqServer = async (method: string, data: object, path: string, tokenRequir
             };
         })
         .catch((error) => {
-            console.log(error.name);
+            console.error(error);
             return {
                 status: 500,
                 msg: "giant error...",
