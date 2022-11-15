@@ -70,7 +70,7 @@ def sign_in():
     return response, 200
 
 
-@auth_blueprint.route("/token", methods=["POST"])
+@auth_blueprint.route("/access_token", methods=["POST"])
 @jwt_required()
 def token():
     fresh_token = create_access_token(identity=get_jwt_identity(), fresh=True)

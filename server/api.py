@@ -27,10 +27,12 @@ def add_post():
     with core.app.app_context():
         try:
 
+            print(request.json)
+
             # Get the request data
-            image = request.json["data"].get("img", None)
-            description = request.json["data"].get("description", None)
-            hashtags = request.json["data"].get("hashtag", None)
+            image = request.json.get("img", None)
+            description = request.json.get("description", None)
+            hashtags = request.json.get("hashtag", None)
 
             # Check if all fields are filled
             if not image:
@@ -75,18 +77,19 @@ def add_post():
 @api_blueprint.after_request
 def refresh_expiring_tokens(response):
     try:
-        print(get_jwt())
-        exp_timestamp = get_jwt()['exp'] or ""
-        return response
-    #     now = datetime.now(timezone.utc)
-    #     target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
-    #     if target_timestamp > exp_timestamp:
-    #         access_token = create_access_token(identity=get_jwt_identity())
-    #         data = response.get_json()
-    #         if type(data) is dict:
-    #             data["access_token"] = access_token
-    #             response.data = json.dumps(data)
-    #         return response
+        jwt = get_jwt()
+        if not jwt:
+            return response
+        exp_timestamp = jwt['exp']
+        now = datetime.now(timezone.utc)
+        target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
+        if target_timestamp > exp_timestamp:
+            access_token = create_access_token(identity=get_jwt_identity())
+            data = response.get_json()
+            if type(data) is dict:
+                data["access_token"] = access_token
+                response.data = json.dumps(data)
+            return response
     except (RuntimeError, KeyError) as e:
-        print(e)
-        return
+        print("[Error] refresh_expiring_tokens: ", e)
+        return response
