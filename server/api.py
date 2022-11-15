@@ -43,24 +43,14 @@ def add_post():
             # Pack hashtags into a string
             hashtags = " ".join(hashtags)
 
-            # Create new post
-            post = core.models.Post(user_id=1, description=description, hashtags=hashtags)
-            core.db.session.add(post)
-            core.db.session.commit()
-
-            # If folder does not exist, create it
-            if not os.path.exists(core.app.config["UPLOAD_FOLDER"]):
-                os.makedirs(core.app.config["UPLOAD_FOLDER"])
-
-            # Save file
+            # Convert file
             starter = image.find(',')
             image_data = image[starter + 1:]
             image_data = bytes(image_data, encoding="ascii")
-            im = Image.open(BytesIO(base64.b64decode(image_data)))
-            im.save(core.app.config["UPLOAD_FOLDER"] + '/' + str(post.id) + '.png')
 
-            # Set Image Path in MySQL
-            post.file = str(post.id) + '.png'
+            # Create new post
+            post = core.models.Post(user_id=1, file=image_data, description=description, hashtags=hashtags)
+            core.db.session.add(post)
             core.db.session.commit()
 
             print("Post added successfully")
@@ -87,15 +77,16 @@ def get_posts(page):
             # Create a list of posts
             posts_list = []
             for post in posts.items:
-                with open (core.app.config["UPLOAD_FOLDER"] + '/' + post.file, "rb") as image_file:
                     posts_list.append({
                         "id": post.id,
                         "user_name": core.models.User.query.filter_by(id=post.user_id).first().username,
                         "description": post.description,
                         "hashtags": post.hashtags,
-                        "file": base64.b64encode(image_file.read()).decode('utf-8'),
+                        "file": post.file,
                         "date": post.created_at
                     })
+
+            print(posts_list)
 
             # Return posts
             return jsonify({"data": posts_list}), 200
