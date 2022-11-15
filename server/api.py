@@ -63,7 +63,7 @@ def get_posts(page):
         try:
 
             # Get posts from database
-            posts = core.models.Post.query.order_by(core.models.Post.id).paginate(page=page, per_page=10)
+            posts = core.models.Post.query.order_by(core.models.Post.ID).paginate(page=page, per_page=10)
 
             # Check if posts exist
             if not posts:
