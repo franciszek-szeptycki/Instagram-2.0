@@ -21,13 +21,11 @@ def create_db():
         core.db.create_all()
 
 
-@api_blueprint.route('/post/add', methods=['POST'])
+@api_blueprint.route('/posts/add', methods=['POST'])
 @jwt_required()
 def add_post():
     with core.app.app_context():
         try:
-
-            print(request.json)
 
             # Get the request data
             image = request.json.get("img", None)
@@ -71,6 +69,39 @@ def add_post():
         except Exception as e:
             print("Error: ", e)
             return jsonify({'error': 'Error while adding post to database - ' + str(e)}), 500
+
+
+@api_blueprint.route('/posts/get/page=<int:page>', methods=['GET'])
+# @jwt_required()
+def get_posts(page):
+    with core.app.app_context():
+        try:
+            # Get posts from database
+            posts = core.models.Post.query.order_by(core.models.Post.id).paginate(page=page, per_page=10)
+
+            # Check if posts exist
+            if not posts:
+                return jsonify({"msg": "No posts found"}), 404
+
+            # Create a list of posts
+            posts_list = []
+            for post in posts.items:
+                with open (core.app.config["UPLOAD_FOLDER"] + '/' + post.file, "rb") as image_file:
+                    posts_list.append({
+                        "id": post.id,
+                        "user_name": core.models.User.query.filter_by(id=post.user_id).first().username,
+                        "description": post.description,
+                        "hashtags": post.hashtags,
+                        "file": base64.b64encode(image_file.read()).decode('utf-8'),
+                        "date": post.created_at
+                    })
+
+            # Return posts
+            return jsonify(posts_list), 200
+
+        except Exception as e:
+            print("Error: ", e)
+            return jsonify({'error': 'Error while getting posts from database - ' + str(e)}), 500
 
 
 # Define a function that will be called whenever access to a protected endpoint is attempted
