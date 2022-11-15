@@ -13,14 +13,44 @@ const reqServer = async (method: string, data: object, path: string, tokenRequir
         headers = { "Content-Type": "application/json", }
     }
 
+    if (method === "POST") {
+        return await fetch(path, {
+            method,
+            headers,
+            body: JSON.stringify(data),
+            })
+            .then(async (res) => {
+                const {status} = res
+                const {access_token, msg, data} = await res.json();
+    
+                if (access_token) {
+                    localStorage.setItem("access_token", access_token);
+                }
+    
+                console.log(data)
+                return {
+                    status,
+                    msg,
+                    data,
+                };
+            })
+            .catch((error) => {
+                console.error(error);
+                return {
+                    status: 500,
+                    msg: "giant error...",
+                    data: "",
+                }
+            });
+    
+    } else if(method === "GET") {
     return await fetch(path, {
         method,
         headers,
-        body: JSON.stringify(data),
-        })
+    })
         .then(async (res) => {
-            const {status} = res
-            const {access_token, msg, data} = await res.json();
+            const { status } = res
+            const { access_token, msg, data } = await res.json();
 
             if (access_token) {
                 localStorage.setItem("access_token", access_token);
@@ -41,6 +71,7 @@ const reqServer = async (method: string, data: object, path: string, tokenRequir
                 data: "",
             }
         });
+}
 
 }
 
