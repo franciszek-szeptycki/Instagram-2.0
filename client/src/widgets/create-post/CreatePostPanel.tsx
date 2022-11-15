@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { CREATE_POST_OFF_FUNCTION } from "../redux/actions/createPostPanel";
-import "./Panel.sass";
-import ProfileIdentity from "../components/ProfileIdentity";
-import request from "../utils/request"
+import { CREATE_POST_OFF_FUNCTION } from "../../redux/actions/createPostPanel";
+import "../Panel.sass";
+import ProfileIdentity from "../../components/ProfileIdentity";
+import reqServer from "../../utils/reqServer"
 
 const CreatePostPanel = () => {
     const dispatch = useDispatch();
@@ -18,13 +18,13 @@ const CreatePostPanel = () => {
         dispatch(CREATE_POST_OFF_FUNCTION());
     };
 
-    const handleHashtag1 = (text) => {
+    const handleHashtag1 = (text: string) => {
         setHashtag1(text.replace(" ", "_"));
     };
-    const handleHashtag2 = (text) => {
+    const handleHashtag2 = (text: string) => {
         setHashtag2(text.replace(" ", "_"));
     };
-    const handleHashtag3 = (text) => {
+    const handleHashtag3 = (text: string) => {
         setHashtag3(text.replace(" ", "_"));
     };
 
@@ -42,7 +42,7 @@ const CreatePostPanel = () => {
                 description,
                 hashtag: [hashtag1, hashtag2, hashtag3],
             };
-            request("POST", data, "/api/post/add");
+            reqServer("POST", data, "/api/post/add");
         })
     };
 

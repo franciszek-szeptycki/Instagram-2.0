@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Nav from './layout/Nav';
-import CreatePostPanel from './widgets/CreatePostPanel'
+import CreatePostPanel from './widgets/create-post/CreatePostPanel'
 import allReducers from "./redux/reducers";
     
 type RootState = ReturnType<typeof allReducers>

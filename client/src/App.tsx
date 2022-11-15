@@ -5,29 +5,27 @@ import LoginPanel from "./start/Login";
 import Register from "./start/Register";
 import { useSelector } from "react-redux";
 import allReducers from "./redux/reducers";
+import reqServer from "./utils/reqServer";
+import { useDispatch } from "react-redux";
+import { LOG_IN_FUNCTION, LOG_OUT_FUNCTION } from "./redux/actions/isLogged";
+import LoadingPage from "./widgets/loading-page/LoadingPage";
 
 type RootState = ReturnType<typeof allReducers>;
 
 const App = () => {
-    const [isLoading, setIsLoading] = useState(true)
+    // const [isLoading, setIsLoading] = useState(true);
 
-    fetch("/auth/token", {
-        method: "POST",
-        headers: {
-            Authorization: localStorage.getItem("access_token"),
-        },
-        body: localStorage.getItem("access_token"),
-    })
-    .then(async (res) => {
-        const data = await res.json()
-        if (res.status === 200) localStorage.setItem("access_token", data.access_token)
-        else localStorage.removeItem("access_token")
-    })
-    .catch((error) => {
-        console.error(error);
-    });
-
+    // const dispatch = useDispatch()
+    // const { status } = await reqServer("POST", null, "/auth/access_token")
+    // if (status === 200) {
+    //     dispatch(LOG_IN_FUNCTION())
+    //     setIsLoading(false)
+    // }
+    // else dispatch(LOG_OUT_FUNCTION())
+    
     const isUserLogged = useSelector<RootState>((state) => state.isLogged);
+    
+    // if (isLoading) return <div className="app"><LoadingPage/></div>;
 
     return (
         <div className="app">

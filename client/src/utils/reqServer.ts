@@ -1,12 +1,12 @@
 import getToken from "./getToken";
 
-const request = async (method: string, data: object, path: string) => {
+const reqServer = async (method: string, data: object, path: string) => {
     console.log(data)
     return await fetch(path, {
         method,
         headers: {
             "Content-Type": "application/json",
-            Authorization: getToken(),
+            Authorization: `Bearer ${getToken()}`,
         },
         body: JSON.stringify(data),
         })
@@ -32,6 +32,6 @@ const request = async (method: string, data: object, path: string) => {
 
 }
 
-export type reqType = Awaited<ReturnType<typeof request>>
+export type reqType = Awaited<ReturnType<typeof reqServer>>
 
-export default request;
+export default reqServer;
