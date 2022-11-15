@@ -8,6 +8,7 @@ import allReducers from "./redux/reducers";
 import { useDispatch } from "react-redux";
 import LoadingPage from "./widgets/loading-page/LoadingPage";
 import checkTokenValidity from "./utils/checkTokenValidity";
+import './App.sass'
 
 type RootState = ReturnType<typeof allReducers>;
 

@@ -8,8 +8,9 @@ const Home = () => {
 		getHomeContent(setPages)
 	}, [])
 
-	return (<div className="home">
-		home
+	return (<div className="page page-home">
+		<main className="main">main</main>		
+		<aside className="aside"></aside>
 	</div> );
 }
  
