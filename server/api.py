@@ -1,16 +1,11 @@
-import os
-import json
-from datetime import datetime, timezone, timedelta
-
-from flask_jwt_extended import jwt_required, get_jwt, get_jwt_identity, create_access_token, verify_jwt_in_request
-
 import core
-import base64
-
-from io import BytesIO
-from PIL import Image
 
 from flask import Blueprint, request, jsonify
+from flask_jwt_extended import jwt_required, get_jwt, get_jwt_identity, create_access_token
+
+import json
+
+from datetime import datetime, timezone, timedelta
 
 api_blueprint = Blueprint('api', __name__, )
 
@@ -49,7 +44,7 @@ def add_post():
             image_data = bytes(image_data, encoding="ascii")
 
             # Create new post
-            post = core.models.Post(user_id=1, file=image_data, description=description, hashtags=hashtags)
+            post = core.models.Post(User_ID=1, Image=image_data, Description=description, Hashtags=hashtags)
             core.db.session.add(post)
             core.db.session.commit()
 
@@ -77,14 +72,14 @@ def get_posts(page):
             # Create a list of posts
             posts_list = []
             for post in posts.items:
-                    posts_list.append({
-                        "id": post.id,
-                        "user_name": core.models.User.query.filter_by(id=post.user_id).first().username,
-                        "description": post.description,
-                        "hashtags": post.hashtags,
-                        "file": post.file,
-                        "date": post.created_at
-                    })
+                posts_list.append({
+                    "id": post.ID,
+                    "user_name": core.models.User.query.filter_by(ID=post.User_ID).first().Username,
+                    "description": post.Description,
+                    "hashtags": post.Hashtags,
+                    "file": post.Image,
+                    "date": post.Date
+                })
 
             print(posts_list)
 

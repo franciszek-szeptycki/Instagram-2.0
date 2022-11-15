@@ -1,36 +1,37 @@
 import core
 
+import datetime
 
 class User(core.db.Model):
     __tablename__ = 'Users'
-    id = core.db.Column(core.db.Integer, primary_key=True)
-    email = core.db.Column(core.db.String(128), unique=True, nullable=False)
-    username = core.db.Column(core.db.String(128), unique=True, nullable=False)
-    password = core.db.Column(core.db.String(128), unique=False, nullable=False)
-    created_at = core.db.Column(core.db.DateTime, default=core.db.func.now())
+    ID = core.db.Column(core.db.Integer, primary_key=True)
+    Email = core.db.Column(core.db.String(128), unique=True, nullable=False)
+    Username = core.db.Column(core.db.String(128), unique=True, nullable=False)
+    Password = core.db.Column(core.db.String(128), unique=False, nullable=False)
+    Date = core.db.Column(core.db.DateTime, default=datetime.datetime.utcnow)
 
-    def __init__(self, email, username, password):
-        self.email = email
-        self.username = username
-        self.password = password
+    def __init__(self, Email, Username, Password):
+        self.Email = Email
+        self.Username = Username
+        self.Password = Password
 
     def __repr__(self):
-        return '<User %r>' % self.username
+        return '<User %r>' % self.Username
 
 class Post(core.db.Model):
     __tablename__ = 'Posts'
-    id = core.db.Column(core.db.Integer, primary_key=True)
-    user_id = core.db.Column(core.db.Integer, core.db.ForeignKey('Users.id'))
-    file = core.db.Column(core.db.Text, unique=False, nullable=False)
-    description = core.db.Column(core.db.String(128), unique=False, nullable=False)
-    hashtags = core.db.Column(core.db.String(128), unique=False, nullable=False)
-    created_at = core.db.Column(core.db.DateTime, default=core.db.func.now())
+    ID = core.db.Column(core.db.Integer, primary_key=True)
+    User_ID = core.db.Column(core.db.Integer, core.db.ForeignKey('Users.ID'))
+    Image = core.db.Column(core.db.Text, unique=False, nullable=False)
+    Description = core.db.Column(core.db.String(256), unique=False, nullable=False)
+    Hashtags = core.db.Column(core.db.String(256), unique=False, nullable=False)
+    Date = core.db.Column(core.db.DateTime, default=datetime.datetime.utcnow)
 
-    def __init__(self, user_id, file, description, hashtags):
-        self.user_id = user_id
-        self.file = file
-        self.description = description
-        self.hashtags = hashtags
+    def __init__(self, User_ID, Image, Description, Hashtags):
+        self.User_ID = User_ID
+        self.Image = Image
+        self.Description = Description
+        self.Hashtags = Hashtags
 
     def __repr__(self):
-        return str(self.id)
+        return '<Post %r>' % self.Description

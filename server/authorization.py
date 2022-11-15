@@ -25,7 +25,7 @@ def sign_up():
         return jsonify({"msg": "Password is required"}), 400
 
     # Check if user already exists
-    user = models.User.query.filter_by(email=email).first()
+    user = models.User.query.filter_by(Email=email).first()
     if user:
         return jsonify({"msg": "User already exists"}), 401
 
@@ -33,7 +33,7 @@ def sign_up():
     password = hashlib.sha256(password.encode()).hexdigest()
 
     # Create new user
-    user = models.User(email=email, username=username, password=password)
+    user = models.User(Email=email, Username=username, Password=password)
     core.db.session.add(user)
     core.db.session.commit()
     return jsonify({"msg": "User created successfully"}), 201
@@ -41,7 +41,6 @@ def sign_up():
 
 @auth_blueprint.route('/log-in', methods=['POST'])
 def sign_in():
-
     # Get the request data
     email = request.json.get("email", None)
     password = request.json.get("password", None)
@@ -53,19 +52,19 @@ def sign_in():
         return jsonify({"msg": "Password is required"}), 400
 
     # Check if user exists
-    user = models.User.query.filter_by(email=email).first()
+    user = models.User.query.filter_by(Email=email).first()
     if not user:
         return jsonify({"msg": "User does not exist"}), 401
 
     # Check if password is correct
     password = hashlib.sha256(password.encode()).hexdigest()
-    if password != user.password:
+    if password != user.Password:
         return jsonify({"msg": "Wrong password"}), 401
 
     # Generate token
-    token = create_access_token(identity=user.username)
+    genereted_token = create_access_token(identity=user.username)
     response = jsonify({
-        "access_token": token,
+        "access_token": genereted_token,
     })
     return response, 200
 
