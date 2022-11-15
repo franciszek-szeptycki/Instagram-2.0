@@ -18,7 +18,9 @@ const App = () => {
 
     const dispatch = useDispatch();
 
-    checkTokenValidity(setIsLoading, dispatch)
+    useEffect(() => {
+        checkTokenValidity(setIsLoading, dispatch)
+    }, [])
 
     const isUserLogged = useSelector<RootState>((state) => state.isLogged);
 
