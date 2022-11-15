@@ -3,8 +3,10 @@ import { LOG_IN_FUNCTION, LOG_OUT_FUNCTION } from "../redux/actions/isLogged";
 import getToken from "./getToken";
 
 const checkTokenValidity = async (setIsLoading, dispatch) => {
-	
-	if (!getToken()) return
+    if (!getToken()) {
+        setIsLoading(false);
+        return;
+    }
 
     const { status } = await reqServer(
         "POST",
@@ -14,11 +16,10 @@ const checkTokenValidity = async (setIsLoading, dispatch) => {
     );
     if (status === 200) {
         dispatch(LOG_IN_FUNCTION());
-        setIsLoading(false);
     } else {
         dispatch(LOG_OUT_FUNCTION());
-        setIsLoading(false);
     }
+    setIsLoading(false);
 };
 
 export default checkTokenValidity;

@@ -5,9 +5,7 @@ import LoginPanel from "./start/Login";
 import Register from "./start/Register";
 import { useSelector } from "react-redux";
 import allReducers from "./redux/reducers";
-import reqServer from "./utils/reqServer";
 import { useDispatch } from "react-redux";
-import { LOG_IN_FUNCTION, LOG_OUT_FUNCTION } from "./redux/actions/isLogged";
 import LoadingPage from "./widgets/loading-page/LoadingPage";
 import checkTokenValidity from "./utils/checkTokenValidity";
 
