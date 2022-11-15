@@ -21,7 +21,11 @@ const reqServer = async (method: string, data: object, path: string, tokenRequir
         .then(async (res) => {
             const {status} = res
             const {access_token, msg, data} = await res.json();
-            localStorage.setItem("access_token", access_token);
+
+            if (access_token) {
+                localStorage.setItem("access_token", access_token);
+            }
+            
             console.log(data)
             return {
                 status,
