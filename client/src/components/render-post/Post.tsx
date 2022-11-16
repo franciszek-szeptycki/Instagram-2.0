@@ -2,7 +2,7 @@ import ProfileIdentity from "../profile-identifier/ProfileIdentity"
 
 
 const Post = ({data}) => {
-	console.log(data)
+	console.log(data.file)
 
 	if (!data.date) return <></>
 
@@ -12,7 +12,9 @@ const Post = ({data}) => {
 				<ProfileIdentity />
 			</div>
 			<div className="post__main">
-				<div className="post__main-img"></div>
+				<div className="post__main-img">
+					<img src={data.file} alt="" />
+				</div>
 			</div>
 			<div className="post__footer">
 				<div className="post__footer-top">

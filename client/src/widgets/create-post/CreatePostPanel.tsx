@@ -32,8 +32,6 @@ const CreatePostPanel = () => {
 
         reader.addEventListener("load", () => {
 
-            // console.log(reader.result)
-
             const data = {
                 img: reader.result,
                 description,
