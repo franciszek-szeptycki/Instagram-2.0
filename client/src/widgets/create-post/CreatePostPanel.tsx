@@ -40,7 +40,10 @@ const CreatePostPanel = () => {
                 description,
                 hashtag: [hashtag1, hashtag2, hashtag3],
             };
+
             reqServer("POST", data, "/api/posts/add", true);
+            
+            document.location.reload()
         })
     };
 

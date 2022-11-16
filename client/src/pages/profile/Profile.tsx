@@ -1,8 +1,12 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { LOG_OUT_FUNCTION } from '../../redux/actions/isLogged';
 import reqServer from '../../utils/reqServer';
 import './Profile.sass'
 
 const Profile = () => {
+
+    const dispatch = useDispatch()
 	
 	const [file, setFile] = useState<File>()
 
@@ -20,6 +24,12 @@ const Profile = () => {
             reqServer("POST", data, "/api/posts/add", true);
         })
     };
+
+    const handleLogOut = () => {
+        localStorage.removeItem("access_token")
+        dispatch(LOG_OUT_FUNCTION())
+        document.location.reload()
+    }
 
 	return <div className="page page-profile">
 		<aside className="aside">
@@ -42,7 +52,12 @@ const Profile = () => {
 				<div className="profile__data"></div>
 			</div>
 		</aside>
-		<main className="main">
+        <main className="main">
+            <div className="user-panel">
+                <div className="user-panel-logout">
+                    <button className="user-panel-logout-btn" onClick={handleLogOut}>log out</button>
+                </div>
+            </div>
 		</main>
 	</div>;
 };

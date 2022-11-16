@@ -27,13 +27,13 @@ const Nav = () => {
             <nav className="nav">
                 <ul className="nav__ul">
                     <li className="nav__li">
-                        <NavLink className="nav__li-content" to="/"><i className="fa-solid fa-house"></i></NavLink>
+                        <NavLink className="nav__li-content" to="/" onClick={handleCreatePost}><i className="fa-solid fa-house"></i></NavLink>
                     </li>
                     <li className="nav__li">
-                        <NavLink className="nav__li-content" to="/following"><i className="fa-solid fa-eye"></i></NavLink>
+                        <NavLink className="nav__li-content" to="/following" onClick={handleCreatePost}><i className="fa-solid fa-eye"></i></NavLink>
                     </li>
                     <li className="nav__li">
-                        <NavLink className="nav__li-content" to="/favourites"><i className="fa-solid fa-heart" ></i></NavLink>
+                        <NavLink className="nav__li-content" to="/favourites" onClick={handleCreatePost}><i className="fa-solid fa-heart" ></i></NavLink>
                     </li>
                     <li className="nav__li">
                         <button className="nav__li-content" onClick={handleCreatePost}>
@@ -41,7 +41,7 @@ const Nav = () => {
                         </button>
                     </li>
                     <li className="nav__li">
-                        <NavLink className="nav__li-content" to="/profile"><i className="fa-solid fa-user"></i></NavLink>
+                        <NavLink className="nav__li-content" to="/profile" onClick={handleCreatePost}><i className="fa-solid fa-user"></i></NavLink>
                     </li>
                 </ul>
             </nav>
