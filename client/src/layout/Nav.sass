@@ -1,13 +1,5 @@
 @import '../sass/variables.sass'	
 
-@keyframes resize-icon
-	0%
-		transform: translate(0%, 0%)
-	50%
-		transform: translate(0%, -20%)
-	100%
-		transform: translate(0%, 0%)
-
 .header	
 	position: fixed
 	top: 0
@@ -53,4 +45,4 @@
 					transition: .2s
 
 				&:hover i
-					transform: scale(115%)
+					transform: $resize-icon
