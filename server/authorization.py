@@ -62,9 +62,10 @@ def sign_in():
         return jsonify({"msg": "Wrong password"}), 401
 
     # Generate token
-    genereted_token = create_access_token(identity=user.Username)
+    additional_claims = {"ID": user.ID, "Username": user.Username}
+    access_token = create_access_token(user.Username, additional_claims=additional_claims)
     response = jsonify({
-        "access_token": genereted_token,
+        "access_token": access_token,
     })
     return response, 200
 

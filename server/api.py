@@ -30,21 +30,19 @@ def add_post():
             # Check if all fields are filled
             if not image:
                 return jsonify({"msg": "Image is required"}), 400
-            if not description:
-                return jsonify({"msg": "Description is required"}), 400
-            if not hashtags:
-                return jsonify({"msg": "Hashtags are required"}), 400
+            # if not description:
+            #     return jsonify({"msg": "Description is required"}), 400
+            # if not hashtags:
+            #     return jsonify({"msg": "Hashtags are required"}), 400
 
             # Pack hashtags into a string
             hashtags = " ".join(hashtags)
 
-            # Convert file
-            starter = image.find(',')
-            image_data = image[starter + 1:]
-            image_data = bytes(image_data, encoding="ascii")
+            # jwt = get_jwt()
+            # print(jwt)
 
             # Create new post
-            post = core.models.Post(User_ID=1, Image=image_data, Description=description, Hashtags=hashtags)
+            post = core.models.Post(User_ID=1, Image=image, Description="TEST", Hashtags="TEST21")
             core.db.session.add(post)
             core.db.session.commit()
 
@@ -53,11 +51,11 @@ def add_post():
 
         except Exception as error:
             print("[ERROR] add_post : ", error)
-            return jsonify({'msg': 'Error while adding post to database - ' + str(error)}), 500
+            return jsonify({"msg": "[ERROR] add_post : " + str(error)}), 500
 
 
 @api_blueprint.route('/posts/get/page=<int:page>', methods=['GET'])
-# @jwt_required()
+@jwt_required()
 def get_posts(page):
     with core.app.app_context():
         try:
@@ -88,7 +86,7 @@ def get_posts(page):
 
         except Exception as error:
             print("[ERROR] get_posts : ", error)
-            return jsonify({'msg': 'Error while getting posts from database - ' + str(error)}), 500
+            return jsonify({'msg': '[ERROR] get_posts : ' + str(error)}), 500
 
 
 # Define a function that will be called whenever access to a protected endpoint is attempted
