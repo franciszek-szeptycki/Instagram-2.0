@@ -68,8 +68,8 @@ def sign_in():
     access_token = create_access_token(user.ID, additional_claims=additional_claims)
     response = jsonify({
         "data": {
-            "Username": user.Username,
-            "Image": user.Image,
+            "username": user.Username,
+            "image": user.Image,
         },
         "access_token": access_token,
     })
