@@ -1,105 +1,118 @@
+@import '../../sass/variables'
+	
 .create-post-bg
 	position: fixed
-	width: 100vw
-	height: 100vh
-	background-color: rgba(0, 0, 0, 0.7)
-	backdrop-filter: blur(3px)
-	top: 0%
-	left: 0%
-
-	.create-post		
-		width: 60vw
-		height: 40vw
-		min-width: 750px
-		min-height: 500px
-		background-color: white
-		position: absolute
-		top: 50vh
-		left: 50vw
-		transform: translate(-50%, -50%)
-		border-radius: 15px
-		overflow: hidden
-		display: flex
-		flex-direction: column
-
-		.create-post__share-btn
-			position: absolute
-			top: .6rem
-			right: .6rem
-			line-height: 1.8rem
-			border-radius: 5px
-			padding: 0 .4rem
-			border: none
-			background-color: #0085de
-			color: white
-			z-index: 1
-			transition: .2s
-
-			&:hover
-				cursor: pointer
-				background-color: #0069b0
-
-
-		&__header
-			position: relative
-			border-bottom: 1px solid lightgray
-
-
-		&__title
-			font-size: 1rem
-			line-height: 3rem
-			text-align: center
-			color: black
-			font-weight: bold 
+	top: 0
+	left: 0
+	
+	.create-post
+		background-image: url("../../assets/img/createpost.png")
+		background-position-x: 33%
+		background-position-y: -20%
+		width: 100vw
+		height: 100vh
+		background-size: auto 70%
 
 		&__main
-			flex-grow: 1
-			display: flex
-			align-items: stretch
-			max-height: calc( 100% - 3rem )
+			width: 100%
+			height: 30vh
 
-			
-		&__upload
-			width: 67%
+			position: absolute
+			bottom: 70px
+
+			background-color: $gray1
+
 			display: flex
-			align-items: center
+
+		&__arrow
+			height: 100%
+
+			display: flex
 			justify-content: center
-			padding: 10px
-			border-right: 1px lightgray solid
-
-			&-input
-				display: none
-
-			&-show
-				max-height: 100%
-				max-width: 100%
-
-		&__info
-			width: 33%
-			display: flex
-			flex-direction: column
+			align-items: center
 			
-			&-hashtags, &-description
-				padding: 10px
-				border-top: 1px solid lightgray
-
-			&-textarea
-				border-color: lightgray
-				padding: 10px 0
-				font-family: Arial, Helvetica, sans-serif
-				border: none
-				flex-grow: 1
-				width: 100%
-
-				&:focus
-					outline: none
+			&-left
+				transform: rotate(-180deg)
 			
-			&-hashtag
-				margin: 5px
+			&-right, &-left
+				margin: 10px
+				cursor: pointer
 
-				&-input
-					border: none
-					border-bottom: lightgray 1px solid
+				i
+					background-color: $gray5
+					height: 32px
+					width: 32px
+					box-shadow: 0 0 3px 0 $gray5
+					border-radius: 50%
+					@include flex-center
+					
+					color: $gray1
 
-					&:focus
-						outline: none
+
+		&__label
+			flex-grow: 1
+			overflow: hidden
+			position: relative
+
+			&-container
+				position: absolute
+				width: 300%
+				display: flex
+				transition: .2s
+
+			
+			&-container-1
+				left: 0%
+			&-container-2
+				left: -100%
+			&-container-3
+				left: -200%
+
+			&-item
+				height: 100px
+				width: calc( 100% / 3 )
+			
+
+
+
+		// &__upload-container
+		// 	position: absolute
+		// 	top: calc( 50% - 70px/2 )
+		// 	left: 50%
+		// 	transform: translate(-50%, -50%)
+		// 	transition: .2s
+
+		// 	&:hover
+		// 		cursor: pointer
+		// 		padding-bottom: 10px 
+
+		// &__upload
+		// 	padding: 10px
+
+		// 	box-shadow: 0 0 3px 0 $gray5
+		// 	border-radius: 50px
+		// 	color: $gray1
+		// 	background-color: $gray5
+		// 	cursor: pointer
+
+		// 	i
+		// 		color: $gray1
+
+		// 	&-input
+		// 		display: none
+
+		// 	&-show
+		// 		width: 20vw
+		// 		height: 20vw
+		// 		position: absolute
+
+
+
+
+// @media (min-width: $min-breakpoint)
+
+// 	.create-post-bg
+// 		width: 100vw
+// 		height: 100vh
+// 		background-color: rgba(0, 0, 0, 0.7)
+// 		backdrop-filter: blur(3px)

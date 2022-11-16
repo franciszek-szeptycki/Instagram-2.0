@@ -3,8 +3,11 @@ import { useDispatch } from "react-redux";
 import { CREATE_POST_OFF_FUNCTION } from "../../redux/actions/createPostPanel";
 import "./CreatePostPanel.sass";
 import ProfileIdentity from "../../components/profile-identifier/ProfileIdentity";
-import reqServer from "../../utils/reqServer"
+import reqServer from "../../utils/reqServer";
 import { getUserInfo } from "../../utils/userInfo";
+import File from "./File";
+import Description from "./Description";
+import Hashtags from "./Hashtags";
 
 const CreatePostPanel = () => {
     const dispatch = useDispatch();
@@ -26,15 +29,13 @@ const CreatePostPanel = () => {
     };
 
     const handleShareButton = async () => {
-
-        dispatch(CREATE_POST_OFF_FUNCTION())
+        dispatch(CREATE_POST_OFF_FUNCTION());
 
         const reader = new FileReader();
 
-        reader.readAsDataURL(file)
+        reader.readAsDataURL(file);
 
-        reader.addEventListener("load", () => {
-
+        reader.addEventListener("load", (): void => {
             const data = {
                 img: reader.result,
                 description,
@@ -42,57 +43,62 @@ const CreatePostPanel = () => {
             };
 
             reqServer("POST", data, "/api/posts/add", true);
-            
-            document.location.reload()
-        })
+
+            document.location.reload();
+        });
     };
 
+    const [page, setPage] = useState(1);
+
+    const handleArrow = (direction: "right" | "left"): void => {
+        switch (direction) {
+            case "right":
+                if (page + 1 > 3) return;
+                return setPage((prev) => prev + 1);
+            case "left":
+                if (page - 1 < 1) return
+                return setPage((prev) => prev - 1);
+        }
+    };
     return (
         <div className="create-post-bg">
             <div className="create-post">
-                <button
+                {/* <button
                     className="create-post__share-btn"
                     onClick={handleShareButton}
                 >
                     share
-                </button>
-                <div className="create-post__header">
-                    <p className="create-post__title">Create new post</p>
-                </div>
+                </button> */}
 
-                {/* LEFT */}
                 <div className="create-post__main">
-                    <label className="create-post__upload">
-                        {file && (
-                            <img
-                                className="create-post__upload-show"
-                                src={URL.createObjectURL(file)}
-                            />
-                        )}
-                        <input
-                            className="create-post__upload-input"
-                            type="file"
-                            onChange={(e) => setFile(e.target.files[0])}
-                        />
-                    </label>
+                    <div className="create-post__arrow">
+                        <div
+                            className="create-post__arrow-left"
+                            onClick={() => handleArrow("left")}
+                        >
+                            <i className="fa-solid fa-play"></i>
+                        </div>
+                    </div>
+                    <div className="create-post__label">
+                        <div className={`create-post__label-container create-post__label-container-${page}`}>
+                            <File data={{ file, setFile }} />
+                            <Description />
+                            <Hashtags />
+                        </div>
+                    </div>
+                    <div className="create-post__arrow">
+                        <div
+                            className="create-post__arrow-right"
+                            onClick={() => handleArrow("right")}
+                        >
+                            <i className="fa-solid fa-play"></i>
+                        </div>
+                    </div>
+                    {/*
                     <div className="create-post__info">
 
-                        {/* RIGHT */}
                         <ProfileIdentity data={getUserInfo()} />
-                        <label className="create-post__info-description">
-                            <p className="create-post__info-name">
-                                Add description to your post
-                            </p>
-                            <textarea
-                                className="create-post__info-textarea"
-                                cols={30}
-                                rows={10}
-                                placeholder="description..."
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
-                            ></textarea>
-                        </label>
-                        {/* HASHTAGS */}
+                
                         <label className="create-post__info-hashtags">
                             <p className="create-post__info-name">
                                 Add # to your post
@@ -131,7 +137,7 @@ const CreatePostPanel = () => {
                                 />
                             </div>
                         </label>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>
