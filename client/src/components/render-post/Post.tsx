@@ -1,15 +1,14 @@
 import ProfileIdentity from "../profile-identifier/ProfileIdentity"
 
 
-const Post = ({data}) => {
-	console.log(data.file)
+const Post = ({ data }) => {
 
 	if (!data.date) return <></>
 
 	return (
 		<div className="post">
 			<div className="post__header">
-				<ProfileIdentity />
+				<ProfileIdentity data={{username: "Jan Kowalski", image: null}}/>
 			</div>
 			<div className="post__main">
 				<div className="post__main-img">

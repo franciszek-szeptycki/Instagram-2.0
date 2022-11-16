@@ -4,6 +4,7 @@ import { CREATE_POST_OFF_FUNCTION } from "../../redux/actions/createPostPanel";
 import "../Panel.sass";
 import ProfileIdentity from "../../components/profile-identifier/ProfileIdentity";
 import reqServer from "../../utils/reqServer"
+import { getUserInfo } from "../../utils/userInfo";
 
 const CreatePostPanel = () => {
     const dispatch = useDispatch();
@@ -25,6 +26,8 @@ const CreatePostPanel = () => {
     };
 
     const handleShareButton = async () => {
+
+        dispatch(CREATE_POST_OFF_FUNCTION())
 
         const reader = new FileReader();
 
@@ -53,6 +56,8 @@ const CreatePostPanel = () => {
                 <div className="create-post__header">
                     <p className="create-post__title">Create new post</p>
                 </div>
+
+                {/* LEFT */}
                 <div className="create-post__main">
                     <label className="create-post__upload">
                         {file && (
@@ -68,7 +73,9 @@ const CreatePostPanel = () => {
                         />
                     </label>
                     <div className="create-post__info">
-                        <ProfileIdentity />
+
+                        {/* RIGHT */}
+                        <ProfileIdentity data={getUserInfo()} />
                         <label className="create-post__info-description">
                             <p className="create-post__info-name">
                                 Add description to your post
@@ -82,6 +89,7 @@ const CreatePostPanel = () => {
                                 onChange={(e) => setDescription(e.target.value)}
                             ></textarea>
                         </label>
+                        {/* HASHTAGS */}
                         <label className="create-post__info-hashtags">
                             <p className="create-post__info-name">
                                 Add # to your post

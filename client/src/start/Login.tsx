@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import "./start.sass";
-import { LOG_IN_FUNCTION } from '../redux/actions/isLogged'
+import { LOG_IN_FUNCTION } from "../redux/actions/isLogged";
 import reqServer, { reqType } from "../utils/reqServer";
-import setUserInfo from "../utils/setUserInfo";
+import { setUserInfo } from "../utils/userInfo";
 
 interface loginDataInterface {
     email: string;
@@ -13,9 +13,9 @@ interface loginDataInterface {
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    
-    const dispatch = useDispatch()
-    
+
+    const dispatch = useDispatch();
+
     const handleInput = ({ name, value }): void => {
         switch (name) {
             case "email":
@@ -33,10 +33,15 @@ const Login = () => {
             password,
         };
 
-        const {status, msg, data}: reqType = await reqServer("POST", loginData, "/auth/log-in", false)
+        const { status, msg, data }: reqType = await reqServer(
+            "POST",
+            loginData,
+            "/auth/log-in",
+            false
+        );
         if (status === 200) {
-            dispatch(LOG_IN_FUNCTION())
-            setUserInfo({data, msg})
+            dispatch(LOG_IN_FUNCTION());
+            setUserInfo(data);
         }
     };
 
