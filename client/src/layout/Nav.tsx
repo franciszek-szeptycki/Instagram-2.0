@@ -1,16 +1,25 @@
 import * as React from "react";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { CREATE_POST_ON, CREATE_POST_ON_FUNCTION } from "../redux/actions/createPostPanel";
+import { CREATE_POST_OFF_FUNCTION, CREATE_POST_ON_FUNCTION } from "../redux/actions/createPostPanel";
 import "./Nav.sass"
+import allReducers from '../redux/reducers/index'
 
+
+type RootState = ReturnType<typeof allReducers>;
 const Nav = () => {
 
 	const dispatch = useDispatch();
+    const isPanelCreated = useSelector<RootState>(state => state.createPostPanel)
 
-	const handleCreatePost = (e) => {
-		e.preventDefault()
-		dispatch(CREATE_POST_ON_FUNCTION())
+	const handleCreatePost = () => {
+        switch (isPanelCreated) {
+            case true:
+                return dispatch(CREATE_POST_OFF_FUNCTION())
+            case false:
+                return dispatch(CREATE_POST_ON_FUNCTION())
+        }
 	}
 
     return (
@@ -27,7 +36,7 @@ const Nav = () => {
                         <NavLink className="nav__li-content" to="/favourites"><i className="fa-solid fa-heart" ></i></NavLink>
                     </li>
                     <li className="nav__li">
-                        <button className="nav__li-content" onClick={(e) => handleCreatePost(e)}>
+                        <button className="nav__li-content" onClick={handleCreatePost}>
                             <i className="fa-solid fa-square-plus"></i>
                         </button>
                     </li>

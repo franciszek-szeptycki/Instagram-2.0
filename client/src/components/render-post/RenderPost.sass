@@ -1,0 +1,54 @@
+@import "../../sass/variables"
+	
+.post
+	margin-top: $main-gap
+	border-radius: 10px
+	overflow: hidden
+	box-shadow: 0 3px 10px 0 $gray3
+	background-color: $gray1
+	
+	&__main
+		width: 100%
+		padding-top: 100% 
+		position: relative
+		
+		&-img
+			width: 100%
+			height: 100%
+			background-image: url('./photo.webp')
+			position: absolute
+			top: 0
+			background-size: auto 100%
+
+	&__footer
+		padding: 20px
+		gap: 20px
+		display: flex
+		flex-direction: column
+		
+		&-top
+			display: flex
+			align-items: center
+			justify-content: space-between
+
+			&-interactions
+				display: flex
+				gap: 10px
+
+				&-btn
+					width: 30px
+					height: 30px
+					border: none
+					background-color: inherit
+					cursor: pointer
+
+					i
+						font-size: 1.3rem
+						color: $gray6
+
+			&-date
+				color: $gray3
+				font-size: .9rem
+
+
+		&-description

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { CREATE_POST_OFF_FUNCTION } from "../../redux/actions/createPostPanel";
 import "../Panel.sass";
-import ProfileIdentity from "../../components/ProfileIdentity";
+import ProfileIdentity from "../../components/profile-identifier/ProfileIdentity";
 import reqServer from "../../utils/reqServer"
 
 const CreatePostPanel = () => {
@@ -13,10 +13,6 @@ const CreatePostPanel = () => {
     const [hashtag1, setHashtag1] = useState("");
     const [hashtag2, setHashtag2] = useState("");
     const [hashtag3, setHashtag3] = useState("");
-
-    const handleClosePanel = () => {
-        dispatch(CREATE_POST_OFF_FUNCTION());
-    };
 
     const handleHashtag1 = (text: string) => {
         setHashtag1(text.replace(" ", "_"));
@@ -30,13 +26,14 @@ const CreatePostPanel = () => {
 
     const handleShareButton = async () => {
 
-        // return console.log(file.name)
-
         const reader = new FileReader();
 
         reader.readAsDataURL(file)
 
         reader.addEventListener("load", () => {
+
+            // console.log(reader.result)
+
             const data = {
                 img: reader.result,
                 description,
@@ -48,12 +45,6 @@ const CreatePostPanel = () => {
 
     return (
         <div className="create-post-bg">
-            <button
-                onClick={handleClosePanel}
-                className="create-post__close-btn"
-            >
-                x
-            </button>
             <div className="create-post">
                 <button
                     className="create-post__share-btn"
