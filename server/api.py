@@ -1,7 +1,7 @@
 import core
 
 from flask import Blueprint, request, jsonify
-from flask_jwt_extended import jwt_required, get_jwt, get_jwt_identity, create_access_token
+from flask_jwt_extended import jwt_required, get_jwt, get_jwt_identity, create_access_token, verify_jwt_in_request
 
 import json
 
@@ -38,15 +38,16 @@ def add_post():
             # Pack hashtags into a string
             hashtags = " ".join(hashtags)
 
-            # jwt = get_jwt()
-            # print(jwt)
+            verify_jwt_in_request()
+            JWT = get_jwt()
+            ID = JWT['sub']
 
             # Create new post
-            post = core.models.Post(User_ID=1, Image=image, Description="TEST", Hashtags="TEST21")
+            post = core.models.Post(User_ID=ID, Image=image, Description="TEST", Hashtags="TEST21")
             core.db.session.add(post)
             core.db.session.commit()
 
-            print("Post added successfully")
+            print("[INFO] Post created successfully")
             return jsonify({"msg": "Post created successfully"}), 201
 
         except Exception as error:
@@ -79,8 +80,6 @@ def get_posts(page):
                     "date": post.Date
                 })
 
-            print(posts_list)
-
             # Return posts
             return jsonify({"data": posts_list}), 200
 
@@ -94,6 +93,7 @@ def get_posts(page):
 @jwt_required()
 def refresh_expiring_tokens(response):
     try:
+        verify_jwt_in_request()
         jwt = get_jwt()
         if not jwt:
             return response

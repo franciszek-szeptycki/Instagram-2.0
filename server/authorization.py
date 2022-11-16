@@ -36,6 +36,8 @@ def sign_up():
     user = models.User(Email=email, Username=username, Password=password)
     core.db.session.add(user)
     core.db.session.commit()
+
+    print("[INFO] User created successfully")
     return jsonify({"msg": "User created successfully"}), 201
 
 
@@ -63,10 +65,16 @@ def sign_in():
 
     # Generate token
     additional_claims = {"ID": user.ID, "Username": user.Username}
-    access_token = create_access_token(user.Username, additional_claims=additional_claims)
+    access_token = create_access_token(user.ID, additional_claims=additional_claims)
     response = jsonify({
+        "data": {
+            "Username": user.Username,
+            "Image": user.Image,
+        },
         "access_token": access_token,
     })
+
+    print("[INFO] User logged in successfully")
     return response, 200
 
 
@@ -74,4 +82,5 @@ def sign_in():
 @jwt_required()
 def token():
     fresh_token = create_access_token(identity=get_jwt_identity(), fresh=True)
+
     return jsonify({"access_token": fresh_token}), 200

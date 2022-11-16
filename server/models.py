@@ -8,6 +8,7 @@ class User(core.db.Model):
     Email = core.db.Column(core.db.String(128), unique=True, nullable=False)
     Username = core.db.Column(core.db.String(128), unique=True, nullable=False)
     Password = core.db.Column(core.db.String(128), unique=False, nullable=False)
+    Image = core.db.Column(core.db.Text(10000000), unique=False, nullable=True)
     Date = core.db.Column(core.db.DateTime, default=datetime.datetime.utcnow)
 
     def __init__(self, Email, Username, Password):
@@ -66,3 +67,17 @@ class Like(core.db.Model):
 
     def __repr__(self):
         return '<Like %r>' % self.ID
+
+class Followers(core.db.Model):
+    __tablename__ = 'Followers'
+    ID = core.db.Column(core.db.Integer, primary_key=True)
+    User_ID = core.db.Column(core.db.Integer, core.db.ForeignKey('Users.ID'))
+    Follower_ID = core.db.Column(core.db.Integer, core.db.ForeignKey('Users.ID'))
+    Date = core.db.Column(core.db.DateTime, default=datetime.datetime.utcnow)
+
+    def __init__(self, User_ID, Follower_ID):
+        self.User_ID = User_ID
+        self.Follower_ID = Follower_ID
+
+    def __repr__(self):
+        return '<Follower %r>' % self.ID
