@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import RenderPosts from "../components/render-post/RenderPosts";
+import RenderPosts from "../../components/render-post/RenderPosts";
 import getHomeContent from "./getHomeContent";
 
 const Home = () => {
@@ -13,7 +13,6 @@ const Home = () => {
 
 	return (<div className="page page-home">
 		<main className="main"><RenderPosts data={pages}/></main>		
-		{/* <main className="main"></main>		 */}
 		<aside className="aside"></aside>
 	</div> );
 }

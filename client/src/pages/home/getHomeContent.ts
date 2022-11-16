@@ -1,4 +1,4 @@
-import reqServer, {reqType} from "../utils/reqServer"
+import reqServer, {reqType} from "../../utils/reqServer"
 
 
 const getHomeContent = async (setPages) => {

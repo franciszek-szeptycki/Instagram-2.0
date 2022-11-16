@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import "./start.sass";
 import { LOG_IN_FUNCTION } from '../redux/actions/isLogged'
 import reqServer, { reqType } from "../utils/reqServer";
-import getToken from "../utils/getToken";
+import setUserInfo from "../utils/setUserInfo";
 
 interface loginDataInterface {
     email: string;
@@ -36,6 +36,7 @@ const Login = () => {
         const {status, msg, data}: reqType = await reqServer("POST", loginData, "/auth/log-in", false)
         if (status === 200) {
             dispatch(LOG_IN_FUNCTION())
+            setUserInfo({data, msg})
         }
     };
 
