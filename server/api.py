@@ -16,6 +16,9 @@ def create_db():
         core.db.create_all()
 
 
+### POSTS ###
+
+
 @api_blueprint.route('/posts/add', methods=['POST'])
 @jwt_required()
 def add_post():
@@ -87,6 +90,70 @@ def get_posts(page):
             print("[ERROR] get_posts : ", error)
             return jsonify({'msg': '[ERROR] get_posts : ' + str(error)}), 500
 
+
+@api_blueprint.route('/posts/get/<int:ID>', methods=['GET'])
+@jwt_required()
+def get_post(ID):
+    with core.app.app_context():
+        try:
+
+            # Get post from database
+            post = core.models.Post.query.filter_by(ID=ID).first()
+
+            # Check if posts exist
+            if not post:
+                return jsonify({"msg": "No post found"}), 404
+
+            data = {
+                "id": post.ID,
+                "user_name": core.models.User.query.filter_by(ID=post.User_ID).first().Username,
+                "description": post.Description,
+                "hashtags": post.Hashtags,
+                "file": post.Image,
+                "date": post.Date
+            }
+
+            # Return post
+            return jsonify({"data": data}), 200
+
+        except Exception as error:
+            print("[ERROR] get_posts : ", error)
+            return jsonify({'msg': '[ERROR] get_posts : ' + str(error)}), 500
+
+### USER ###
+
+
+@api_blueprint.route('/user/image/add', methods=['POST'])
+@jwt_required()
+def add_user_image():
+    with core.app.app_context():
+        try:
+
+            # Get the request data
+            image = request.json.get("img", None)
+
+            # Check if all fields are filled
+            if not image:
+                return jsonify({"msg": "Image is required"}), 400
+
+            verify_jwt_in_request()
+            JWT = get_jwt()
+            ID = JWT['sub']
+
+            # Change image
+            user = core.models.User.query.filter_by(ID=ID).first()
+            user.Image = image
+            core.db.session.commit()
+
+            print("[INFO] User image added successfully")
+            return jsonify({"msg": "User image added successfully"}), 201
+
+        except Exception as error:
+            print("[ERROR] add_user_image : ", error)
+            return jsonify({"msg": "[ERROR] add_user_image : " + str(error)}), 500
+
+
+### OTHER ###
 
 # Define a function that will be called whenever access to a protected endpoint is attempted
 @api_blueprint.after_request

@@ -1,3 +1,5 @@
+import base64
+
 import core
 import models
 
@@ -68,7 +70,7 @@ def sign_in():
     access_token = create_access_token(user.ID, additional_claims=additional_claims)
     response = jsonify({
         "data": {
-            "username": user.Username,
+            "user_name": user.Username,
             "image": user.Image,
         },
         "access_token": access_token,
