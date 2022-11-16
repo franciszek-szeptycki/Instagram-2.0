@@ -33,3 +33,16 @@ code
 .page-home
     aside
         display: none
+
+@media (max-width: $max-breakpoint) 
+    .page
+        margin-top: 0
+        margin-bottom: $nav-height
+
+        flex-direction: column
+
+        .main
+            width: 100%
+
+        .aside
+            margin-top: 0

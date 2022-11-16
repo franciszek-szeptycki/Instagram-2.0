@@ -4,15 +4,28 @@
 .start-background
 	width: 100vw
 	height: 100vh
+	background-size: 100% 100%
+
+.login-bg
+	background-image: url("../assets/img/theme1.webp")
+
+.register-bg
+	background-image: url("../assets/img/theme2.png")
 
 @media (min-width: 1001px)
-	.login-start
+	.start
 		.start-aside
-			background-image: url("../assets/img/autumn.webp")
+			background-size: auto 100%
+
+	.login-start
+		background-image: url("../assets/img/orange.webp")
+		background-position-x: 10%
+		background-size: 100% auto
 
 	.register-start
 		.start-aside
-			background-image: url("../assets/img/winter.webp")
+			background-image: url("../assets/img/bluee.png")
+			background-position-x: 35%
 
 	.start
 		background-color: white
@@ -29,9 +42,10 @@
 		position: absolute
 		display: flex
 
-		.start-aside
+		&-aside
 			width: 50%
-			background-size: 100% auto
+			background-size: auto 100%
+
 
 		.start-main
 			width: 50%
@@ -57,7 +71,7 @@
 			width: 100%
 
 			&__label-name
-				color: gray
+				color: $gray5
 
 			.form__label
 				width: inherit
@@ -69,10 +83,11 @@
 				
 				&-input
 					border: none
-					border-bottom: 1px lightgray solid
+					border-bottom: 1px $gray5 solid
 					width: 60%
 					font-size: 1rem
 					padding: 5px 0
+					background-color: transparent
 
 					&:focus
 						outline: none

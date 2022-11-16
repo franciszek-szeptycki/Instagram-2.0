@@ -46,7 +46,7 @@ const Login = () => {
     };
 
     return (
-        <div className="start-background">
+        <div className="start-background login-bg">
             <div className="login-start start">
                 <div className="start-main">
                     <p className="start__title">

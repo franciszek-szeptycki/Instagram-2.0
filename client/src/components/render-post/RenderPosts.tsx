@@ -1,5 +1,6 @@
 import Post from './Post'
 import "./RenderPost.sass";
+import "./RenderPostMobile.sass";
 
 
 const RenderPosts = (props) => {

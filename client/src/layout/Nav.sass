@@ -2,7 +2,6 @@
 
 .header	
 	position: fixed
-	top: 0
 	z-index: 1
 	box-shadow: 0 0 10px 0 $gray3
 
@@ -46,3 +45,12 @@
 
 				&:hover i
 					transform: $resize-icon
+
+
+@media (max-width: $max-breakpoint) 
+	.header
+		bottom: 0
+
+@media (min-width: $min-breakpoint)
+	.header
+		top: 0

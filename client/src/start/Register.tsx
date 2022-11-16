@@ -55,7 +55,7 @@ const Register = () => {
     };
 
     return (
-        <div className="start-background">
+        <div className="start-background register-bg">
             <div className="register-start start">
                 <div className="start-aside"></div>
                 <div className="start-main">

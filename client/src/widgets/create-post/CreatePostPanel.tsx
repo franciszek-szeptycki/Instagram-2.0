@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { CREATE_POST_OFF_FUNCTION } from "../../redux/actions/createPostPanel";
-import "../Panel.sass";
+import "./CreatePostPanel.sass";
 import ProfileIdentity from "../../components/profile-identifier/ProfileIdentity";
 import reqServer from "../../utils/reqServer"
 import { getUserInfo } from "../../utils/userInfo";
