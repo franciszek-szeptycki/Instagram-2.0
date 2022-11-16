@@ -3,7 +3,7 @@ import "./ProfileIdentity.sass";
 const ProfileIdentity = (props) => {
 	const { username, image } = props.data;
 
-	console.log(props)
+	// console.log(props)
 
     return (
         <div className="profile-id">

@@ -60,6 +60,7 @@ const CreatePostPanel = () => {
                 return setPage((prev) => prev - 1);
         }
     };
+
     return (
         <div className="create-post-bg">
             <div className="create-post">
