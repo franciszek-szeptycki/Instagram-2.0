@@ -4,8 +4,8 @@ interface userInfo {
 }
 
 export const setUserInfo = ({ user_name, image }) => {
-    localStorage.setItem("user_info-username", user_name);
-    localStorage.setItem("user_info-image", image);
+    if(user_name) localStorage.setItem("user_info-username", user_name);
+    if(image) localStorage.setItem("user_info-image", image);
 };
 
 export const getUserInfo = (): userInfo => {

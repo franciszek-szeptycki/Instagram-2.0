@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { LOG_OUT_FUNCTION } from '../../redux/actions/isLogged';
 import reqServer from '../../utils/reqServer';
+import { getUserInfo, setUserInfo } from '../../utils/userInfo';
 import './Profile.sass'
 
 const Profile = () => {
@@ -10,40 +11,42 @@ const Profile = () => {
 	
 	const [file, setFile] = useState<File>()
 
-	const handleSaveButton = async () => {
-
+	const handleSave = async () => {
         const reader = new FileReader();
-
         reader.readAsDataURL(file)
-
-        reader.addEventListener("load", () => {
-
-            const data = {
+        reader.addEventListener("load", async () => {
+            const imgData = {
                 img: reader.result,
             };
-            reqServer("POST", data, "/api/posts/add", true);
+            const { status, msg, data } = await reqServer("POST", imgData, "/api/user/image/add", true);
+            console.log(status)
+            if (status === 201) setUserInfo({ user_name: null, image: reader.result })
+            localStorage.removeItem("access_token")
+            dispatch(LOG_OUT_FUNCTION())
         })
     };
 
     const handleLogOut = () => {
         localStorage.removeItem("access_token")
         dispatch(LOG_OUT_FUNCTION())
-        document.location.reload()
     }
+
+    const {username, image} = getUserInfo()
 
 	return <div className="page page-profile">
 		<aside className="aside">
 		<div className="profile">
-				<div className="profile__photo">
-					<label className="profile__upload">
+                <div className="profile__photo">
+                    <img src={image} alt="" className="profile__photo-current-photo" />
+					<label className="profile__photo-upload">
                         {file && (
                             <img
-                                className="profile__upload-show"
+                                className="profile__photo-upload-show"
                                 src={URL.createObjectURL(file)}
                             />
                         )}
                         <input
-                            className="profile__upload-input"
+                            className="profile__photo-upload-input"
                             type="file"
                             onChange={(e) => setFile(e.target.files[0])}
                         />
@@ -54,8 +57,9 @@ const Profile = () => {
 		</aside>
         <main className="main">
             <div className="user-panel">
-                <div className="user-panel-logout">
-                    <button className="user-panel-logout-btn" onClick={handleLogOut}>log out</button>
+                <div className="user-panel-buttons">
+                    <button className="user-panel-buttons-btn" onClick={handleSave}>save</button>
+                    <button className="user-panel-buttons-btn" onClick={handleLogOut}>log out</button>
                 </div>
             </div>
 		</main>
