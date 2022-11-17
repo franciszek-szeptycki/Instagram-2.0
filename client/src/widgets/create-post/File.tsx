@@ -1,6 +1,5 @@
 const File = (props) => {
     const { file, setFile } = props.data;
-    console.log(props);
 
     return (
         <div className="create-post__label-item">
@@ -8,7 +7,7 @@ const File = (props) => {
                 <p className="create-post__upload-name">{file ? file.name : " "}</p>
                 <label className="create-post__upload">
                     {/* <button className="create-post__upload-btn"> */}
-                    <i className="fa-regular fa-image"></i> choose a photo
+                    <i className="fa-regular fa-image"></i>choose a photo
                     {/* </button> */}
                     <input
                         className="create-post__upload-input"

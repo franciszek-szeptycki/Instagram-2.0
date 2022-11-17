@@ -1,20 +1,20 @@
-const Description = () => {
-    return (<div className="create-post__label-item">
-        lorem lorem
-		{/* <label className="create-post__info-description">
-                <p className="create-post__info-name">
-                    Add description to your post
-                </p>
+const Description = (props) => {
+    const { description, setDescription } = props.data;
+
+    return (
+        <div className="create-post__label-item">
+            <div className="create-post__description">
                 <textarea
-                    className="create-post__info-textarea"
+                    className="create-post__description-textarea"
                     cols={30}
                     rows={10}
-                    placeholder="description..."
+                    placeholder="Add post description..."
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                 ></textarea>
-            </label> */}
-	</div> );
-}
- 
+            </div>
+        </div>
+    );
+};
+
 export default Description;

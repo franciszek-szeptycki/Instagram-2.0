@@ -16,16 +16,11 @@ const Nav = () => {
         (state) => state.createPostPanel
     );
 
-    const handleCreatePost = () => {
-        switch (isPanelCreated) {
-            case true:
-                return dispatch(CREATE_POST_OFF_FUNCTION());
-            case false:
-                return dispatch(CREATE_POST_ON_FUNCTION());
-        }
+    const handleSwitchONCreatePost = () => {
+        return dispatch(CREATE_POST_ON_FUNCTION());
     };
 
-    const handleTurnOffCreatePost = () => {
+    const handleSwitchOffCreatePost = () => {
         return dispatch(CREATE_POST_OFF_FUNCTION());
     }
 
@@ -37,7 +32,7 @@ const Nav = () => {
                         <NavLink
                             className="nav__li-content"
                             to="/"
-                            onClick={handleTurnOffCreatePost}
+                            onClick={handleSwitchOffCreatePost}
                         >
                             <i className="fa-solid fa-house"></i>
                         </NavLink>
@@ -46,7 +41,7 @@ const Nav = () => {
                         <NavLink
                             className="nav__li-content"
                             to="/following"
-                            onClick={handleTurnOffCreatePost}
+                            onClick={handleSwitchOffCreatePost}
                         >
                             <i className="fa-solid fa-eye"></i>
                         </NavLink>
@@ -55,7 +50,7 @@ const Nav = () => {
                         <NavLink
                             className="nav__li-content"
                             to="/favourites"
-                            onClick={handleTurnOffCreatePost}
+                            onClick={handleSwitchOffCreatePost}
                         >
                             <i className="fa-solid fa-heart"></i>
                         </NavLink>
@@ -63,7 +58,7 @@ const Nav = () => {
                     <li className="nav__li">
                         <button
                             className="nav__li-content"
-                            onClick={handleCreatePost}
+                            onClick={handleSwitchONCreatePost}
                         >
                             <i className="fa-solid fa-square-plus"></i>
                         </button>
@@ -72,7 +67,7 @@ const Nav = () => {
                         <NavLink
                             className="nav__li-content"
                             to="/profile"
-                            onClick={handleTurnOffCreatePost}
+                            onClick={handleSwitchOffCreatePost}
                         >
                             <i className="fa-solid fa-user"></i>
                         </NavLink>
