@@ -7,12 +7,7 @@ import Home from "./pages/home/Home";
 import { Routes, Route } from "react-router-dom";
 import Profile from "./pages/profile/Profile";
 
-type RootState = ReturnType<typeof allReducers>;
-
 const Container = () => {
-    const createPostPanel = useSelector<RootState>(
-        (state) => state.createPostPanel
-    );
 
     return (
         <div className="container">
@@ -20,8 +15,8 @@ const Container = () => {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/create-post" element={<CreatePostPanel />}/>
             </Routes>
-            {createPostPanel && <CreatePostPanel />}
         </div>
     );
 };
