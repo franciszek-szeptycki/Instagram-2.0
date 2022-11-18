@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import Nav from "./layout/Nav";
-import CreatePostPanel from "./widgets/create-post/CreatePostPanel";
+import CreatePostPanel from "./pages/create-post/CreatePostPanel";
 import allReducers from "./redux/reducers";
 import Home from "./pages/home/Home";
 import { Routes, Route } from "react-router-dom";
