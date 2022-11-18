@@ -56,9 +56,8 @@ const Register = () => {
             );
             console.log(status)
             switch (status) {
-                case 200:
-                    console.log(200)
-                    window.location.href = "/";
+                case 201:
+                    window.location.href = "/login";
                     break;
                 case 400:
                     return setEmailErrorServer(msg);
@@ -71,8 +70,6 @@ const Register = () => {
             passwordAgainError = checkPasswordAgainIllegality(password, passwordAgain)
         }
     };
-
-    // NotificationContainer.success("msg","title",3000)
 
     return (
         <div className="start-background register-bg">
