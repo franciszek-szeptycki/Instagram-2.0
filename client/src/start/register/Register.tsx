@@ -2,7 +2,8 @@ import * as React from "react";
 import "../start.sass";
 import { useState } from "react";
 import reqServer from "../../utils/reqServer";
-import Verification from "./verification";
+import { verify, verifyPassword, verifyPasswordAgain, verifyUsername } from "./verification";
+import Notification from "../Notification";
 
 interface registerDataInterface {
     email: string;
@@ -16,9 +17,9 @@ const Register = () => {
     const [password, setPassword] = useState("");
     const [passwordAgain, setPasswordAgain] = useState("");
 
-    const [usernameError, setUsernameError] = useState<string | boolean>();
-    const [passwordError, setPasswordError] = useState<string | boolean>();
-    const passwordAgainError = password !== passwordAgain;
+    const usernameError = verifyUsername(username)
+    const passwordError = verifyPassword(password)
+    const passwordAgainError = verifyPasswordAgain(password, passwordAgain)
 
     const handleInput = ({ name, value }): void => {
         switch (name) {
@@ -40,25 +41,27 @@ const Register = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if(passwordAgainError) return
 
-        
+
         // W E R Y F I K A C J A   D A N Y C H
-        const verification = new Verification(username, password)
-        console.log(verification.usernameError)
-        console.log(verification.passwordError)
-        console.log(verification.isCorrect)
 
-        // const registerData: registerDataInterface = {
-        //     email,
-        //     username,
-        //     password,
-        // };
 
-        // reqServer("POST", registerData, "/auth/sign-up", true);
+        // switch (verification.isCorrect) {
+        //     case true:
+        //         // const registerData: registerDataInterface = {
+        //         //     email,
+        //         //     username,
+        //         //     password,
+        //         // }
+        //         // reqServer("POST", registerData, "/auth/sign-up", true);
+        //         break;
+
+        //     case false:
+        //         setUsernameError(verification.usernameError);
+        //         setPasswordError(verification.passwordError);
+        //         break;
+        // }
     };
-
-    // NotificationContainer.success("msg","title",3000)
 
     return (
         <div className="start-background register-bg">
@@ -93,16 +96,7 @@ const Register = () => {
                                 data-testid="username"
                                 value={username}
                             />
-                            <div
-                                className={`form__label-alert ${
-                                    usernameError ? "" : "hidden"
-                                }`}
-                            >
-                                <i className="fa-solid fa-circle-exclamation"></i>
-                                <p className="form__label-alert-text">
-                                    passwords are not the same
-                                </p>
-                            </div>
+                            <Notification data={usernameError} />
                         </label>
 
                         {/* password */}
@@ -117,16 +111,7 @@ const Register = () => {
                                 data-testid="password"
                                 value={password}
                             />
-                            <div
-                                className={`form__label-alert ${
-                                    passwordError ? "" : "hidden"
-                                }`}
-                            >
-                                <i className="fa-solid fa-circle-exclamation"></i>
-                                <p className="form__label-alert-text">
-                                    passwords are not the same
-                                </p>
-                            </div>
+                            <Notification data={passwordError} />
                         </label>
 
                         {/* password again */}
@@ -141,16 +126,12 @@ const Register = () => {
                                 data-testid="password again"
                                 value={passwordAgain}
                             />
-                            <div
-                                className={`form__label-alert ${
-                                    passwordAgainError ? "" : "hidden"
-                                }`}
-                            >
-                                <i className="fa-solid fa-circle-exclamation"></i>
-                                <p className="form__label-alert-text">
-                                    passwords are not the same
-                                </p>
-                            </div>
+                            <Notification
+                                data={
+                                    passwordAgainError &&
+                                    "the password are not the same"
+                                }
+                            />
                         </label>
 
                         {/* submit and link */}
