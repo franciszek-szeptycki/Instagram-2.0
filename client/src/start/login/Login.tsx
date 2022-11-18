@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import "./start.sass";
-import { LOG_IN_FUNCTION } from "../redux/actions/isLogged";
-import reqServer, { reqType } from "../utils/reqServer";
-import { setUserInfo } from "../utils/userInfo";
+import "../start.sass";
+import { LOG_IN_FUNCTION } from "../../redux/actions/isLogged";
+import reqServer, { reqType } from "../../utils/reqServer";
+import { setUserInfo } from "../../utils/userInfo";
 
 interface loginDataInterface {
     email: string;

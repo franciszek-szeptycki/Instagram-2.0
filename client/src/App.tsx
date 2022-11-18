@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Container from "./Container";
-import LoginPanel from "./start/Login";
-import Register from "./start/Register";
+import LoginPanel from "./start/login/Login";
+import Register from "./start/register/Register";
 import { useSelector } from "react-redux";
 import allReducers from "./redux/reducers";
 import { useDispatch } from "react-redux";

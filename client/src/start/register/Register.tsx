@@ -1,8 +1,7 @@
 import * as React from "react";
-import "./start.sass";
+import "../start.sass";
 import { useState } from "react";
-import ErrorReport from "./utils/ErrorReport";
-import { sendRegisterForm } from "./utils/request";
+import reqServer from "../../utils/reqServer";
 
 interface registerDataInterface {
     email: string;
@@ -15,7 +14,6 @@ const Register = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [passwordAgain, setPasswordAgain] = useState("");
-    const [msg, setMsg] = useState("info");
 
     const handleInput = ({ name, value }): void => {
         switch (name) {
@@ -37,21 +35,15 @@ const Register = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const data: registerDataInterface = {
+        const registerData: registerDataInterface = {
             email,
             username,
             password,
         };
 
         // W E R Y F I K A C J A   D A N Y C H
-        // const errors = new ErrorReport(data)
-        // switch (errors.noErrors) {
-        //     case true:
-        //         return sendRegisterForm(data)
-        //     case false:
-        //         return console.log(errors)
 
-        sendRegisterForm(data);
+        reqServer("POST", registerData, "/auth/sign-up", true)
     };
 
     return (
@@ -61,6 +53,7 @@ const Register = () => {
                 <div className="start-main">
                     <p className="start__title">Welcome to Instagram 2.0</p>
                     <form className="form" onSubmit={(e) => handleSubmit(e)}>
+
                         {/* email */}
                         <p className="form__label-name">email</p>
                         <label className="form__label">
