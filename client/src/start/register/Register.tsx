@@ -2,6 +2,7 @@ import * as React from "react";
 import "../start.sass";
 import { useState } from "react";
 import reqServer from "../../utils/reqServer";
+import Verification from "./verification";
 
 interface registerDataInterface {
     email: string;
@@ -39,13 +40,20 @@ const Register = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const registerData: registerDataInterface = {
-            email,
-            username,
-            password,
-        };
+        if(passwordAgainError) return
 
+        
         // W E R Y F I K A C J A   D A N Y C H
+        const verification = new Verification(username, password)
+        console.log(verification.usernameError)
+        console.log(verification.passwordError)
+        console.log(verification.isCorrect)
+
+        // const registerData: registerDataInterface = {
+        //     email,
+        //     username,
+        //     password,
+        // };
 
         // reqServer("POST", registerData, "/auth/sign-up", true);
     };
