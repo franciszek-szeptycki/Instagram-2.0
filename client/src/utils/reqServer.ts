@@ -1,5 +1,11 @@
 import getToken from "./getToken";
 
+export interface serverRes {
+    msg: string;
+    status: number;
+    data: any;
+}
+
 const reqServer = async (
     method: string,
     data: object,

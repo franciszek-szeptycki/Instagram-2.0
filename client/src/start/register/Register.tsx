@@ -1,15 +1,14 @@
 import * as React from "react";
 import "../start.sass";
 import { useState } from "react";
-import reqServer from "../../utils/reqServer";
-import { verify, verifyPassword, verifyPasswordAgain, verifyUsername } from "./verification";
+import reqServer, { serverRes } from "../../utils/reqServer";
+import {
+    verify,
+    checkPasswordIllegality,
+    checkPasswordAgainIllegality,
+    checkUsernameIllegality,
+} from "./utils/verification";
 import Notification from "../Notification";
-
-interface registerDataInterface {
-    email: string;
-    username: string;
-    password: string;
-}
 
 const Register = () => {
     const [email, setEmail] = useState("");
@@ -17,50 +16,60 @@ const Register = () => {
     const [password, setPassword] = useState("");
     const [passwordAgain, setPasswordAgain] = useState("");
 
-    const usernameError = verifyUsername(username)
-    const passwordError = verifyPassword(password)
-    const passwordAgainError = verifyPasswordAgain(password, passwordAgain)
+    let usernameError: string | boolean | string[] = checkUsernameIllegality(username)
+    let passwordError: string | boolean | string[] = checkPasswordIllegality(password)
+    let passwordAgainError: string | boolean = checkPasswordAgainIllegality(password, passwordAgain)
+    const [emailErrorServer, setEmailErrorServer] = useState("")
+    const [usernameErrorServer, setUsernameErrorServer] = useState("")
 
     const handleInput = ({ name, value }): void => {
         switch (name) {
             case "email":
                 setEmail(value);
-                break;
+                break
             case "username":
                 setUsername(value);
-                break;
+                break
             case "password":
                 setPassword(value);
-                break;
+                break
             case "password again":
                 setPasswordAgain(value);
-                break;
+                break
         }
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-
-
-        // W E R Y F I K A C J A   D A N Y C H
-
-
-        // switch (verification.isCorrect) {
-        //     case true:
-        //         // const registerData: registerDataInterface = {
-        //         //     email,
-        //         //     username,
-        //         //     password,
-        //         // }
-        //         // reqServer("POST", registerData, "/auth/sign-up", true);
-        //         break;
-
-        //     case false:
-        //         setUsernameError(verification.usernameError);
-        //         setPasswordError(verification.passwordError);
-        //         break;
-        // }
+        if (verify({ username, password, passwordAgain })) {
+            const registerData = {
+                email,
+                username,
+                password,
+            };
+            const { status, msg }: serverRes = await reqServer(
+                "POST",
+                registerData,
+                "/auth/sign-up",
+                true
+            );
+            console.log(status)
+            switch (status) {
+                case 200:
+                    console.log(200)
+                    window.location.href = "/";
+                    break;
+                case 400:
+                    return setEmailErrorServer(msg);
+                case 401:
+                    return setUsernameErrorServer(msg);
+            }
+        } else {
+            usernameError = checkUsernameIllegality(username)
+            passwordError = checkPasswordIllegality(password)
+            passwordAgainError = checkPasswordAgainIllegality(password, passwordAgain)
+        }
     };
 
     return (
@@ -82,6 +91,7 @@ const Register = () => {
                                 data-testid="email"
                                 value={email}
                             />
+                            <Notification data={emailErrorServer} />
                         </label>
 
                         {/* username */}
@@ -97,6 +107,7 @@ const Register = () => {
                                 value={username}
                             />
                             <Notification data={usernameError} />
+                            <Notification data={usernameErrorServer} />
                         </label>
 
                         {/* password */}
@@ -126,12 +137,7 @@ const Register = () => {
                                 data-testid="password again"
                                 value={passwordAgain}
                             />
-                            <Notification
-                                data={
-                                    passwordAgainError &&
-                                    "the password are not the same"
-                                }
-                            />
+                            <Notification data={passwordAgainError} />
                         </label>
 
                         {/* submit and link */}
