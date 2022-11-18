@@ -15,6 +15,10 @@ const Register = () => {
     const [password, setPassword] = useState("");
     const [passwordAgain, setPasswordAgain] = useState("");
 
+    const [usernameError, setUsernameError] = useState<string | boolean>();
+    const [passwordError, setPasswordError] = useState<string | boolean>();
+    const passwordAgainError = password !== passwordAgain;
+
     const handleInput = ({ name, value }): void => {
         switch (name) {
             case "email":
@@ -43,8 +47,10 @@ const Register = () => {
 
         // W E R Y F I K A C J A   D A N Y C H
 
-        reqServer("POST", registerData, "/auth/sign-up", true)
+        // reqServer("POST", registerData, "/auth/sign-up", true);
     };
+
+    // NotificationContainer.success("msg","title",3000)
 
     return (
         <div className="start-background register-bg">
@@ -53,7 +59,6 @@ const Register = () => {
                 <div className="start-main">
                     <p className="start__title">Welcome to Instagram 2.0</p>
                     <form className="form" onSubmit={(e) => handleSubmit(e)}>
-
                         {/* email */}
                         <p className="form__label-name">email</p>
                         <label className="form__label">
@@ -80,11 +85,21 @@ const Register = () => {
                                 data-testid="username"
                                 value={username}
                             />
+                            <div
+                                className={`form__label-alert ${
+                                    usernameError ? "" : "hidden"
+                                }`}
+                            >
+                                <i className="fa-solid fa-circle-exclamation"></i>
+                                <p className="form__label-alert-text">
+                                    passwords are not the same
+                                </p>
+                            </div>
                         </label>
 
                         {/* password */}
                         <p className="form__label-name">password</p>
-                        <label className="form__label form__label-wrong">
+                        <label className="form__label">
                             <input
                                 id="password"
                                 name="password"
@@ -94,11 +109,21 @@ const Register = () => {
                                 data-testid="password"
                                 value={password}
                             />
+                            <div
+                                className={`form__label-alert ${
+                                    passwordError ? "" : "hidden"
+                                }`}
+                            >
+                                <i className="fa-solid fa-circle-exclamation"></i>
+                                <p className="form__label-alert-text">
+                                    passwords are not the same
+                                </p>
+                            </div>
                         </label>
 
                         {/* password again */}
                         <p className="form__label-name">password again</p>
-                        <label className="form__label form__label-wrong">
+                        <label className="form__label">
                             <input
                                 id="password again"
                                 name="password again"
@@ -108,6 +133,16 @@ const Register = () => {
                                 data-testid="password again"
                                 value={passwordAgain}
                             />
+                            <div
+                                className={`form__label-alert ${
+                                    passwordAgainError ? "" : "hidden"
+                                }`}
+                            >
+                                <i className="fa-solid fa-circle-exclamation"></i>
+                                <p className="form__label-alert-text">
+                                    passwords are not the same
+                                </p>
+                            </div>
                         </label>
 
                         {/* submit and link */}
