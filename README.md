@@ -16,8 +16,11 @@
       - Flask-JWT-Extended
       - Flask-SQLAlchemy
       - Jinja2,
-  - **JavaScript**:
+  - **Typescript**:
       - React,
+      - Redux,
+      - Sass,
+      - Jest,
   - **SQL**
   - **HTML**
 
