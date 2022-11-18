@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-, "src/tests/ErrorReport.test.ts"  ]
+, "src/start/utils/ErrorReport.test.ts"  ]
 }

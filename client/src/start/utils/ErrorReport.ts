@@ -1,12 +1,12 @@
-const legalCharacters = `qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHG
-    FDSAZXCVBNM._1234567890`.split("");
-
 interface formData {
     password: string;
     username: string;
 }
 
 class ErrorReport {
+    private legalCharacters: string[] =
+        `qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM
+        ._1234567890`.split("");
     usernameError: string | boolean;
     passwordError: string | boolean;
     noErrors: boolean;
@@ -20,12 +20,12 @@ class ErrorReport {
     private checkUsername(username: string) {
         if (username.length < 4) return "this username is too short (min. 5)";
 
-        let illegalChar: string;
+        let illegalChar: string[];
         const test = username.split("").filter((item) => {
-            legalCharacters.map((char) => {
+            this.legalCharacters.map((char) => {
                 if (item === char) return item;
             });
-            illegalChar = item;
+            illegalChar.push(item)
         });
 
         if (test.length !== username.length)
