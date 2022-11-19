@@ -8,7 +8,7 @@ import allReducers from "./redux/reducers";
 import { useDispatch } from "react-redux";
 import LoadingPage from "./widgets/loading-page/LoadingPage";
 import checkTokenValidity from "./utils/checkTokenValidity";
-import './App.sass'
+import "./App.sass";
 
 type RootState = ReturnType<typeof allReducers>;
 
@@ -18,8 +18,8 @@ const App = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        checkTokenValidity(setIsLoading, dispatch)
-    }, [])
+        checkTokenValidity(setIsLoading, dispatch);
+    }, []);
 
     const isUserLogged = useSelector<RootState>((state) => state.isLogged);
 
