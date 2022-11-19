@@ -8,7 +8,7 @@ class User(core.db.Model):
     Email = core.db.Column(core.db.String(128), unique=True, nullable=False)
     Username = core.db.Column(core.db.String(128), unique=True, nullable=False)
     Password = core.db.Column(core.db.String(128), unique=False, nullable=False)
-    Image = core.db.Column(core.db.Text(10000000), unique=False, nullable=False, default='test')
+    Image = core.db.Column(core.db.Text(10000000), unique=False, nullable=False, default=core.app.config['DEFAULT_IMAGE'])
     Date = core.db.Column(core.db.DateTime, default=datetime.datetime.utcnow)
 
     def __init__(self, Email, Username, Password):
