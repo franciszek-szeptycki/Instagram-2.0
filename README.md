@@ -13,7 +13,6 @@
       - Flask Mail,
       - Flask-JWT-Extended
       - Flask-SQLAlchemy
-      - Jinja2,
   - **Typescript**:
       - React,
       - Redux,
