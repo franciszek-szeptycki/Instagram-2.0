@@ -42,13 +42,17 @@ def sign_up():
             "data": "email",
         }), 401
 
-    print(email, username)
+    # Key generation
+    Key = core.others.keyGenerator()
 
     # Hash password
     password = hashlib.sha256(password.encode()).hexdigest()
 
+    # Send welcome email
+    core.others.send_welcome_email(username, email, Key)
+
     # Create new user
-    user = models.User(Email=email, Username=username, Password=password)
+    user = models.User(Email=email, Username=username, Password=password, Security_Key=Key)
     core.db.session.add(user)
     core.db.session.commit()
 
@@ -68,10 +72,12 @@ def sign_in():
     if not password:
         return jsonify({"msg": "Password is required"}), 400
 
-    # Check if user exists
+    # Check if user exists and is activeted
     user = models.User.query.filter_by(Email=email).first()
     if not user:
         return jsonify({"msg": "User does not exist"}), 401
+    if not user.Active:
+        return jsonify({"data": "User is not activated"}), 401
 
     # Check if password is correct
     password = hashlib.sha256(password.encode()).hexdigest()
@@ -91,6 +97,29 @@ def sign_in():
 
     print("[INFO] User logged in successfully")
     return response, 200
+
+
+@auth_blueprint.route('/activate/<key>', methods=['GET'])
+def activate(key):
+    try:
+
+        # Get user from database
+        user = models.User.query.filter_by(Security_Key=key).first()
+
+        # Check if user exists
+        if not user:
+            return jsonify({"msg": "No user found"}), 404
+
+        # Activate user
+        user.Active = True
+        core.db.session.commit()
+
+        print("[INFO] User activated successfully")
+        return jsonify({"msg": "User activated successfully"}), 200
+
+    except Exception as error:
+        print("[ERROR] activate : ", error)
+        return jsonify({"msg": "[ERROR] activate: " + str(error)}) , 500
 
 
 @auth_blueprint.route("/access_token", methods=["POST"])

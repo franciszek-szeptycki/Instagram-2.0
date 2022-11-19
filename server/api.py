@@ -188,11 +188,11 @@ def get_user(ID):
                     "user_id": user.ID,
                     "user_name": user.Username,
                     "email": user.Email,
-                    # "image": user.Image,
+                    "image": user.Image,
                     "id": post.ID,
                     "description": post.Description,
                     "hashtags": post.Hashtags,
-                    # "file": post.Image,
+                    "file": post.Image,
                     "date": post.Date
                 })
 
