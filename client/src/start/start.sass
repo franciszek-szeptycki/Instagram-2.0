@@ -4,27 +4,16 @@
 .start-background
 	width: 100vw
 	height: 100vh
-	background-size: 100% 100%
 
-.login-bg
-	background-image: url("../assets/img/theme1.webp")
-
-.register-bg
-	background-image: url("../assets/img/theme2.png")
-
-@media (min-width: 1001px)
-	.start-aside
-		background-size: auto 100%
 	.login-start
 		.start-aside
-			background-image: url("../assets/img/orange.webp")
-			background-position-x: 45%
+			background-image: url("../assets/img/autumn.webp")
 
 	.register-start
 		.start-aside
-			background-image: url("../assets/img/bluee.png")
-			background-position-x: 35%
+			background-image: url("../assets/img/winter.webp")
 
+@media (min-width: 1001px)
 	.start
 		background-color: white
 		box-shadow: 0 0  40px 0px lightgray
@@ -42,7 +31,7 @@
 
 		&-aside
 			width: 50%
-			background-size: auto 100%
+			background-size: 100% auto
 
 
 		.start-main
@@ -52,13 +41,6 @@
 			align-items: center
 			justify-content: center
 			padding: 0px 100px
-
-			.start__alert
-				padding: 5px 0 0
-				text-align: center
-
-				.start__alert-msg
-					color: red
 
 
 		.start__title
@@ -145,3 +127,102 @@
 					background-color: rgb(182, 219, 239)
 				.start__button-login:hover
 					background-color: rgb(230, 184, 165)
+
+@media (max-width: 1000px)
+	.start
+		width: 100vw
+		height: 100vh
+		position: relative
+
+		&-aside
+			position: absolute
+			top: 0
+			left: 0
+			height: 100%
+			width: 100%
+			background-size: auto 100%
+			background-position: center
+			@media ( min-width: 660px )
+				background-size: 100% auto !important
+		
+		&-main
+			z-index: 1
+			position: absolute
+
+			width: 100vw
+			min-width: 320px
+			height: 100vh
+			min-height: 320px
+			padding: 10px 30px
+			@media ( min-width: 700px )
+				padding: 10px 150px
+				
+
+			background-color: rgba(0, 0, 0, .9)
+			@include flex-center
+			flex-direction: column
+
+		&__title
+			font-size: 1.5rem
+			color: $gray1
+			text-align: center
+
+		.form
+			margin-top: 30px
+			width: 100%
+				
+			&__label-name
+				color: white
+				text-align: center
+
+			&__label
+				display: flex
+				flex-direction: column
+				align-items: center
+
+				&-name
+				margin-top: 10px 
+				&-input
+					width: 70%
+					background-color: transparent
+					border: none
+					text-align: center
+					border-bottom: 1px solid $gray2
+
+					&:focus
+						outline: none
+				
+				.hidden
+					height: 0px
+					padding: 0
+
+
+				&-alert
+					padding: 5px 0
+					display: flex
+					align-items: center
+					gap: 5px
+
+					&-text
+						font-size: .8rem
+						color: darkred
+					
+					i
+						color: darkred
+
+		&__buttons
+			margin-top: 30px
+			display: flex
+			justify-content: space-evenly
+
+		&__button
+			background-color: rgba($gray1, .1)
+			border: none
+			color: $gray2
+			border-radius: 5px
+			padding: 5px
+			width: 100px
+			@include flex-center
+
+		&__button-login, &__button-register
+			background-color: rgba($gray1, .3)

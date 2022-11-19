@@ -4,6 +4,7 @@ import "../start.sass";
 import { LOG_IN_FUNCTION } from "../../redux/actions/isLogged";
 import reqServer, { reqType } from "../../utils/reqServer";
 import { setUserInfo } from "../../utils/userInfo";
+import Notification from '../Notification'
 
 interface loginDataInterface {
     email: string;
@@ -64,6 +65,7 @@ const Login = () => {
                                 onChange={(e) => handleInput(e.target)}
                                 data-testid="email"
                             />
+                            <Notification data="test"/>
                         </label>
 
                         {/* password */}
@@ -77,6 +79,7 @@ const Login = () => {
                                 onChange={(e) => handleInput(e.target)}
                                 data-testid="password"
                             />
+                            <Notification data="test"/>
                         </label>
 
                         {/* submit and link */}

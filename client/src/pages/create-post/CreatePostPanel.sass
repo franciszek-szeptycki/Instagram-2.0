@@ -4,16 +4,17 @@
 	display: none
 	
 .create-post
-	background-image: url("./createpost.png")
-	background-position-x: 33%
-	background-position-y: -20%
-	background-size: auto 70%
-	background-repeat: no-repeat
+	background-image: url("./red.webp")
+	background-size: auto 120%
+	background-position: center
 
-	height: 90vh
+	height: 100vh
+	display: flex
+	justify-content: center
 
 	&__main
 		height: 30vh
+		width: 100%
 
 		position: absolute
 		bottom: 70px
@@ -52,7 +53,8 @@
 
 
 	&__label
-		flex-grow: 1
+		// flex-grow: 1
+		width: 100%
 		overflow: hidden
 		position: relative
 
@@ -78,17 +80,16 @@
 	// UPLOAD FILE
 	&__upload-wrapper
 		height: 100px
-		padding-bottom: 30px
 
 	&__upload
 		width: 150px
 		height: 40px
 
-		box-shadow: 0 0 3px 0 $gray5 
+		// box-shadow: 0 0 3px 0 $gray5 
 		border: none
 		border-radius: 10px
 
-		background-color: $gray5
+		// background-color: $gray5
 		@include flex-center
 		
 		&-text
@@ -139,6 +140,8 @@
 			text-transform: uppercase
 			box-shadow: 0 0 3px 0 $gray5 
 
+
+
 @media ( min-width: $min-breakpoint )
 	.desktop
 		display: block
@@ -146,21 +149,22 @@
 		display: none
 
 	.create-post
-		background-size: 100% auto
 		background-position-x: center
 		background-position-y: 65%
 
 		&__main
 			background-color: transparent
 			height: 90vh
+			width: 95%
 			bottom: 0px
 
 		// ARROWS
 		&__arrow-left, &__arrow-right
-			transform: scale(140%)
-			padding: 0 50px
+			padding: 0 30px 0 50px
 		&__arrow-left
 			transform: rotate(180deg) scale(140%)
+		&__arrow-right
+			transform: scale(140%)
 
 		&__label
 			&-container
@@ -220,3 +224,29 @@
 					object-fit: contain
 
 		// DESCRIPTION
+		&__description
+			@include flex-center
+			height: 500px
+			&-textarea
+				width: 500px
+				height: 200px
+				border-radius: 10px
+				padding: 10px
+				box-shadow: 0 0 3px 0 $gray3
+		// HASHTAGS
+		&__hashtags
+			width: 500px
+			height: 500px
+			border-radius: 10px
+			padding: 10px
+			box-shadow: 0 0 3px 0 $gray3
+			background-color: $gray1
+
+			gap: 20px
+			
+			&-input
+				margin: 0 5px
+
+			&-submit
+				margin-top: 20px
+				cursor: pointer
