@@ -1,0 +1,55 @@
+@import '../../sass/variables.sass'
+
+.loading-post
+	margin-top: $big-gap
+	border-radius: 10px
+	overflow: hidden
+	box-shadow: 0 3px 10px 0 $gray3
+	&__top
+		background-color: $gray1
+		padding: 15px
+		display: flex
+		align-items: center
+		&-photo
+			width: 50px
+			height: 50px
+			border-radius: 50px
+		&-title
+			width: 150px
+			height: 20px
+			border-radius: 5px
+			margin-left: 20px
+
+	&__mid
+		height: 600px
+		width: 600px
+	&__bottom
+		background-color: $gray1
+		height: 80px
+		display: flex
+		justify-content: space-between
+		margin: 20px
+
+		&-icons
+			display: flex
+			gap: 10px
+			&-icon
+				width: 25px
+				height: 25px
+				border-radius: 50%
+
+		&-date
+			width: 100px
+			height: 25px
+			border-radius: 5px
+			
+	.animate
+		animation: loading-post linear 5s infinite
+
+@keyframes loading-post
+	0%
+		background-color: rgb(240, 240, 240)
+	50%
+		background-color: rgb(215, 215, 215)
+	100%
+		background-color: rgb(240, 240, 240)

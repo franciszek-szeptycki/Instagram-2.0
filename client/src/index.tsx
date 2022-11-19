@@ -5,21 +5,24 @@ import { createStore } from "redux";
 import App from "./App";
 import allReducers from "./redux/reducers";
 import { Provider } from "react-redux";
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { composeWithDevTools } from "redux-devtools-extension";
+import { QueryClient, QueryClientProvider } from "react-query";
 
-const store = createStore(
-    allReducers,
-    composeWithDevTools()
-);
+const store = createStore(allReducers, composeWithDevTools());
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
 );
+
+const queryClient = new QueryClient();
+
 root.render(
     <React.StrictMode>
-        <Provider store={store}>
-            <App />
-        </Provider>
+        <QueryClientProvider client={queryClient}>
+            <Provider store={store}>
+                <App />
+            </Provider>
+        </QueryClientProvider>
     </React.StrictMode>
 );
 
