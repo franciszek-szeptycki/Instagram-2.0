@@ -77,6 +77,8 @@ def get_posts(page):
                 posts_list.append({
                     "id": post.ID,
                     "user_name": core.models.User.query.filter_by(ID=post.User_ID).first().Username,
+                    "owner_id": post.User_ID,
+                    "owner_image": core.models.User.query.filter_by(ID=post.User_ID).first().Image,
                     "description": post.Description,
                     "hashtags": post.Hashtags,
                     "file": post.Image,
@@ -100,13 +102,19 @@ def get_post(ID):
             # Get post from database
             post = core.models.Post.query.filter_by(ID=ID).first()
 
+            # Get user from database
+            user = core.models.User.query.filter_by(ID=post.User_ID).first()
+
             # Check if posts exist
             if not post:
                 return jsonify({"msg": "No post found"}), 404
 
             data = {
+                "user_id": user.ID,
+                "user_name": user.Username,
+                "email": user.Email,
+                "image": user.Image,
                 "id": post.ID,
-                "user_name": core.models.User.query.filter_by(ID=post.User_ID).first().Username,
                 "description": post.Description,
                 "hashtags": post.Hashtags,
                 "file": post.Image,
@@ -119,6 +127,7 @@ def get_post(ID):
         except Exception as error:
             print("[ERROR] get_posts : ", error)
             return jsonify({'msg': '[ERROR] get_posts : ' + str(error)}), 500
+
 
 ### USER ###
 
@@ -152,6 +161,44 @@ def add_user_image():
             print("[ERROR] add_user_image : ", error)
             return jsonify({"msg": "[ERROR] add_user_image : " + str(error)}), 500
 
+
+@api_blueprint.route('/user/<int:ID>', methods=['GET'])
+@jwt_required()
+def get_user(ID):
+    with core.app.app_context():
+        try:
+
+            # Get user from database
+            user = core.models.User.query.filter_by(ID=ID).first()
+
+            # Get user posts from database
+            posts = core.models.Post.query.filter_by(User_ID=ID).all()
+
+            # Check if user exists
+            if not user:
+                return jsonify({"msg": "No user found"}), 404
+
+            # Create a list of posts
+            posts_list = []
+            for post in posts:
+                posts_list.append({
+                    "user_id": user.ID,
+                    "user_name": user.Username,
+                    "email": user.Email,
+                    "image": user.Image,
+                    "id": post.ID,
+                    "description": post.Description,
+                    "hashtags": post.Hashtags,
+                    "file": post.Image,
+                    "date": post.Date
+                })
+
+            # Return user
+            return jsonify({"data": posts_list}), 200
+
+        except Exception as error:
+            print("[ERROR] get_user : ", error)
+            return jsonify({'msg': '[ERROR] get_user : ' + str(error)}), 500
 
 ### OTHER ###
 

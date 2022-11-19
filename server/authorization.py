@@ -26,20 +26,23 @@ def sign_up():
     if not password:
         return jsonify({"msg": "Password is required"}), 400
 
+
     # Check if user already exists
-    username = models.User.query.filter_by(Username=username).first()
-    if username:
+    username_check = models.User.query.filter_by(Username=username).first()
+    if username_check:
         return jsonify({
             "msg": "user already exists",
             "data": "username",
         }), 401
 
-    email = models.User.query.filter_by(Email=email).first()
-    if email:
+    email_check = models.User.query.filter_by(Email=email).first()
+    if email_check:
         return jsonify({
             "msg": "email already exists",
             "data": "email",
         }), 401
+
+    print(email, username)
 
     # Hash password
     password = hashlib.sha256(password.encode()).hexdigest()
