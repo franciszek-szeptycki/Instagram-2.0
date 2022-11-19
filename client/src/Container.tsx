@@ -5,7 +5,7 @@ import CreatePostPanel from "./pages/create-post/CreatePostPanel";
 import allReducers from "./redux/reducers";
 import Home from "./pages/home/Home";
 import { Routes, Route } from "react-router-dom";
-import Profile from "./pages/profile/Profile";
+import MyProfile from "./pages/my-profile/MyProfile";
 
 const Container = () => {
 
@@ -14,7 +14,8 @@ const Container = () => {
             <Nav />
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/profile" element={<MyProfile />} />
+                <Route path="/user" element={<MyProfile />} />
                 <Route path="/create-post" element={<CreatePostPanel />}/>
             </Routes>
         </div>

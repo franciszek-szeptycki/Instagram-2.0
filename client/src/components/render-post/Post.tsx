@@ -2,17 +2,17 @@ import ProfileIdentity from "../profile-identifier/ProfileIdentity"
 
 
 const Post = ({ data }) => {
-
-	if (!data.date) return <></>
+	// console.log(data)
+	// if (!data.date) return <></>
 
 	return (
 		<div className="post">
 			<div className="post__header">
-				<ProfileIdentity data={{username: "Jan Kowalski", image: null}}/>
+				<ProfileIdentity data={{username: data.user_name, image: data.owner_image}}/>
 			</div>
 			<div className="post__main">
 				<div className="post__main-img">
-					<img src={data.file} alt="" />
+					<img loading="lazy" src={data.file} alt="" />
 				</div>
 			</div>
 			<div className="post__footer">

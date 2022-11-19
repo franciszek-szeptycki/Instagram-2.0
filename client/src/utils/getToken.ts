@@ -3,14 +3,15 @@ import jwt_decode from "jwt-decode";
 
 interface token {
 	name: string;
-	exp: number;
+    exp: number;
+    sub: number
 }
 
 const getToken = (): string | null => {
 	try {
         const userToken: string = localStorage.getItem("access_token");
         const decodedToken = jwt_decode<token>(userToken)
-        // console.log(decodedToken.exp)
+
         if (decodedToken.exp * 1000 < Date.now()) {
             localStorage.removeItem("token");
             return
@@ -22,25 +23,10 @@ const getToken = (): string | null => {
     }
 }
 
-
-// function useToken() {
-//     const [token, setToken] = useState(getToken());
-
-//     function saveToken(userToken) {
-//         localStorage.setItem("token", userToken);
-//         setToken(userToken);
-//     }
-
-//     function removeToken() {
-//         localStorage.removeItem("token");
-//         setToken("");
-//     }
-
-//     return {
-//         setToken: saveToken,
-//         token,
-//         removeToken,
-//     };
-// }
+export const getUserId = (): number => {
+    const userToken: string = localStorage.getItem("access_token");
+    const decodedToken = jwt_decode<token>(userToken)
+    return decodedToken.sub
+}
 
 export default getToken;
