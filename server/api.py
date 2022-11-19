@@ -33,20 +33,23 @@ def add_post():
             # Check if all fields are filled
             if not image:
                 return jsonify({"msg": "Image is required"}), 400
-            # if not description:
-            #     return jsonify({"msg": "Description is required"}), 400
-            # if not hashtags:
-            #     return jsonify({"msg": "Hashtags are required"}), 400
+            if not description:
+                return jsonify({"msg": "Description is required"}), 400
+            if not hashtags:
+                return jsonify({"msg": "Hashtags are required"}), 400
 
-            # Pack hashtags into a string
+            # Pack hashtags into a string and add a # to the beginning of each one
             hashtags = " ".join(hashtags)
+            hashtags = hashtags.split()
+            hashtags = " ".join(["#" + hashtag for hashtag in hashtags])
+
 
             verify_jwt_in_request()
             JWT = get_jwt()
             ID = JWT['sub']
 
             # Create new post
-            post = core.models.Post(User_ID=ID, Image=image, Description="TEST", Hashtags="TEST21")
+            post = core.models.Post(User_ID=ID, Image=image, Description=description, Hashtags=hashtags)
             core.db.session.add(post)
             core.db.session.commit()
 
@@ -185,11 +188,11 @@ def get_user(ID):
                     "user_id": user.ID,
                     "user_name": user.Username,
                     "email": user.Email,
-                    "image": user.Image,
+                    # "image": user.Image,
                     "id": post.ID,
                     "description": post.Description,
                     "hashtags": post.Hashtags,
-                    "file": post.Image,
+                    # "file": post.Image,
                     "date": post.Date
                 })
 
