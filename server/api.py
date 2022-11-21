@@ -74,12 +74,18 @@ def get_posts(page):
             if not posts:
                 return jsonify({"msg": "No posts found"}), 404
 
-
             # Create a list of posts
             posts_list = []
             for post in posts.items:
                 posts_list.append({
                     "id": post.ID,
+                    "user_name": core.models.User.query.filter_by(ID=post.User_ID).first().Username,
+                    "owner_id": post.User_ID,
+                    "owner_image": core.models.User.query.filter_by(ID=post.User_ID).first().Image,
+                    "description": post.Description,
+                    "hashtags": post.Hashtags,
+                    "file": post.Image,
+                    "date": post.Date
                 })
 
             # Return posts
