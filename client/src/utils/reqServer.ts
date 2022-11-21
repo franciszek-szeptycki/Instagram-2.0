@@ -12,7 +12,7 @@ const reqServer = async (
     path: string,
     tokenRequired: boolean
 ) => {
-    // console.log(data);
+    console.log(data);
 
     let headers: HeadersInit;
     if (tokenRequired) {
@@ -47,7 +47,8 @@ const reqServer = async (
                 localStorage.setItem("access_token", access_token);
             }
 
-            // console.log(data);
+            console.log("msg", msg);
+            console.log("data", data);
             return {
                 status,
                 msg,

@@ -17,21 +17,21 @@ function checkUsernameCharacters(text: string): string[] {
 
 // PASSWORD
 export const checkPasswordIllegality = (password: string): string | boolean => {
-    if (password.length < 8) return "password is too short (min. 8)";
-
-    const illegal = checkPasswordCharacters(password);
-    if (illegal) return illegal;
+    // if (password.length < 8) return "password is too short (min. 8)";
+    //
+    // const illegal = checkPasswordCharacters(password);
+    // if (illegal) return illegal;
 
     return false;
 };
 
 function checkPasswordCharacters(text: string): string | boolean {
-    if (text === text.toLowerCase())
-        return "password must contain capital letters";
-    if (text === text.toUpperCase())
-        return "password must contain lowercase letters";
-    if (!text.replace(/([^0-1]+)/gi, ""))
-        return "password must contain numbers";
+    // if (text === text.toLowerCase())
+    //     return "password must contain capital letters";
+    // if (text === text.toUpperCase())
+    //     return "password must contain lowercase letters";
+    // if (!text.replace(/([^0-1]+)/gi, ""))
+    //     return "password must contain numbers";
     return false;
 }
 

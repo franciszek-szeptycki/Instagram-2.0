@@ -64,10 +64,6 @@ const Register = () => {
                 case 401:
                     return setUsernameErrorServer(msg);
             }
-        } else {
-            usernameError = checkUsernameIllegality(username)
-            passwordError = checkPasswordIllegality(password)
-            passwordAgainError = checkPasswordAgainIllegality(password, passwordAgain)
         }
     };
 
