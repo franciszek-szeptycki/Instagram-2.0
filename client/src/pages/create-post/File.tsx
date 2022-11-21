@@ -2,7 +2,7 @@ const File = (props) => {
     const { file, setFile } = props.data;
 
     return (
-        <div className="create-post__label-item">
+        <div className="create-post__label-item create-post__label-item-1">
             <div className="create-post__upload-wrapper">
                 <p className="create-post__upload-name mobile">
                     {file && file.name}

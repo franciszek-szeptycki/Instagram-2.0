@@ -1,1 +1,39 @@
-// console.log('current Pathname 👉️', window.location.pathname);
+@import '../../sass/variables'
+	
+.page-user-profile, .page-profile
+	display: flex
+	flex-direction: column
+	align-items: center
+	gap: 0px !important
+
+	.aside 
+		width: 600px
+		position: relative
+		border-radius: 10px
+		box-shadow: 0 3px 10px 0 $gray3
+		
+		.profile
+			display: flex
+			flex-direction: column
+			align-items: center
+			padding: 50px
+
+			&__photo
+				width: 250px
+				height: 250px
+				border-radius: 50%
+				overflow: hidden
+				margin-bottom: 50px
+
+				img
+					width: 100%
+					height: 100%
+					object-fit: cover
+			&__ul
+				width: 200px
+			&__li
+				display: flex
+				justify-content: space-between
+			
+	.main
+		width: 600px
