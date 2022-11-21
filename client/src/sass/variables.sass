@@ -11,6 +11,7 @@ $gray6: rgb(50, 50, 50)
 $resize-icon: scale(115%)
 $min-breakpoint: 601px
 $max-breakpoint: 600px
+$main-width: 600px
 
 @mixin absolute-center
 	top: 50%
@@ -21,4 +22,19 @@ $max-breakpoint: 600px
 	display: flex
 	align-items: center
 	justify-content: center
+
+@mixin position-center
+	top: 50%
+	left: 50%
+	transform: translate(-50%,-50%)
 	
+@keyframes loading-post
+	0%
+		background-color: rgb(240, 240, 240)
+	50%
+		background-color: rgb(215, 215, 215)
+	100%
+		background-color: rgb(240, 240, 240)
+
+.loading-content
+	animation: loading-post linear 5s infinite

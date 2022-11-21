@@ -1,8 +1,13 @@
 import ProfileIdentity from "../profile-identifier/ProfileIdentity";
 
-const Post = ({ data }) => {
+const Post = ({ data, owner }) => {
     return (
         <div className="post">
+            {owner && (
+                <div className="post__delete">
+                    <i className="fa-regular fa-trash-can"></i>
+                </div>
+            )}
             <div className="post__header">
                 <ProfileIdentity
                     data={{ username: data.user_name, image: data.owner_image }}
@@ -33,7 +38,7 @@ const Post = ({ data }) => {
                         {data.date
                             ? `${data.date.split(" ")[1]} ${
                                   data.date.split(" ")[2]
-                              }${data.date.split(" ")[3]}`
+                              } ${data.date.split(" ")[3]}`
                             : ""}
                     </p>
                 </div>

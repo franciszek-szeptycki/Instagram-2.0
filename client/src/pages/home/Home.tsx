@@ -15,7 +15,7 @@ const Home = () => {
             <main className="main">
                 <div className="main__search">
                     <i className="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" className="main__search-input" />
+                    <input type="text" className="main__search-input" placeholder="Search..."/>
                 </div>
                 {isLoading ? <LoadingPost /> : <RenderPosts data={data} />}
             </main>

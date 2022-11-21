@@ -4,6 +4,9 @@ import { LOG_OUT_FUNCTION } from "../../redux/actions/isLogged";
 import reqServer from "../../utils/reqServer";
 import { getUserInfo, setUserInfo } from "../../utils/userInfo";
 import "./Profile.sass";
+import { useQuery } from "react-query";
+import RenderPosts from "../../components/render-post/RenderPosts";
+import LoadingPost from "../../components/render-post/LoadingPost";
 
 const MyProfile = () => {
     const dispatch = useDispatch();
@@ -26,8 +29,7 @@ const MyProfile = () => {
             console.log(status);
             if (status === 201)
                 setUserInfo({ user_name: null, image: reader.result });
-            localStorage.removeItem("access_token");
-            dispatch(LOG_OUT_FUNCTION());
+                window.location.reload()
         });
     };
 
@@ -36,15 +38,27 @@ const MyProfile = () => {
         dispatch(LOG_OUT_FUNCTION());
     };
 
-    const { username, image } = getUserInfo();
+    const { userId } = getUserInfo();
+
+    const profile = useQuery("users", () =>
+        reqServer("GET", null, `/api/user/${userId}`, true)
+    );
+
+    const posts = useQuery("users-posts", () =>
+        reqServer("GET", null, `/api/user/${userId}/posts`, true)
+    );
 
     return (
         <div className="page page-profile">
             <aside className="aside">
                 <div className="profile">
-                    <div className="profile__photo">
+                    <div
+                        className={`profile__photo ${
+                            !profile.isLoading ? "loading-content" : ""
+                        }`}
+                    >
                         <img
-                            src={image}
+                            src={!profile.isLoading && profile.data.data.image}
                             alt=""
                             className="profile__photo-current-photo"
                         />
@@ -62,14 +76,22 @@ const MyProfile = () => {
                             />
                         </label>
                     </div>
-                    <div className="profile__data">
-                        <p className="profile__data-username">
-                            <span>username:</span> {username}
-                        </p>
-                    </div>
+                    <ul className="profile__ul">
+                        <li className="profile__li">
+                            <strong>Username: </strong>
+                            <p>
+                                {!profile.isLoading &&
+                                    profile.data.data.username}
+                            </p>
+                        </li>
+                        <li className="profile__li">
+                            <strong>E-mail adress: </strong>
+                            <p>
+                                {!profile.isLoading && profile.data.data.email}
+                            </p>
+                        </li>
+                    </ul>
                 </div>
-            </aside>
-            <main className="main">
                 <div className="user-panel">
                     <div className="user-panel-buttons">
                         <button
@@ -86,6 +108,13 @@ const MyProfile = () => {
                         </button>
                     </div>
                 </div>
+            </aside>
+            <main className="main">
+                {!posts.isLoading ? (
+                    <RenderPosts data={posts.data} owner={true} />
+                ) : (
+                    <LoadingPost />
+                )}
             </main>
         </div>
     );
