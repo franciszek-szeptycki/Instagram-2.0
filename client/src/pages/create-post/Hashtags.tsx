@@ -33,7 +33,7 @@ const Hashtags = (props) => {
     };
 
     return (
-        <div className="create-post__label-item">
+        <div className="create-post__label-item create-post__label-item-3">
             <div className="create-post__hashtags">
                 <label className="create-post__hashtags-label">
                     #

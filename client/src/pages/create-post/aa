@@ -85,11 +85,11 @@
 		width: 150px
 		height: 40px
 
-		box-shadow: 0 0 3px 0 $gray5 
+		// box-shadow: 0 0 3px 0 $gray5 
 		border: none
 		border-radius: 10px
 
-		background-color: $gray5
+		// background-color: $gray5
 		@include flex-center
 		
 		&-text
@@ -155,9 +155,9 @@
 
 		&__main
 			background-color: transparent
-			height: 87vh
+			height: 90vh
 			width: 95%
-			bottom: 0vh
+			bottom: 0px
 
 		// ARROWS
 		&__arrow-left, &__arrow-right

@@ -24,7 +24,7 @@ const CreatePostPanel = () => {
 
             reqServer("POST", data, "/api/posts/add", true);
 
-            document.location.reload();
+            document.location.pathname = ""
         });
     };
 
