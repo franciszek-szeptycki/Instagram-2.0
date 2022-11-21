@@ -74,6 +74,7 @@ def get_posts(page):
             if not posts:
                 return jsonify({"msg": "No posts found"}), 404
 
+
             # Create a list of posts
             posts_list = []
             for post in posts.items:
