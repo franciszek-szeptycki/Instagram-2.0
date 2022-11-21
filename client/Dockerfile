@@ -1,5 +1,5 @@
 # Image
-FROM node:alpine as builder
+FROM node:lts-alpine3.14 as builder
 
 # Work directory
 WORKDIR /frontend
@@ -9,6 +9,7 @@ COPY package*.json ./
 
 # Installations
 RUN npm install
+
 
 # Copy source code
 COPY ./ ./
@@ -21,7 +22,7 @@ RUN npm run build
 FROM nginx:alpine
 
 # Copy build
-COPY --from=builder /client/build /usr/share/nginx/html
+COPY --from=builder /frontend/build /usr/share/nginx/html
 
 # Expose port
 EXPOSE 80
