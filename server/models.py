@@ -2,13 +2,15 @@ import core
 
 import datetime
 
+
 class User(core.db.Model):
     __tablename__ = 'Users'
     ID = core.db.Column(core.db.Integer, primary_key=True)
     Email = core.db.Column(core.db.String(128), unique=True, nullable=False)
     Username = core.db.Column(core.db.String(128), unique=True, nullable=False)
     Password = core.db.Column(core.db.String(128), unique=False, nullable=False)
-    Image = core.db.Column(core.db.Text(10000000), unique=False, nullable=False, default=core.app.config['DEFAULT_IMAGE'])
+    Image = core.db.Column(core.db.Text(10000000), unique=False, nullable=False,
+                           default=core.app.config['DEFAULT_IMAGE'])
     Security_Key = core.db.Column(core.db.String(10), unique=False, nullable=False)
     Active = core.db.Column(core.db.Boolean, unique=False, nullable=False, default=False)
     Date = core.db.Column(core.db.DateTime, default=datetime.datetime.utcnow)
@@ -21,6 +23,7 @@ class User(core.db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.Username
+
 
 class Post(core.db.Model):
     __tablename__ = 'Posts'
@@ -40,6 +43,7 @@ class Post(core.db.Model):
     def __repr__(self):
         return '<Post %r>' % self.Description
 
+
 class Comment(core.db.Model):
     __tablename__ = 'Comments'
     ID = core.db.Column(core.db.Integer, primary_key=True)
@@ -48,10 +52,10 @@ class Comment(core.db.Model):
     Comment = core.db.Column(core.db.String(512), unique=False, nullable=False)
     Date = core.db.Column(core.db.DateTime, default=datetime.datetime.utcnow)
 
-    def __init__(self, User_ID, Post_ID, Comment):
+    def __init__(self, User_ID, Post_ID, Comments):
         self.User_ID = User_ID
         self.Post_ID = Post_ID
-        self.Comment = Comment
+        self.Comment = Comments
 
     def __repr__(self):
         return '<Comment %r>' % self.Text
@@ -70,6 +74,7 @@ class Like(core.db.Model):
 
     def __repr__(self):
         return '<Like %r>' % self.ID
+
 
 class Followers(core.db.Model):
     __tablename__ = 'Followers'

@@ -16,8 +16,9 @@ def create_db():
         core.db.create_all()
 
 
-### POSTS ###
-
+#############
+# POSTS #
+#############
 
 @api_blueprint.route('/posts/add', methods=['POST'])
 @jwt_required()
@@ -42,7 +43,6 @@ def add_post():
             hashtags = " ".join(hashtags)
             hashtags = hashtags.split()
             hashtags = " ".join(["#" + hashtag for hashtag in hashtags])
-
 
             verify_jwt_in_request()
             JWT = get_jwt()
@@ -82,7 +82,6 @@ def get_posts(page):
             # Create a list of posts
             posts_list = []
             for post in posts.items:
-
                 posts_list.append({
                     "id": post.ID,
                     "user_name": core.models.User.query.filter_by(ID=post.User_ID).first().Username,
@@ -94,7 +93,8 @@ def get_posts(page):
                     "date": post.Date,
                     "likes": core.models.Like.query.filter_by(Post_ID=post.ID).count(),
                     "comments": core.models.Comment.query.filter_by(Post_ID=post.ID).count(),
-                    "liked": True if core.models.Like.query.filter_by(User_ID=User_ID, Post_ID=post.ID).first() else False
+                    "liked": True if core.models.Like.query.filter_by(User_ID=User_ID,
+                                                                      Post_ID=post.ID).first() else False
                 })
 
             # Return posts
@@ -141,8 +141,9 @@ def get_post(ID):
             return jsonify({'msg': '[ERROR] get_posts : ' + str(error)}), 500
 
 
-### USER ###
-
+#############
+# USER #
+#############
 
 @api_blueprint.route('/user/image/add', methods=['POST'])
 @jwt_required()
@@ -237,8 +238,9 @@ def get_user_posts(ID):
             return jsonify({'msg': '[ERROR] get_user_posts : ' + str(error)}), 500
 
 
-### LIKE ###
-
+#############
+# LIKE #
+#############
 @api_blueprint.route('/likes/add/<int:ID>', methods=['POST'])
 @jwt_required()
 def add_like(ID):
@@ -269,7 +271,9 @@ def add_like(ID):
             return jsonify({"msg": "[ERROR] add_like : " + str(error)}), 500
 
 
-### COMMENTS ###
+#############
+# COMMENTS #
+#############
 
 @api_blueprint.route('/comments/add/<int:ID>', methods=['POST'])
 @jwt_required()
@@ -290,7 +294,7 @@ def add_comment(ID):
             User_ID = JWT['sub']
 
             # Add comment to database
-            comment = core.models.Comment(User_ID=User_ID, Post_ID=ID, Comment=comment)
+            comment = core.models.Comment(User_ID=User_ID, Post_ID=ID, Comments=comment)
             core.db.session.add(comment)
             core.db.session.commit()
 
@@ -302,7 +306,7 @@ def add_comment(ID):
             return jsonify({"msg": "[ERROR] add_comment : " + str(error)}), 500
 
 
-@api_blueprint.route('/comments/get/<int:ID>', methods=['POST'])
+@api_blueprint.route('/comments/get/<int:ID>', methods=['GET'])
 @jwt_required()
 def get_comments(ID):
     with core.app.app_context():
@@ -334,8 +338,10 @@ def get_comments(ID):
             print("[ERROR] get_comments : ", error)
             return jsonify({'msg': '[ERROR] get_comments : ' + str(error)}), 500
 
-### OTHER ###
 
+#############
+# OTHER #
+#############
 # Define a function that will be called whenever access to a protected endpoint is attempted
 @api_blueprint.after_request
 @jwt_required()
