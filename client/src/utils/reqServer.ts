@@ -56,6 +56,7 @@ const reqServer = async (
         })
         .catch((error) => {
             console.error(error);
+            window.location.reload()
             return {
                 status: 500,
                 msg: "giant error...",

@@ -3,7 +3,7 @@ import reqServer from "../../utils/reqServer";
 import ProfileIdentity from "../profile-identifier/ProfileIdentity";
 
 const Post = ({ data, owner }) => {
-    // console.log(data)
+    console.log(data)
     const [isPostLiked, setIsPostLiked] = useState(data.liked);
     const [likesAmount, setLikesAmount] = useState(data.likes);
 
