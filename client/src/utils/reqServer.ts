@@ -10,9 +10,8 @@ const reqServer = async (
     method: string,
     data: object,
     path: string,
-    tokenRequired: boolean
+    tokenRequired: boolean = true
 ) => {
-    console.log(data);
 
     let headers: HeadersInit;
     if (tokenRequired) {

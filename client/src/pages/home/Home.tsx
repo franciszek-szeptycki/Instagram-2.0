@@ -9,7 +9,7 @@ const Home = () => {
     const { isLoading, data } = useQuery("all-posts", () => {
         return reqServer("GET", null, "/api/posts/get/page=1", true);
     });
-    console.log(isLoading)
+    // console.log(isLoading)
     return (
         <div className="page page-home">
             <main className="main">

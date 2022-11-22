@@ -6,7 +6,7 @@ const ProfileIdentity = (props) => {
     return (
         <div className="profile-id">
             <div className="profile-id__photo">
-                <img loading="lazy" className="profile-id__photo-img"
+                <img className="profile-id__photo-img"
                     src={image}
                     alt=""
                 />
