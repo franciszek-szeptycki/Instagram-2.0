@@ -125,12 +125,12 @@ def get_post(ID):
                 "user_id": user.ID,
                 "user_name": user.Username,
                 "email": user.Email,
-                "image": user.Image,
+                "image": "TEST",
                 "id": post.ID,
                 "description": post.Description,
                 "hashtags": post.Hashtags,
-                "file": post.Image,
-                "date": post.Date
+                "file": "TEST",
+                "date": post.Date,
             }
 
             # Return post
@@ -253,6 +253,8 @@ def add_like(ID):
             # Check if the user already liked the post
             if core.models.Like.query.filter_by(User_ID=User_ID, Post_ID=ID).first():
                 core.models.Like.query.filter_by(User_ID=User_ID, Post_ID=ID).delete()
+                core.db.session.commit()
+                return jsonify({"msg": "Like removed successfully"}), 200
 
             # Add like to database
             like = core.models.Like(User_ID=User_ID, Post_ID=ID)
@@ -299,6 +301,38 @@ def add_comment(ID):
             print("[ERROR] add_comment : ", error)
             return jsonify({"msg": "[ERROR] add_comment : " + str(error)}), 500
 
+
+@api_blueprint.route('/comments/get/<int:ID>', methods=['POST'])
+@jwt_required()
+def get_comments(ID):
+    with core.app.app_context():
+        try:
+
+            # Get comments from database
+            comments = core.models.Comment.query.filter_by(Post_ID=ID).order_by(core.models.Comment.ID).all()
+
+            # Check if comments exist
+            if not comments:
+                return jsonify({"msg": "No comments found"}), 404
+
+            # Create a list of comments
+            comments_list = []
+            for comment in comments:
+                comments_list.append({
+                    "id": comment.ID,
+                    "user_name": core.models.User.query.filter_by(ID=comment.User_ID).first().Username,
+                    "owner_id": comment.User_ID,
+                    "owner_image": core.models.User.query.filter_by(ID=comment.User_ID).first().Image,
+                    "comment": comment.Comment,
+                    "date": comment.Date
+                })
+
+            # Return comments
+            return jsonify({"data": comments_list}), 200
+
+        except Exception as error:
+            print("[ERROR] get_comments : ", error)
+            return jsonify({'msg': '[ERROR] get_comments : ' + str(error)}), 500
 
 ### OTHER ###
 
