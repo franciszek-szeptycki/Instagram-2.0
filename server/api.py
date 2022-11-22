@@ -74,18 +74,27 @@ def get_posts(page):
             if not posts:
                 return jsonify({"msg": "No posts found"}), 404
 
+            # Get the current user
+            verify_jwt_in_request()
+            JWT = get_jwt()
+            User_ID = JWT['sub']
+
             # Create a list of posts
             posts_list = []
             for post in posts.items:
+
                 posts_list.append({
                     "id": post.ID,
                     "user_name": core.models.User.query.filter_by(ID=post.User_ID).first().Username,
                     "owner_id": post.User_ID,
-                    "owner_image": core.models.User.query.filter_by(ID=post.User_ID).first().Image,
+                    "owner_image": "TEST",
                     "description": post.Description,
                     "hashtags": post.Hashtags,
-                    "file": post.Image,
-                    "date": post.Date
+                    "file": "TEST",
+                    "date": post.Date,
+                    "likes": core.models.Like.query.filter_by(Post_ID=post.ID).count(),
+                    "comments": core.models.Comment.query.filter_by(Post_ID=post.ID).count(),
+                    "liked": True if core.models.Like.query.filter_by(User_ID=User_ID, Post_ID=post.ID).first() else False
                 })
 
             # Return posts
@@ -226,6 +235,69 @@ def get_user_posts(ID):
         except Exception as error:
             print("[ERROR] get_user_posts : ", error)
             return jsonify({'msg': '[ERROR] get_user_posts : ' + str(error)}), 500
+
+
+### LIKE ###
+
+@api_blueprint.route('/likes/add/<int:ID>', methods=['GET'])
+@jwt_required()
+def add_like(ID):
+    with core.app.app_context():
+        try:
+
+            # Get the current user
+            verify_jwt_in_request()
+            JWT = get_jwt()
+            User_ID = JWT['sub']
+
+            # Check if the user already liked the post
+            if core.models.Like.query.filter_by(User_ID=User_ID, Post_ID=ID).first():
+                return jsonify({"msg": "You already liked this post"}), 400
+
+            # Add like to database
+            like = core.models.Like(User_ID=User_ID, Post_ID=ID)
+            core.db.session.add(like)
+            core.db.session.commit()
+
+            print("[INFO] Like added successfully")
+            return jsonify({"msg": "Like added successfully"}), 201
+
+        except Exception as error:
+            print("[ERROR] add_like : ", error)
+            return jsonify({"msg": "[ERROR] add_like : " + str(error)}), 500
+
+
+### COMMENTS ###
+
+@api_blueprint.route('/comments/add/<int:ID>', methods=['POST'])
+@jwt_required()
+def add_comment(ID):
+    with core.app.app_context():
+        try:
+
+            # Get the request data
+            comment = request.json.get("comment", None)
+
+            # Check if all fields are filled
+            if not comment:
+                return jsonify({"msg": "Comment is required"}), 400
+
+            # Get the current user
+            verify_jwt_in_request()
+            JWT = get_jwt()
+            User_ID = JWT['sub']
+
+            # Add comment to database
+            comment = core.models.Comment(User_ID=User_ID, Post_ID=ID, Comment=comment)
+            core.db.session.add(comment)
+            core.db.session.commit()
+
+            print("[INFO] Comment added successfully")
+            return jsonify({"msg": "Comment added successfully"}), 201
+
+        except Exception as error:
+            print("[ERROR] add_comment : ", error)
+            return jsonify({"msg": "[ERROR] add_comment : " + str(error)}), 500
 
 ### OTHER ###
 

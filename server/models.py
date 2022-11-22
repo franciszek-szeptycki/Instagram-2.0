@@ -45,13 +45,13 @@ class Comment(core.db.Model):
     ID = core.db.Column(core.db.Integer, primary_key=True)
     User_ID = core.db.Column(core.db.Integer, core.db.ForeignKey('Users.ID'))
     Post_ID = core.db.Column(core.db.Integer, core.db.ForeignKey('Posts.ID'))
-    Text = core.db.Column(core.db.String(512), unique=False, nullable=False)
+    Comment = core.db.Column(core.db.String(512), unique=False, nullable=False)
     Date = core.db.Column(core.db.DateTime, default=datetime.datetime.utcnow)
 
-    def __init__(self, User_ID, Post_ID, Text):
+    def __init__(self, User_ID, Post_ID, Comment):
         self.User_ID = User_ID
         self.Post_ID = Post_ID
-        self.Text = Text
+        self.Comment = Comment
 
     def __repr__(self):
         return '<Comment %r>' % self.Text
