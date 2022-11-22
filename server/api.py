@@ -239,7 +239,7 @@ def get_user_posts(ID):
 
 ### LIKE ###
 
-@api_blueprint.route('/likes/add/<int:ID>', methods=['GET'])
+@api_blueprint.route('/likes/add/<int:ID>', methods=['POST'])
 @jwt_required()
 def add_like(ID):
     with core.app.app_context():
@@ -252,7 +252,7 @@ def add_like(ID):
 
             # Check if the user already liked the post
             if core.models.Like.query.filter_by(User_ID=User_ID, Post_ID=ID).first():
-                return jsonify({"msg": "You already liked this post"}), 400
+                core.models.Like.query.filter_by(User_ID=User_ID, Post_ID=ID).delete()
 
             # Add like to database
             like = core.models.Like(User_ID=User_ID, Post_ID=ID)
@@ -298,6 +298,7 @@ def add_comment(ID):
         except Exception as error:
             print("[ERROR] add_comment : ", error)
             return jsonify({"msg": "[ERROR] add_comment : " + str(error)}), 500
+
 
 ### OTHER ###
 
