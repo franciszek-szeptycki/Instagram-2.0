@@ -457,6 +457,35 @@ def add_follower(ID):
             return jsonify({"msg": "[ERROR] add_follower : " + str(error)}), 500
 
 
+@api_blueprint.route('/followers/get/<int:ID>', methods=['GET'])
+@jwt_required()
+def get_followers(ID):
+    with core.app.app_context():
+        try:
+
+            # Get followers from database
+            followers = core.models.Followers.query.filter_by(User_ID=ID).all()
+
+            # Check if followers exist
+            if not followers:
+                return jsonify({"msg": "No followers found"}), 404
+
+            # Create a list of followers
+            followers_list = []
+            for follower in followers:
+                followers_list.append({
+                    "id": follower.Follower_ID,
+                    "user_name": core.models.User.query.filter_by(ID=follower.Follower_ID).first().Username,
+                    "image": core.models.User.query.filter_by(ID=follower.Follower_ID).first().Image
+                })
+
+            # Return followers
+            return jsonify({"data": followers_list}), 200
+
+        except Exception as error:
+            print("[ERROR] get_followers : ", error)
+            return jsonify({'msg': '[ERROR] get_followers : ' + str(error)}), 500
+
 #############
 # OTHER #
 #############
