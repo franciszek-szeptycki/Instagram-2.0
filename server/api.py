@@ -463,8 +463,13 @@ def get_followers(ID):
     with core.app.app_context():
         try:
 
+            # Get the current user
+            verify_jwt_in_request()
+            JWT = get_jwt()
+            User_ID = JWT['sub']
+
             # Get followers from database
-            followers = core.models.Followers.query.filter_by(User_ID=ID).all()
+            followers = core.models.Followers.query.filter_by(User_ID=ID).order_by(core.models.Followers.ID).all()
 
             # Check if followers exist
             if not followers:
@@ -475,16 +480,40 @@ def get_followers(ID):
             for follower in followers:
                 followers_list.append({
                     "id": follower.Follower_ID,
-                    "user_name": core.models.User.query.filter_by(ID=follower.Follower_ID).first().Username,
-                    "image": core.models.User.query.filter_by(ID=follower.Follower_ID).first().Image
                 })
 
-            # Return followers
-            return jsonify({"data": followers_list}), 200
+            # Get followers posts
+            for follower in followers_list:
+                follower["posts"] = core.models.Post.query.filter_by(User_ID=follower["id"]).order_by(core.models.Post.ID).all()
+
+            # Create a list of posts
+            posts_list = []
+            for follower in followers_list:
+                for post in follower["posts"]:
+                    posts_list.append({
+                        "id": post.ID,
+                        "user_name": core.models.User.query.filter_by(ID=post.User_ID).first().Username,
+                        "owner_id": post.User_ID,
+                        # "owner_image": core.models.User.query.filter_by(ID=post.User_ID).first().Image,
+                        "description": post.Description,
+                        "hashtags": post.Hashtags,
+                        # "file": post.Image,
+                        "date": post.Date,
+                        "likes": core.models.Like.query.filter_by(Post_ID=post.ID).count(),
+                        "comments": core.models.Comment.query.filter_by(Post_ID=post.ID).count(),
+                        "liked": True if core.models.Like.query.filter_by(User_ID=User_ID, Post_ID=post.ID).first() else False
+                    })
+
+            # Sort posts by date
+            posts_list.sort(key=lambda x: x["date"], reverse=True)
+
+            # Return posts
+            return jsonify({"data": posts_list}), 200
 
         except Exception as error:
             print("[ERROR] get_followers : ", error)
             return jsonify({'msg': '[ERROR] get_followers : ' + str(error)}), 500
+
 
 #############
 # OTHER #
