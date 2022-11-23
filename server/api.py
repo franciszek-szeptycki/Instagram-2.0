@@ -141,6 +141,46 @@ def get_post(ID):
             return jsonify({'msg': '[ERROR] get_posts : ' + str(error)}), 500
 
 
+@api_blueprint.route('/posts/delete/<int:ID>', methods=['DELETE'])
+@jwt_required()
+def delete_post(ID):
+    with core.app.app_context():
+        try:
+
+            # Get post from database
+            post = core.models.Post.query.filter_by(ID=ID).first()
+
+            # Get post comments from database
+            comments = core.models.Comment.query.filter_by(Post_ID=ID).all()
+
+            # Check if post exists
+            if not post:
+                return jsonify({"msg": "No post found"}), 404
+
+            # Check if the user is the owner of the post
+            verify_jwt_in_request()
+            JWT = get_jwt()
+            User_ID = JWT['sub']
+            if User_ID != post.User_ID:
+                return jsonify({"msg": "You are not allowed to delete this post"}), 403
+
+            # Delete comments
+            for comment in comments:
+                core.db.session.delete(comment)
+                core.db.session.commit()
+
+            # Delete post
+            core.db.session.delete(post)
+            core.db.session.commit()
+
+            print("[INFO] Post deleted successfully")
+            return jsonify({"msg": "Post deleted successfully"}), 200
+
+        except Exception as error:
+            print("[ERROR] delete_post : ", error)
+            return jsonify({'msg': '[ERROR] delete_post : ' + str(error)}), 500
+
+
 #############
 # USER #
 #############
@@ -241,6 +281,7 @@ def get_user_posts(ID):
 #############
 # LIKE #
 #############
+
 @api_blueprint.route('/likes/add/<int:ID>', methods=['GET'])
 @jwt_required()
 def add_like(ID):
@@ -257,7 +298,7 @@ def add_like(ID):
                 core.models.Like.query.filter_by(User_ID=User_ID, Post_ID=ID).delete()
                 core.db.session.commit()
                 print("[INFO] Like removed successfully")
-                return jsonify({"msg": "Like removed successfully"}), 200
+                return jsonify({"msg": "Like removed successfully"}), 201
 
             # Add like to database
             like = core.models.Like(User_ID=User_ID, Post_ID=ID)
@@ -271,6 +312,48 @@ def add_like(ID):
             print("[ERROR] add_like : ", error)
             return jsonify({"msg": "[ERROR] add_like : " + str(error)}), 500
 
+
+@api_blueprint.route('/likes/get', methods=['GET'])
+@jwt_required()
+def get_likes():
+    with core.app.app_context():
+        try:
+
+            # Get the current user
+            verify_jwt_in_request()
+            JWT = get_jwt()
+            User_ID = JWT['sub']
+
+            # Get likes from database
+            likes = core.models.Like.query.filter_by(User_ID=User_ID).all()
+
+            # Check if likes exist
+            if not likes:
+                return jsonify({"msg": "No likes found"}), 404
+
+            # Create a list of likes
+            likes_list = []
+            for like in likes:
+                likes_list.append({
+                    "post_id": like.Post_ID,
+                    "user_name": core.models.User.query.filter_by(ID=core.models.Post.query.filter_by(ID=like.Post_ID).first().User_ID).first().Username,
+                    "owner_id": core.models.Post.query.filter_by(ID=like.Post_ID).first().User_ID,
+                    "owner_image": core.models.User.query.filter_by(ID=core.models.Post.query.filter_by(ID=like.Post_ID).first().User_ID).first().Image,
+                    "description": core.models.Post.query.filter_by(ID=like.Post_ID).first().Description,
+                    "hashtags": core.models.Post.query.filter_by(ID=like.Post_ID).first().Hashtags,
+                    "file": core.models.Post.query.filter_by(ID=like.Post_ID).first().Image,
+                    "date": core.models.Post.query.filter_by(ID=like.Post_ID).first().Date,
+                    "likes": core.models.Like.query.filter_by(Post_ID=like.Post_ID).count(),
+                    "comments": core.models.Comment.query.filter_by(Post_ID=like.Post_ID).count(),
+                    "liked": True if core.models.Like.query.filter_by(User_ID=User_ID, Post_ID=like.Post_ID).first() else False
+                })
+
+            # Return likes
+            return jsonify({"data": likes_list}), 200
+
+        except Exception as error:
+            print("[ERROR] get_likes : ", error)
+            return jsonify({'msg': '[ERROR] get_likes : ' + str(error)}), 500
 
 #############
 # COMMENTS #
@@ -339,11 +422,45 @@ def get_comments(ID):
             print("[ERROR] get_comments : ", error)
             return jsonify({'msg': '[ERROR] get_comments : ' + str(error)}), 500
 
+#############
+# FOLLOWERS #
+#############
+
+@api_blueprint.route('/followers/add/<int:ID>', methods=['POST'])
+@jwt_required()
+def add_follower(ID):
+    with core.app.app_context():
+        try:
+
+            # Get the current user
+            verify_jwt_in_request()
+            JWT = get_jwt()
+            User_ID = JWT['sub']
+
+            # Check if the user already follow the user
+            if core.models.Followers.query.filter_by(User_ID=User_ID, Follower_ID=ID).first():
+                core.models.Followers.query.filter_by(User_ID=User_ID, Follower_ID=ID).delete()
+                core.db.session.commit()
+                print("[INFO] Follower removed successfully")
+                return jsonify({"msg": "Follower removed successfully"}), 200
+
+            # Add follower to database
+            follower = core.models.Followers(User_ID=User_ID, Follower_ID=ID)
+            core.db.session.add(follower)
+            core.db.session.commit()
+
+            print("[INFO] Follower added successfully")
+            return jsonify({"msg": "Follower added successfully"}), 201
+
+        except Exception as error:
+            print("[ERROR] add_follower : ", error)
+            return jsonify({"msg": "[ERROR] add_follower : " + str(error)}), 500
+
 
 #############
 # OTHER #
 #############
-# Define a function that will be called whenever access to a protected endpoint is attempted
+
 @api_blueprint.after_request
 @jwt_required()
 def refresh_expiring_tokens(response):
