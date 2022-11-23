@@ -241,7 +241,7 @@ def get_user_posts(ID):
 #############
 # LIKE #
 #############
-@api_blueprint.route('/likes/add/<int:ID>', methods=['POST'])
+@api_blueprint.route('/likes/add/<int:ID>', methods=['GET'])
 @jwt_required()
 def add_like(ID):
     with core.app.app_context():
@@ -256,6 +256,7 @@ def add_like(ID):
             if core.models.Like.query.filter_by(User_ID=User_ID, Post_ID=ID).first():
                 core.models.Like.query.filter_by(User_ID=User_ID, Post_ID=ID).delete()
                 core.db.session.commit()
+                print("[INFO] Like removed successfully")
                 return jsonify({"msg": "Like removed successfully"}), 200
 
             # Add like to database
