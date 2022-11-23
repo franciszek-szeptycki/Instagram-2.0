@@ -457,9 +457,9 @@ def add_follower(ID):
             return jsonify({"msg": "[ERROR] add_follower : " + str(error)}), 500
 
 
-@api_blueprint.route('/followers/get/<int:ID>', methods=['GET'])
+@api_blueprint.route('/followers/get', methods=['GET'])
 @jwt_required()
-def get_followers(ID):
+def get_followers():
     with core.app.app_context():
         try:
 
@@ -469,7 +469,7 @@ def get_followers(ID):
             User_ID = JWT['sub']
 
             # Get followers from database
-            followers = core.models.Followers.query.filter_by(User_ID=ID).order_by(core.models.Followers.ID).all()
+            followers = core.models.Followers.query.filter_by(User_ID=User_ID).order_by(core.models.Followers.ID).all()
 
             # Check if followers exist
             if not followers:
