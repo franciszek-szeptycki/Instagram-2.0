@@ -50,9 +50,12 @@ def add_post():
 
             # Create new hashtags
             for hashtag in hashtags:
-                hashtag = core.models.Hashtags(Hashtag=hashtag, Post_ID=post.ID)
-                core.db.session.add(hashtag)
-                core.db.session.commit()
+                if hashtag != "":
+                    if hashtag[0] != "#":
+                        hashtag = "#" + hashtag
+                    hashtag = core.models.Hashtags(Hashtag=hashtag, Post_ID=post.ID)
+                    core.db.session.add(hashtag)
+                    core.db.session.commit()
 
             print("[INFO] Post created successfully")
             return jsonify({"msg": "Post created successfully"}), 201
@@ -360,6 +363,7 @@ def get_likes():
 # COMMENTS #
 #############
 
+
 @api_blueprint.route('/comments/add/<int:ID>', methods=['POST'])
 @jwt_required()
 def add_comment(ID):
@@ -426,6 +430,7 @@ def get_comments(ID):
 #############
 # FOLLOWERS #
 #############
+
 
 @api_blueprint.route('/followers/add/<int:ID>', methods=['POST'])
 @jwt_required()
@@ -497,7 +502,7 @@ def get_followers():
                         "owner_id": post.User_ID,
                         "owner_image": core.models.User.query.filter_by(ID=post.User_ID).first().Image,
                         "description": post.Description,
-                        "hashtags": core.models.Hashtag.query.filter_by(Post_ID=post.ID).all(),
+                        "hashtags": core.models.Hashtags.query.filter_by(Post_ID=post.ID).all(),
                         "file": post.Image,
                         "date": post.Date,
                         "likes": core.models.Like.query.filter_by(Post_ID=post.ID).count(),
@@ -518,6 +523,7 @@ def get_followers():
 #############
 # SEARCHING #
 #############
+
 
 @api_blueprint.route('/search/user/<string:username>', methods=['GET'])
 @jwt_required()
@@ -547,14 +553,15 @@ def search_user(username):
             print("[ERROR] search_user : ", error)
             return jsonify({'msg': '[ERROR] search_user : ' + str(error)}), 500
 
+
 @api_blueprint.route('/search/hashtag/<string:hashtag>', methods=['GET'])
 @jwt_required()
 def search_hashtag(hashtag):
     with core.app.app_context():
         try:
 
-            # Get posts from database
-            hashtags = core.models.Hashtags.query.filter(core.models.Hashtags.Hashtag.like("%" + hashtag + "%")).order_by(core.models.Hashtags.ID).all()
+            # Get hashtags from database and distinct them
+            hashtags = core.models.Hashtags.query.filter(core.models.Hashtags.Hashtag.like("%" + hashtag + "%")).order_by(core.models.Hashtags.ID).distinct().all()
 
             # Check if hashtags exist
             if not hashtags:
@@ -578,6 +585,7 @@ def search_hashtag(hashtag):
 #############
 # OTHER #
 #############
+
 
 @api_blueprint.after_request
 @jwt_required()

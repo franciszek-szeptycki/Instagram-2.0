@@ -45,7 +45,7 @@ class Post(core.db.Model):
 class Hashtags(core.db.Model):
     __tablename__ = 'Hashtags'
     ID = core.db.Column(core.db.Integer, primary_key=True)
-    Hashtag = core.db.Column(core.db.String(128), unique=True, nullable=False)
+    Hashtag = core.db.Column(core.db.String(128), unique=False, nullable=False)
     Post_ID = core.db.Column(core.db.Integer, core.db.ForeignKey('Posts.ID'))
     Date = core.db.Column(core.db.DateTime, default=datetime.datetime.utcnow)
 
