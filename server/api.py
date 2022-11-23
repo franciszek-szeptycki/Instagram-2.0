@@ -125,11 +125,11 @@ def get_post(ID):
                 "user_id": user.ID,
                 "user_name": user.Username,
                 "email": user.Email,
-                "image": "TEST",
+                "image": user.Image,
                 "id": post.ID,
                 "description": post.Description,
                 "hashtags": post.Hashtags,
-                "file": "TEST",
+                "file": post.Image,
                 "date": post.Date,
             }
 
