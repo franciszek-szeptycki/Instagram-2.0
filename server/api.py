@@ -39,19 +39,20 @@ def add_post():
             if not hashtags:
                 return jsonify({"msg": "Hashtags are required"}), 400
 
-            # Pack hashtags into a string and add a # to the beginning of each one
-            hashtags = " ".join(hashtags)
-            hashtags = hashtags.split()
-            hashtags = " ".join(["#" + hashtag for hashtag in hashtags])
-
             verify_jwt_in_request()
             JWT = get_jwt()
             ID = JWT['sub']
 
             # Create new post
-            post = core.models.Post(User_ID=ID, Image=image, Description=description, Hashtags=hashtags)
+            post = core.models.Post(User_ID=ID, Image=image, Description=description)
             core.db.session.add(post)
             core.db.session.commit()
+
+            # Create new hashtags
+            for hashtag in hashtags:
+                hashtag = core.models.Hashtags(Hashtag=hashtag, Post_ID=post.ID)
+                core.db.session.add(hashtag)
+                core.db.session.commit()
 
             print("[INFO] Post created successfully")
             return jsonify({"msg": "Post created successfully"}), 201
@@ -88,7 +89,7 @@ def get_posts(page):
                     "owner_id": post.User_ID,
                     "owner_image": core.models.User.query.filter_by(ID=post.User_ID).first().Image,
                     "description": post.Description,
-                    "hashtags": post.Hashtags,
+                    "hashtags": [hashtag.Hashtag for hashtag in core.models.Hashtags.query.filter_by(Post_ID=post.ID).all()],
                     "file": post.Image,
                     "date": post.Date,
                     "likes": core.models.Like.query.filter_by(Post_ID=post.ID).count(),
@@ -128,7 +129,7 @@ def get_post(ID):
                 "image": user.Image,
                 "id": post.ID,
                 "description": post.Description,
-                "hashtags": post.Hashtags,
+                "hashtags": [hashtag.Hashtag for hashtag in core.models.Hashtags.query.filter_by(Post_ID=post.ID).all()],
                 "file": post.Image,
                 "date": post.Date,
             }
@@ -265,7 +266,7 @@ def get_user_posts(ID):
                     "owner_id": post.User_ID,
                     "owner_image": core.models.User.query.filter_by(ID=post.User_ID).first().Image,
                     "description": post.Description,
-                    "hashtags": post.Hashtags,
+                    "hashtags": [hashtag.Hashtag for hashtag in core.models.Hashtags.query.filter_by(Post_ID=post.ID).all()],
                     "file": post.Image,
                     "date": post.Date
                 })
@@ -340,7 +341,7 @@ def get_likes():
                     "owner_id": core.models.Post.query.filter_by(ID=like.Post_ID).first().User_ID,
                     "owner_image": core.models.User.query.filter_by(ID=core.models.Post.query.filter_by(ID=like.Post_ID).first().User_ID).first().Image,
                     "description": core.models.Post.query.filter_by(ID=like.Post_ID).first().Description,
-                    "hashtags": core.models.Post.query.filter_by(ID=like.Post_ID).first().Hashtags,
+                    "hashtags": [hashtag.Hashtag for hashtag in core.models.Hashtags.query.filter_by(Post_ID=like.Post_ID).all()],
                     "file": core.models.Post.query.filter_by(ID=like.Post_ID).first().Image,
                     "date": core.models.Post.query.filter_by(ID=like.Post_ID).first().Date,
                     "likes": core.models.Like.query.filter_by(Post_ID=like.Post_ID).count(),
@@ -496,7 +497,7 @@ def get_followers():
                         "owner_id": post.User_ID,
                         "owner_image": core.models.User.query.filter_by(ID=post.User_ID).first().Image,
                         "description": post.Description,
-                        "hashtags": post.Hashtags,
+                        "hashtags": core.models.Hashtag.query.filter_by(Post_ID=post.ID).all(),
                         "file": post.Image,
                         "date": post.Date,
                         "likes": core.models.Like.query.filter_by(Post_ID=post.ID).count(),
@@ -514,6 +515,65 @@ def get_followers():
             print("[ERROR] get_followers : ", error)
             return jsonify({'msg': '[ERROR] get_followers : ' + str(error)}), 500
 
+#############
+# SEARCHING #
+#############
+
+@api_blueprint.route('/search/user/<string:username>', methods=['GET'])
+@jwt_required()
+def search_user(username):
+    with core.app.app_context():
+        try:
+
+            # Get users from database
+            users = core.models.User.query.filter(core.models.User.Username.like("%" + username + "%")).order_by(core.models.User.ID).all()
+
+            # Check if users exist
+            if not users:
+                return jsonify({"msg": "No users found"}), 404
+
+            # Create a list of users
+            users_list = []
+            for user in users:
+                users_list.append({
+                    "id": user.ID,
+                    "user_name": user.Username,
+                })
+
+            # Return users
+            return jsonify({"data": users_list}), 200
+
+        except Exception as error:
+            print("[ERROR] search_user : ", error)
+            return jsonify({'msg': '[ERROR] search_user : ' + str(error)}), 500
+
+@api_blueprint.route('/search/hashtag/<string:hashtag>', methods=['GET'])
+@jwt_required()
+def search_hashtag(hashtag):
+    with core.app.app_context():
+        try:
+
+            # Get posts from database
+            hashtags = core.models.Hashtags.query.filter(core.models.Hashtags.Hashtag.like("%" + hashtag + "%")).order_by(core.models.Hashtags.ID).all()
+
+            # Check if hashtags exist
+            if not hashtags:
+                return jsonify({"msg": "No hashtags found"}), 404
+
+            # Create a list of hashtags
+            hashtags_list = []
+            for hashtag in hashtags:
+                hashtags_list.append({
+                    "id": hashtag.ID,
+                    "hashtag_name": hashtag.Hashtag,
+                })
+
+            # Return posts
+            return jsonify({"data": hashtags_list}), 200
+
+        except Exception as error:
+            print("[ERROR] search_hashtag : ", error)
+            return jsonify({'msg': '[ERROR] search_hashtag : ' + str(error)}), 500
 
 #############
 # OTHER #

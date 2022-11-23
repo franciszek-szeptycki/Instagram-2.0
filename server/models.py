@@ -31,17 +31,30 @@ class Post(core.db.Model):
     User_ID = core.db.Column(core.db.Integer, core.db.ForeignKey('Users.ID'))
     Image = core.db.Column(core.db.Text(10000000), unique=False, nullable=False)
     Description = core.db.Column(core.db.String(256), unique=False, nullable=False)
-    Hashtags = core.db.Column(core.db.String(256), unique=False, nullable=False)
     Date = core.db.Column(core.db.DateTime, default=datetime.datetime.utcnow)
 
-    def __init__(self, User_ID, Image, Description, Hashtags):
+    def __init__(self, User_ID, Image, Description):
         self.User_ID = User_ID
         self.Image = Image
         self.Description = Description
-        self.Hashtags = Hashtags
 
     def __repr__(self):
         return '<Post %r>' % self.Description
+
+
+class Hashtags(core.db.Model):
+    __tablename__ = 'Hashtags'
+    ID = core.db.Column(core.db.Integer, primary_key=True)
+    Hashtag = core.db.Column(core.db.String(128), unique=True, nullable=False)
+    Post_ID = core.db.Column(core.db.Integer, core.db.ForeignKey('Posts.ID'))
+    Date = core.db.Column(core.db.DateTime, default=datetime.datetime.utcnow)
+
+    def __init__(self, Hashtag, Post_ID):
+        self.Hashtag = Hashtag
+        self.Post_ID = Post_ID
+
+    def __repr__(self):
+        return '<Hashtag %r>' % self.Name
 
 
 class Comment(core.db.Model):
