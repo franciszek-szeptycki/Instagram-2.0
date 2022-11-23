@@ -14,11 +14,9 @@ const DisplayPost = () => {
         (state) => state.displayPost.postID
     );
 
-    const postUpdatedAt = 0;
-
     const [] = useState(false);
     const [isPostReady, setIsPostReady] = useState(false);
-    const [isPostUpdated, setIsPostUpdated] = useState(false);
+    const [isCommentsReady, setIsCommentsReady] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -38,9 +36,13 @@ const DisplayPost = () => {
     if (!isPostReady && !post.isRefetching && post.status === "success") {
         setIsPostReady(true);
     }
-    if (isPostReady && post.data.status === 200) {
-        // comments.data.data.comments.map((item) => console.log(item));
-        console.log(comments.data)
+
+    if (
+        !isCommentsReady &&
+        !comments.isRefetching &&
+        comments.status === "success"
+    ) {
+        setIsCommentsReady(true);
     }
 
     return (
@@ -84,12 +86,31 @@ const DisplayPost = () => {
                         </div>
                         <div className="add-comment">
                             <form>
-                                <input type="text" />
+                                <textarea className="add-comment__textarea" cols={30} rows={3}></textarea>
                                 <input type="submit" />
                             </form>
                         </div>
                         <ul className="comments">
-                            {/* {isPostReady && post.data.status === 200 && post.data.data.map(item => <li className="comments__comment"></li>)} */}
+                            {isCommentsReady &&
+                                comments.data.data &&
+                                comments.data.data.map((item) => (
+                                    <li key={item.id} className="comment">
+                                        <div className="comment__author">
+                                            <div className="comment__author-photo">
+                                                <img
+                                                    src={item.owner_image}
+                                                    alt="author's profile photo"
+                                                />
+                                            </div>
+                                            <p className="comment__author-username">
+                                                {item.user_name}
+                                            </p>
+                                        </div>
+                                        <p className="comment__content">
+                                            {item.comment}
+                                        </p>
+                                    </li>
+                                ))}
                         </ul>
                     </div>
                 </div>

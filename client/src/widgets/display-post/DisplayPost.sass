@@ -50,7 +50,7 @@
 	&__item-2
 		background-color: $gray1
 		display: grid
-		grid-template-rows: auto auto auto auto
+		grid-template-rows: auto 2fr 1fr 4fr
 
 	&__photo
 		width: 100%
@@ -65,8 +65,59 @@
 
 	.description
 		background-color: beige
-	
+		padding: 0 20px 20px 20px
+		overflow-y: scroll
+
+	.add-comment
+		height: 100px
+		padding: 20px
+		form
+			display: flex
+			height: 100%
+
+		&__textarea
+			padding: 5px
+			width: 100%
+			height: 100%
+
 	.comments
-		background-color: lightblue
+		// background-color: lightblue
+		overflow: hidden
+		background-color: $gray2
+		display: flex
+		flex-direction: column
+		gap: 5px
+		padding: 5px
+		overflow-y: scroll
 
+		.comment
+			padding: 10px
+			width: 100%
+			display: flex
+			flex-direction: column
+			align-items: center
+			gap: 5px
+			background-color: $gray1
 
+			&__author
+				gap: 10px
+				display: flex
+				align-items: center
+				width: 100%
+
+				&-photo
+					width: 40px
+					height: 40px
+					border-radius: 50%
+					overflow: hidden
+
+					img
+						width: 100%
+						height: 100%
+						object-fit: cover
+
+			&__content
+				width: 100%
+				font-size: .8rem
+				word-wrap: break-word
+				flex-grow: 1

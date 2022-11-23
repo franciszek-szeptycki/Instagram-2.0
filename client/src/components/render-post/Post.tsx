@@ -23,8 +23,6 @@ const Post = ({ data, owner }) => {
         setIsPostLiked((prev) => !prev);
         handleLikesCounter(isPostLiked);
 
-        // PO UZGODNIENU
-        // const { status } = await reqServer("POST", null, `/api/likes/add/${data.id}`, true)
         const { status, msg } = await reqServer(
             "GET",
             null,
