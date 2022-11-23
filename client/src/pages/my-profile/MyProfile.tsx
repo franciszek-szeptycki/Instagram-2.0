@@ -48,17 +48,19 @@ const MyProfile = () => {
         reqServer("GET", null, `/api/user/${userId}/posts`, true)
     );
 
+    const profileIsReady = profile.status === "success"
+
     return (
         <div className="page page-profile">
             <aside className="aside">
                 <div className="profile">
                     <div
                         className={`profile__photo ${
-                            !profile.isLoading ? "loading-content" : ""
+                            profileIsReady ? "loading-content" : ""
                         }`}
                     >
                         <img
-                            src={!profile.isLoading && profile.data.data.image}
+                            src={profileIsReady ? profile.data.data.image : ""}
                             alt=""
                             className="profile__photo-current-photo"
                         />
@@ -80,14 +82,14 @@ const MyProfile = () => {
                         <li className="profile__li">
                             <strong>Username: </strong>
                             <p>
-                                {!profile.isLoading &&
+                                {profileIsReady &&
                                     profile.data.data.username}
                             </p>
                         </li>
                         <li className="profile__li">
                             <strong>E-mail adress: </strong>
                             <p>
-                                {!profile.isLoading && profile.data.data.email}
+                                {profileIsReady && profile.data.data.email}
                             </p>
                         </li>
                     </ul>

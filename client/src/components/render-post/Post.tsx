@@ -1,11 +1,14 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { SHOW_POST_FUNCTION } from "../../redux/actions/displayPost";
 import reqServer from "../../utils/reqServer";
 import ProfileIdentity from "../profile-identifier/ProfileIdentity";
 
 const Post = ({ data, owner }) => {
-    console.log(data)
+    // console.log(data)
     const [isPostLiked, setIsPostLiked] = useState(data.liked);
     const [likesAmount, setLikesAmount] = useState(data.likes);
+    const dispatch = useDispatch()
 
     const handleLikesCounter = (arg: boolean) => {
         switch (arg) {
@@ -35,6 +38,11 @@ const Post = ({ data, owner }) => {
         }
     };
 
+    const handleShowPost = () => {
+        dispatch(SHOW_POST_FUNCTION(data.id))
+        // console.log(data)
+    }
+
     return (
         <div className="post">
             {owner && (
@@ -49,13 +57,13 @@ const Post = ({ data, owner }) => {
             </div>
             <div className="post__main">
                 <div className="post__main-img">
-                    <img src={data.file} alt="" />
+                    <img src={data.file} alt="post content" onClick={handleShowPost}/>
                 </div>
             </div>
             <div className="post__footer">
                 <div className="post__footer-top">
                     <div className="post__footer-top-interactions">
-                        <button className="post__footer-top-interactions-btn">
+                        <button className="post__footer-top-interactions-btn" onClick={handleShowPost}>
                             <i className="fa-regular fa-comment"></i>
                         </button>
                         <button className="post__footer-top-interactions-btn">

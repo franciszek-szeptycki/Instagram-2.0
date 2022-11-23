@@ -46,8 +46,8 @@ const reqServer = async (
                 localStorage.setItem("access_token", access_token);
             }
 
-            console.log("msg", msg);
-            console.log("data", data);
+            // console.log("msg", msg);
+            // console.log("data", data);
             return {
                 status,
                 msg,
