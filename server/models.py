@@ -57,7 +57,7 @@ class Hashtags(core.db.Model):
         return '<Hashtag %r>' % self.Hashtag
 
 
-class Comment(core.db.Model):
+class Comments(core.db.Model):
     __tablename__ = 'Comments'
     ID = core.db.Column(core.db.Integer, primary_key=True)
     User_ID = core.db.Column(core.db.Integer, core.db.ForeignKey('Users.ID'))
@@ -74,7 +74,7 @@ class Comment(core.db.Model):
         return '<Comment %r>' % self.Text
 
 
-class Like(core.db.Model):
+class Likes(core.db.Model):
     __tablename__ = 'Likes'
     ID = core.db.Column(core.db.Integer, primary_key=True)
     User_ID = core.db.Column(core.db.Integer, core.db.ForeignKey('Users.ID'))

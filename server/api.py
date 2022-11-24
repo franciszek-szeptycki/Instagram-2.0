@@ -95,10 +95,10 @@ def get_posts(page):
                     "hashtags": [hashtag.Hashtag for hashtag in core.models.Hashtags.query.filter_by(Post_ID=post.ID).all()],
                     "file": post.Image,
                     "date": post.Date,
-                    "likes": core.models.Like.query.filter_by(Post_ID=post.ID).count(),
-                    "comments": core.models.Comment.query.filter_by(Post_ID=post.ID).count(),
-                    "liked": True if core.models.Like.query.filter_by(User_ID=User_ID, Post_ID=post.ID).first() else False,
-                    "commented": True if core.models.Comment.query.filter_by(User_ID=User_ID, Post_ID=post.ID).first() else False,
+                    "likes": core.models.Likes.query.filter_by(Post_ID=post.ID).count(),
+                    "comments": core.models.Comments.query.filter_by(Post_ID=post.ID).count(),
+                    "liked": True if core.models.Likes.query.filter_by(User_ID=User_ID, Post_ID=post.ID).first() else False,
+                    "commented": True if core.models.Comments.query.filter_by(User_ID=User_ID, Post_ID=post.ID).first() else False,
                     "followed": True if core.models.Followers.query.filter_by(User_ID=User_ID, Follower_ID=post.User_ID).first() else False
                 })
 
@@ -156,7 +156,7 @@ def delete_post(ID):
             post = core.models.Post.query.filter_by(ID=ID).first()
 
             # Get post comments from database
-            comments = core.models.Comment.query.filter_by(Post_ID=ID).all()
+            comments = core.models.Comments.query.filter_by(Post_ID=ID).all()
 
             # Check if post exists
             if not post:
@@ -299,14 +299,14 @@ def add_like(ID):
             User_ID = JWT['sub']
 
             # Check if the user already liked the post
-            if core.models.Like.query.filter_by(User_ID=User_ID, Post_ID=ID).first():
-                core.models.Like.query.filter_by(User_ID=User_ID, Post_ID=ID).delete()
+            if core.models.Likes.query.filter_by(User_ID=User_ID, Post_ID=ID).first():
+                core.models.Likes.query.filter_by(User_ID=User_ID, Post_ID=ID).delete()
                 core.db.session.commit()
                 print("[INFO] Like removed successfully")
                 return jsonify({"msg": "Like removed successfully"}), 201
 
             # Add like to database
-            like = core.models.Like(User_ID=User_ID, Post_ID=ID)
+            like = core.models.Likes(User_ID=User_ID, Post_ID=ID)
             core.db.session.add(like)
             core.db.session.commit()
 
@@ -330,7 +330,7 @@ def get_likes():
             User_ID = JWT['sub']
 
             # Get likes from database
-            likes = core.models.Like.query.filter_by(User_ID=User_ID).all()
+            likes = core.models.Likes.query.filter_by(User_ID=User_ID).all()
 
             # Check if likes exist
             if not likes:
@@ -348,10 +348,10 @@ def get_likes():
                     "hashtags": [hashtag.Hashtag for hashtag in core.models.Hashtags.query.filter_by(Post_ID=like.Post_ID).all()],
                     "file": core.models.Post.query.filter_by(ID=like.Post_ID).first().Image,
                     "date": core.models.Post.query.filter_by(ID=like.Post_ID).first().Date,
-                    "likes": core.models.Like.query.filter_by(Post_ID=like.Post_ID).count(),
-                    "comments": core.models.Comment.query.filter_by(Post_ID=like.Post_ID).count(),
-                    "liked": True if core.models.Like.query.filter_by(User_ID=User_ID, Post_ID=like.Post_ID).first() else False,
-                    "commented": True if core.models.Comment.query.filter_by(User_ID=User_ID, Post_ID=like.Post_ID).first() else False,
+                    "likes": core.models.Likes.query.filter_by(Post_ID=like.Post_ID).count(),
+                    "comments": core.models.Comments.query.filter_by(Post_ID=like.Post_ID).count(),
+                    "liked": True if core.models.Likes.query.filter_by(User_ID=User_ID, Post_ID=like.Post_ID).first() else False,
+                    "commented": True if core.models.Comments.query.filter_by(User_ID=User_ID, Post_ID=like.Post_ID).first() else False,
                     "followed": True if core.models.Followers.query.filter_by(User_ID=User_ID, Follower_ID=core.models.Post.query.filter_by(ID=like.Post_ID).first().User_ID).first() else False
                 })
 
@@ -386,7 +386,7 @@ def add_comment(ID):
             User_ID = JWT['sub']
 
             # Add comment to database
-            comment = core.models.Comment(User_ID=User_ID, Post_ID=ID, Comments=comment)
+            comment = core.models.Comments(User_ID=User_ID, Post_ID=ID, Comments=comment)
             core.db.session.add(comment)
             core.db.session.commit()
 
@@ -405,7 +405,7 @@ def get_comments(ID):
         try:
 
             # Get comments from database
-            comments = core.models.Comment.query.filter_by(Post_ID=ID).order_by(core.models.Comment.ID).all()
+            comments = core.models.Comments.query.filter_by(Post_ID=ID).order_by(core.models.Comments.ID).all()
 
             # Check if comments exist
             if not comments:
@@ -508,10 +508,10 @@ def get_followers():
                         "hashtags": [hashtag.Hashtag for hashtag in core.models.Hashtags.query.filter_by(Post_ID=post.ID).all()],
                         "file": post.Image,
                         "date": post.Date,
-                        "likes": core.models.Like.query.filter_by(Post_ID=post.ID).count(),
-                        "comments": core.models.Comment.query.filter_by(Post_ID=post.ID).count(),
-                        "liked": True if core.models.Like.query.filter_by(User_ID=User_ID, Post_ID=post.ID).first() else False,
-                        "commented": True if core.models.Comment.query.filter_by(User_ID=User_ID, Post_ID=post.ID).first() else False,
+                        "likes": core.models.Likes.query.filter_by(Post_ID=post.ID).count(),
+                        "comments": core.models.Comments.query.filter_by(Post_ID=post.ID).count(),
+                        "liked": True if core.models.Likes.query.filter_by(User_ID=User_ID, Post_ID=post.ID).first() else False,
+                        "commented": True if core.models.Comments.query.filter_by(User_ID=User_ID, Post_ID=post.ID).first() else False,
                         "followed": True if core.models.Followers.query.filter_by(User_ID=User_ID, Follower_ID=post.User_ID).first() else False
                     })
 
