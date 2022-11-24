@@ -352,7 +352,7 @@ def get_likes():
                     "comments": core.models.Comment.query.filter_by(Post_ID=like.Post_ID).count(),
                     "liked": True if core.models.Like.query.filter_by(User_ID=User_ID, Post_ID=like.Post_ID).first() else False,
                     "commented": True if core.models.Comment.query.filter_by(User_ID=User_ID, Post_ID=like.Post_ID).first() else False,
-                    "followed": True if core.models.Follow.query.filter_by(User_ID=User_ID, Followed_ID=core.models.Post.query.filter_by(ID=like.Post_ID).first().User_ID).first() else False
+                    "followed": True if core.models.Followers.query.filter_by(User_ID=User_ID, Follower_ID=core.models.Post.query.filter_by(ID=like.Post_ID).first().User_ID).first() else False
                 })
 
             # Return likes
