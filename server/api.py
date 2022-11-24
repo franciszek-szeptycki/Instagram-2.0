@@ -451,7 +451,7 @@ def add_follower(ID):
                 core.models.Followers.query.filter_by(User_ID=User_ID, Follower_ID=ID).delete()
                 core.db.session.commit()
                 print("[INFO] Follower removed successfully")
-                return jsonify({"msg": "Follower removed successfully"}), 200
+                return jsonify({"msg": "Follower removed successfully"}), 201
 
             # Add follower to database
             follower = core.models.Followers(User_ID=User_ID, Follower_ID=ID)
