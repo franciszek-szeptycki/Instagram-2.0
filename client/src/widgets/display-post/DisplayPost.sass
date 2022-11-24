@@ -1,7 +1,6 @@
 @import '../../sass/variables'
 
 .display-post-bg
-	background-color: rgba(0,0,0,0.5)
 	height: 100vh
 	width: 100vw
 	position: fixed
@@ -9,17 +8,13 @@
 	left: 0
 
 .display-post
-	@include absolute-center
-	width: 80vw
-	max-width: 1200px
-	height: 80vh
-	margin-top: 0px
 	position: relative
+	width: 100%
+	height: 100%
+	padding-bottom: $nav-height
 	display: grid
-	grid-template-columns: 80vh 1fr
-	grid-template-rows: 80vh
-	overflow: hidden
-	border-radius: 10px
+	grid-template-columns: 100%
+	grid-template-rows: 50% 50%
 
 	&__hide-btn
 		position: absolute
@@ -31,6 +26,7 @@
 		border-radius: 50%
 		border: 2px solid $gray5
 		background-color: $gray2
+		z-index: 1
 
 		i
 			font-size: 22px
@@ -39,22 +35,22 @@
 			background-color: $gray5
 			i
 				color: $gray2
-
-	&__item
 		
 	&__item-1
 		background-color: $gray6
-		grid-row: 1/3
-		padding: 30px
+		padding: 10px
 
 	&__item-2
+		padding: 10px
 		background-color: $gray1
 		display: grid
-		grid-template-rows: auto 2fr 1fr 4fr
+		grid-template-columns: 50% 50%
+		grid-template-rows: 80px auto 120px
+		grid-auto-flow: column
 
 	&__photo
 		width: 100%
-		height: calc( 80vh - 60px )
+		height: 100%
 		position: relative
 
 		img
@@ -62,15 +58,16 @@
 			height: 100%
 			object-fit: contain
 
+	.profile-id
+		height: 80px
 
 	.description
+		grid-row: 2/4
 		background-color: beige
-		padding: 0 20px 20px 20px
 		overflow-y: scroll
+		height: 100%
 
 	.add-comment
-		height: 100px
-		padding: 20px
 		form
 			display: flex
 			height: 100%
@@ -79,14 +76,15 @@
 			padding: 5px
 			width: 100%
 			height: 100%
+			font-size: .8rem
 
 	.comments
-		// background-color: lightblue
+		grid-row: 1/3
+		grid-column: 2
 		overflow: hidden
 		background-color: $gray2
 		display: flex
-		flex-direction: column
-		// justify-content: flex-end
+		flex-direction: column-reverse
 		gap: 5px
 		padding: 5px
 		overflow-y: scroll
@@ -107,8 +105,8 @@
 				width: 100%
 
 				&-photo
-					width: 40px
-					height: 40px
+					width: 30px
+					height: 30px
 					border-radius: 50%
 					overflow: hidden
 
@@ -123,6 +121,84 @@
 				word-wrap: break-word
 				flex-grow: 1
 
-			&__placeholder
-				height: 100%
-				background-color: red
+	@media ( max-width: 400px )
+		.profile-id
+			display: none
+		.description 
+			grid-row: 1/3
+		.add-comment
+			grid-column: 1/3
+		.comment
+			&__author
+				&-username
+					// font-size: .8rem
+			&__content
+				font-size: .8rem
+		&__item-2
+			grid-template-rows: 80px auto 50px
+			
+
+
+@media ( min-width: 601px )
+	.display-post-bg
+		background-color: rgba(0,0,0,0.5)
+		padding-top: $nav-height
+
+	.display-post
+		position: absolute
+		top: 100px
+		left: 50%
+		transform: translate(-50%, 0)
+		height: 100%
+		width: 100%
+		max-width: 1200px
+		max-height: 800px
+		padding: 0
+
+		overflow: hidden
+		border-radius: 10px
+		grid-template-columns: 1fr auto
+		grid-template-rows: 100%
+
+		&__item-1
+			padding: 30px
+			width: 100%
+
+		&__item-2
+			grid-template-rows: auto 2fr 1fr 4fr
+			grid-auto-flow: row
+			max-width: 400px
+
+		&__photo
+			height: calc( 80vh - 60px )
+
+		.profile-id
+			grid-column: 1/3
+			grid-row: 1
+
+		.description
+			padding: 0 20px 20px 20px
+			grid-column: 1/3
+			grid-row: 2
+
+		.add-comment
+			height: 100px
+			padding: 20px
+			grid-column: 1/3
+			grid-row: 3
+
+			.form
+				// width: 100%
+				// height: 100%
+				display: flex
+				align-items: center
+
+			&__textarea
+				// height: 0px
+		
+		.comments
+			grid-column: 1/3
+			grid-row: 4
+
+			flex-direction: column
+		
