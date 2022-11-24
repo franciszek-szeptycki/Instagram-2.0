@@ -446,6 +446,10 @@ def add_follower(ID):
             JWT = get_jwt()
             User_ID = JWT['sub']
 
+            # Check if the user is trying to follow himself
+            if User_ID == ID:
+                return jsonify({"msg": "You can't follow yourself"}), 400
+
             # Check if the user already follow the user
             if core.models.Followers.query.filter_by(User_ID=User_ID, Follower_ID=ID).first():
                 core.models.Followers.query.filter_by(User_ID=User_ID, Follower_ID=ID).delete()
@@ -516,7 +520,7 @@ def get_followers():
                     })
 
             # Sort posts by date
-            posts_list.sort(key=lambda x: x["date"], reverse=True)
+            posts_list.sort(key=lambda x: x["date"], reverse=False)
 
             # Return posts
             return jsonify({"data": posts_list}), 200
