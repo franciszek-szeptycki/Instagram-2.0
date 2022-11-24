@@ -71,8 +71,8 @@ def get_posts(page):
     with core.app.app_context():
         try:
 
-            # Get posts from database
-            posts = core.models.Post.query.order_by(core.models.Post.ID).paginate(page=page, per_page=10)
+            # Get latest posts from database
+            posts = core.models.Post.query.order_by(core.models.Post.Date.desc()).paginate(page=page, per_page=10)
 
             # Check if posts exist
             if not posts:
