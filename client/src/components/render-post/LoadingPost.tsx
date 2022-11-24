@@ -13,7 +13,6 @@ const LoadingPost = () => {
                     <div className="loading-post__bottom-icons-icon loading-content"></div>
                     <div className="loading-post__bottom-icons-icon loading-content"></div>
                     <div className="loading-post__bottom-icons-icon loading-content"></div>
-                    <div className="loading-post__bottom-icons-icon loading-content"></div>
                 </div>
                 <div className="loading-post__bottom-date loading-content"></div>
             </div>

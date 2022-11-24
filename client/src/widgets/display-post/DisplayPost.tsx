@@ -8,6 +8,7 @@ import reqServer from "../../utils/reqServer";
 import { useState } from "react";
 import Spinner from "../../components/animations/Spinner";
 import ProfileIdentity from "../../components/profile-identifier/ProfileIdentity";
+import AddComment from "./AddComment";
 
 const DisplayPost = () => {
     const postID = useSelector<ReturnType<typeof allReducers>>(
@@ -32,6 +33,11 @@ const DisplayPost = () => {
     const comments = useQuery("display-comments", () =>
         reqServer("GET", null, `/api/comments/get/${postID}`)
     );
+
+    const refetchComments = () => {
+        // setTimeout(() => comments.refetch(), 1000)
+        comments.refetch();
+    };
 
     if (!isPostReady && !post.isRefetching && post.status === "success") {
         setIsPostReady(true);
@@ -85,15 +91,15 @@ const DisplayPost = () => {
                             {isPostReady && post.data.data.description}
                         </div>
                         <div className="add-comment">
-                            <form>
-                                <textarea className="add-comment__textarea" cols={30} rows={3}></textarea>
-                                <input type="submit" />
-                            </form>
+                            <AddComment
+                                id={postID}
+                                refetchComments={refetchComments}
+                            />
                         </div>
                         <ul className="comments">
                             {isCommentsReady &&
                                 comments.data.data &&
-                                comments.data.data.map((item) => (
+                                [...comments.data.data].reverse().map((item) => (
                                     <li key={item.id} className="comment">
                                         <div className="comment__author">
                                             <div className="comment__author-photo">
@@ -112,6 +118,7 @@ const DisplayPost = () => {
                                     </li>
                                 ))}
                         </ul>
+                        {/* <div className="comment__placeholder"></div> */}
                     </div>
                 </div>
             </div>

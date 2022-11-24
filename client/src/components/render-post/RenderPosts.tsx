@@ -10,6 +10,7 @@ const RenderPosts = (props) => {
 
     try {
         for (const element of data) {
+            console.log(element)
             posts.push(<Post key={element.id} data={element} owner={owner}/>)
         }
     } finally {   

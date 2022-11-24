@@ -8,6 +8,7 @@ import { Routes, Route } from "react-router-dom";
 import MyProfile from "./pages/my-profile/MyProfile";
 import UserProfile from "./pages/somebody-profile/UserProfile";
 import DisplayPost from "./widgets/display-post/DisplayPost";
+import Favourites from "./pages/liked-posts/Favourites";
 
 const Container = () => {
 
@@ -21,6 +22,7 @@ const Container = () => {
                 <Route path="/profile" element={<MyProfile />} />
                 <Route path="/users/*" element={<UserProfile />} />
                 <Route path="/create-post" element={<CreatePostPanel />}/>
+                <Route path="/favourites" element={<Favourites />}/>
             </Routes>
             {displayPost && <DisplayPost/>}
         </div>
