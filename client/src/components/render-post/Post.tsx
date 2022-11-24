@@ -5,7 +5,6 @@ import reqServer from "../../utils/reqServer";
 import ProfileIdentity from "../profile-identifier/ProfileIdentity";
 
 const Post = ({ data, owner }) => {
-    // console.log(data)
     const [isPostLiked, setIsPostLiked] = useState(data.liked);
     const [likesAmount, setLikesAmount] = useState(data.likes);
     const dispatch = useDispatch()
@@ -38,8 +37,9 @@ const Post = ({ data, owner }) => {
 
     const handleShowPost = () => {
         dispatch(SHOW_POST_FUNCTION(data.id))
-        // console.log(data)
+        console.log(data)
     }
+    // console.log(data)
 
     return (
         <div className="post">
@@ -64,6 +64,9 @@ const Post = ({ data, owner }) => {
                         <button className="post__footer-top-interactions-btn" onClick={handleShowPost}>
                             <i className="fa-regular fa-comment"></i>
                         </button>
+                        <p className="post__footer-top-interactions-counter">
+                            {data.comments}
+                        </p>
                         <button className="post__footer-top-interactions-btn">
                             <i className="fa-solid fa-eye"></i>
                         </button>
@@ -78,7 +81,7 @@ const Post = ({ data, owner }) => {
                             ></i>
                         </button>
 
-                        <p className="post__footer-top-interactions-likes">
+                        <p className="post__footer-top-interactions-counter">
                             {likesAmount}
                         </p>
                         {/* <button className="post__footer-top-interactions-btn">
