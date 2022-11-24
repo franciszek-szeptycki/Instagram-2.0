@@ -54,7 +54,7 @@ class Hashtags(core.db.Model):
         self.Post_ID = Post_ID
 
     def __repr__(self):
-        return '<Hashtag %r>' % self.Name
+        return '<Hashtag %r>' % self.Hashtag
 
 
 class Comment(core.db.Model):

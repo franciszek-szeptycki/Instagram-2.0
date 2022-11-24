@@ -97,8 +97,9 @@ def get_posts(page):
                     "date": post.Date,
                     "likes": core.models.Like.query.filter_by(Post_ID=post.ID).count(),
                     "comments": core.models.Comment.query.filter_by(Post_ID=post.ID).count(),
-                    "liked": True if core.models.Like.query.filter_by(User_ID=User_ID,
-                                                                      Post_ID=post.ID).first() else False
+                    "liked": True if core.models.Like.query.filter_by(User_ID=User_ID, Post_ID=post.ID).first() else False,
+                    "commented": True if core.models.Comment.query.filter_by(User_ID=User_ID, Post_ID=post.ID).first() else False,
+                    "followed": True if core.models.Follow.query.filter_by(User_ID=User_ID, Followed_ID=post.User_ID).first() else False
                 })
 
             # Return posts
@@ -339,7 +340,7 @@ def get_likes():
             likes_list = []
             for like in likes:
                 likes_list.append({
-                    "post_id": like.Post_ID,
+                    "id": like.Post_ID,
                     "user_name": core.models.User.query.filter_by(ID=core.models.Post.query.filter_by(ID=like.Post_ID).first().User_ID).first().Username,
                     "owner_id": core.models.Post.query.filter_by(ID=like.Post_ID).first().User_ID,
                     "owner_image": core.models.User.query.filter_by(ID=core.models.Post.query.filter_by(ID=like.Post_ID).first().User_ID).first().Image,
@@ -349,7 +350,9 @@ def get_likes():
                     "date": core.models.Post.query.filter_by(ID=like.Post_ID).first().Date,
                     "likes": core.models.Like.query.filter_by(Post_ID=like.Post_ID).count(),
                     "comments": core.models.Comment.query.filter_by(Post_ID=like.Post_ID).count(),
-                    "liked": True if core.models.Like.query.filter_by(User_ID=User_ID, Post_ID=like.Post_ID).first() else False
+                    "liked": True if core.models.Like.query.filter_by(User_ID=User_ID, Post_ID=like.Post_ID).first() else False,
+                    "commented": True if core.models.Comment.query.filter_by(User_ID=User_ID, Post_ID=like.Post_ID).first() else False,
+                    "followed": True if core.models.Follow.query.filter_by(User_ID=User_ID, Followed_ID=core.models.Post.query.filter_by(ID=like.Post_ID).first().User_ID).first() else False
                 })
 
             # Return likes
@@ -502,12 +505,14 @@ def get_followers():
                         "owner_id": post.User_ID,
                         "owner_image": core.models.User.query.filter_by(ID=post.User_ID).first().Image,
                         "description": post.Description,
-                        "hashtags": core.models.Hashtags.query.filter_by(Post_ID=post.ID).all(),
+                        "hashtags": [hashtag.Hashtag for hashtag in core.models.Hashtags.query.filter_by(Post_ID=post.ID).all()],
                         "file": post.Image,
                         "date": post.Date,
                         "likes": core.models.Like.query.filter_by(Post_ID=post.ID).count(),
                         "comments": core.models.Comment.query.filter_by(Post_ID=post.ID).count(),
-                        "liked": True if core.models.Like.query.filter_by(User_ID=User_ID, Post_ID=post.ID).first() else False
+                        "liked": True if core.models.Like.query.filter_by(User_ID=User_ID, Post_ID=post.ID).first() else False,
+                        "commented": True if core.models.Comment.query.filter_by(User_ID=User_ID, Post_ID=post.ID).first() else False,
+                        "followed": True if core.models.Followers.query.filter_by(User_ID=User_ID, Follower_ID=post.User_ID).first() else False
                     })
 
             # Sort posts by date
