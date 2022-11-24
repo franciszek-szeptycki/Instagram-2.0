@@ -99,7 +99,7 @@ def get_posts(page):
                     "comments": core.models.Comment.query.filter_by(Post_ID=post.ID).count(),
                     "liked": True if core.models.Like.query.filter_by(User_ID=User_ID, Post_ID=post.ID).first() else False,
                     "commented": True if core.models.Comment.query.filter_by(User_ID=User_ID, Post_ID=post.ID).first() else False,
-                    "followed": True if core.models.Follow.query.filter_by(User_ID=User_ID, Followed_ID=post.User_ID).first() else False
+                    "followed": True if core.models.Followers.query.filter_by(User_ID=User_ID, Follower_ID=post.User_ID).first() else False
                 })
 
             # Return posts
