@@ -9,6 +9,7 @@ import MyProfile from "./pages/my-profile/MyProfile";
 import UserProfile from "./pages/somebody-profile/UserProfile";
 import DisplayPost from "./widgets/display-post/DisplayPost";
 import Favourites from "./pages/liked-posts/Favourites";
+import Following from "./pages/following/Following";
 
 const Container = () => {
 
@@ -23,6 +24,7 @@ const Container = () => {
                 <Route path="/users/*" element={<UserProfile />} />
                 <Route path="/create-post" element={<CreatePostPanel />}/>
                 <Route path="/favourites" element={<Favourites />}/>
+                <Route path="/following" element={<Following />}/>
             </Routes>
             {displayPost && <DisplayPost/>}
         </div>
