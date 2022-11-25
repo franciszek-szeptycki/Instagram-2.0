@@ -1,7 +1,7 @@
 @import "../../sass/variables"
 	
 .post
-	margin-top: $big-gap
+	margin-bottom: $big-gap
 	border-radius: 10px
 	overflow: hidden
 	box-shadow: 0 3px 10px 0 $gray3
@@ -46,7 +46,7 @@
 
 	&__footer
 		padding: 20px
-		gap: 20px
+		gap: 10px
 		display: flex
 		flex-direction: column
 		
@@ -71,8 +71,6 @@
 						color: $gray5
 						transition: .1s
 
-						&:hover
-							// transform: $resize-icon
 					.green
 						color: rgb(15, 161, 73)
 					
@@ -86,9 +84,20 @@
 			&-date
 				color: $gray3
 				font-size: .9rem
+		
+		&-hashtags
+			display: flex
+			gap: 10px
+			margin: 5px 0
+			
+			&-item
+				border-radius: 3px
+				background-color: $gray5
+				padding: 0 3px
+				color: $gray1
+				cursor: pointer
 
-
-		&-description
+		// &-description
 
 @media ( max-width: $max-breakpoint )
 	.post

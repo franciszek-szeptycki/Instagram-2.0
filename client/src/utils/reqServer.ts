@@ -55,7 +55,7 @@ const reqServer = async (
             };
         })
         .catch((error) => {
-            console.error(error);
+            // console.error(error);
             window.location.reload()
             return {
                 status: 500,

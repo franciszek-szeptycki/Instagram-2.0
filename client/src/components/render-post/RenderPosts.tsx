@@ -6,7 +6,6 @@ const RenderPosts = ({data, owner = false, reverse = true }) => {
     const postsData: any = data.data
     const isOwner: any = owner
     const posts = [];
-    console.log(postsData)
 
     try {
         for (const item of postsData) {

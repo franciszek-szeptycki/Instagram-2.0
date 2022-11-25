@@ -7,8 +7,8 @@ import ProfileIdentity from "../profile-identifier/ProfileIdentity";
 const Post = ({ data, owner }) => {
     const [isPostLiked, setIsPostLiked] = useState(data.liked);
     const [likesAmount, setLikesAmount] = useState(data.likes);
-    const [isUserFollowed, setIsUserFollowed] = useState(data.followed)
-    const dispatch = useDispatch()
+    const [isUserFollowed, setIsUserFollowed] = useState(data.followed);
+    const dispatch = useDispatch();
 
     const handleLikesCounter = (arg: boolean) => {
         switch (arg) {
@@ -40,27 +40,30 @@ const Post = ({ data, owner }) => {
         );
         if (status !== 201) {
             handleLikesCounter(!isPostLiked);
-            setIsPostLiked(prev => !prev)
+            setIsPostLiked((prev) => !prev);
         }
     };
 
     const handleShowPost = () => {
-        dispatch(SHOW_POST_FUNCTION(data.id))
-        console.log(data)
-    }
+        dispatch(SHOW_POST_FUNCTION(data.id));
+        console.log(data);
+    };
 
     const handleFollowUser = async () => {
         setIsUserFollowed((prev) => !prev);
         handleFollowIcon(isUserFollowed);
-        const { status } = await reqServer("POST", null, `/api/followers/add/${data.owner_id}`)
-        console.log(status)
+        const { status } = await reqServer(
+            "POST",
+            null,
+            `/api/followers/add/${data.owner_id}`
+        );
         if (status !== 201) {
             handleFollowIcon(!isUserFollowed);
-            setIsUserFollowed(prev => !prev)
+            setIsUserFollowed((prev) => !prev);
         }
-        
-    }
-    console.log(data.followed)
+    };
+
+    // console.log(data)
 
     return (
         <div className="post">
@@ -71,25 +74,43 @@ const Post = ({ data, owner }) => {
             )}
             <div className="post__header">
                 <ProfileIdentity
-                    data={{ username: data.user_name, image: data.owner_image, owner_id: data.owner_id }}
+                    data={{
+                        username: data.user_name,
+                        image: data.owner_image,
+                        owner_id: data.owner_id,
+                    }}
                 />
             </div>
             <div className="post__main">
                 <div className="post__main-img">
-                    <img src={data.file} alt="post content" onClick={handleShowPost}/>
+                    <img
+                        src={data.file}
+                        alt="post content"
+                        onClick={handleShowPost}
+                    />
                 </div>
             </div>
             <div className="post__footer">
                 <div className="post__footer-top">
                     <div className="post__footer-top-interactions">
-                        <button className="post__footer-top-interactions-btn" onClick={handleShowPost}>
+                        <button
+                            className="post__footer-top-interactions-btn"
+                            onClick={handleShowPost}
+                        >
                             <i className="fa-regular fa-comment"></i>
                         </button>
                         <p className="post__footer-top-interactions-counter">
                             {data.comments}
                         </p>
-                        <button className="post__footer-top-interactions-btn" onClick={handleFollowUser}>
-                            <i className={`fa-solid fa-eye ${isUserFollowed ? "green" : ""}`}></i>
+                        <button
+                            className="post__footer-top-interactions-btn"
+                            onClick={handleFollowUser}
+                        >
+                            <i
+                                className={`fa-solid fa-eye ${
+                                    isUserFollowed ? "green" : ""
+                                }`}
+                            ></i>
                         </button>
                         <button
                             className="post__footer-top-interactions-btn"
@@ -117,6 +138,16 @@ const Post = ({ data, owner }) => {
                             : ""}
                     </p>
                 </div>
+                <div className="post__footer-hashtags">
+                        {data.hashtags.map((item: string) => {
+                            if (item)
+                                return (
+                                    <p className="post__footer-hashtags-item" id={item}>
+                                        {item}
+                                    </p>
+                                );
+                        })}
+                    </div>
                 <p className="post__footer-description">{data.description}</p>
             </div>
         </div>

@@ -5,8 +5,40 @@
 		display: none
 	.main
 		width: 600px
+
+		&__label-wrapper
+			height: 154px
+
+		&__label
+			position: fixed
+			top: 100px
+			left: 50%
+			transform: translate(-50%, 0)
+			width: 600px
+			background-color: red
+			border-radius: 10px
+			padding: 10px
+			z-index: 1
+
+			&-ul
+				width: 100%
+				left: 0
+				top: 100%
+				height: 34px
+				overflow: hidden
+			
+			&-ul.extended
+				height: auto
+				
+			&-ul.hidden
+				display: none
+
+			&-li
+				height: 34px
+				background-color: black
+
+
 		&__search
-			margin: 50px 0 
 			border: 2px solid $gray3
 			border-radius: 50px
 			padding: 5px 10px
@@ -15,8 +47,10 @@
 			gap: 5px
 
 			i
-				color: $gray5
+				color: $gray3
 
 			&-input
 				flex-grow: 1
 				border: none
+				color: $gray2
+				background-color: transparent
