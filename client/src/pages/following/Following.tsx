@@ -8,7 +8,7 @@ const Following = () => {
 	const { isLoading, data } = useQuery("following-posts", () => {
         return reqServer("GET", null, "/api/followers/get");
     });
-    console.log(!isLoading && data)
+    console.log(data)
     return (
         <div className="page page-following">
             <main className="main">

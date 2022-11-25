@@ -7,6 +7,7 @@ import ProfileIdentity from "../profile-identifier/ProfileIdentity";
 const Post = ({ data, owner }) => {
     const [isPostLiked, setIsPostLiked] = useState(data.liked);
     const [likesAmount, setLikesAmount] = useState(data.likes);
+    const [isUserFollowed, setIsUserFollowed] = useState(data.followed)
     const dispatch = useDispatch()
 
     const handleLikesCounter = (arg: boolean) => {
@@ -15,6 +16,15 @@ const Post = ({ data, owner }) => {
                 return setLikesAmount((prev) => (prev -= 1));
             case false:
                 return setLikesAmount((prev) => (prev += 1));
+        }
+    };
+
+    const handleFollowIcon = (arg: boolean) => {
+        switch (arg) {
+            case true:
+                return setIsUserFollowed((prev) => (prev -= 1));
+            case false:
+                return setIsUserFollowed((prev) => (prev += 1));
         }
     };
 
@@ -28,7 +38,6 @@ const Post = ({ data, owner }) => {
             `/api/likes/add/${data.id}`,
             true
         );
-        console.log(status, msg);
         if (status !== 201) {
             handleLikesCounter(!isPostLiked);
             setIsPostLiked(prev => !prev)
@@ -39,7 +48,17 @@ const Post = ({ data, owner }) => {
         dispatch(SHOW_POST_FUNCTION(data.id))
         console.log(data)
     }
-    // console.log(data)
+
+    const handleFollowUser = async () => {
+        setIsUserFollowed((prev) => !prev);
+        handleFollowIcon(isUserFollowed);
+        const { status } = await reqServer("POST", null, `/api/followers/add/${data.owner_id}`)
+        if (status !== 201) {
+            handleFollowIcon(!isUserFollowed);
+            setIsUserFollowed(prev => !prev)
+        }
+        
+    }
 
     return (
         <div className="post">
@@ -50,7 +69,7 @@ const Post = ({ data, owner }) => {
             )}
             <div className="post__header">
                 <ProfileIdentity
-                    data={{ username: data.user_name, image: data.owner_image }}
+                    data={{ username: data.user_name, image: data.owner_image, owner_id: data.owner_id }}
                 />
             </div>
             <div className="post__main">
@@ -67,8 +86,8 @@ const Post = ({ data, owner }) => {
                         <p className="post__footer-top-interactions-counter">
                             {data.comments}
                         </p>
-                        <button className="post__footer-top-interactions-btn">
-                            <i className="fa-solid fa-eye"></i>
+                        <button className="post__footer-top-interactions-btn" onClick={handleFollowUser}>
+                            <i className={`fa-solid fa-eye ${isUserFollowed ? "green" : ""}`}></i>
                         </button>
                         <button
                             className="post__footer-top-interactions-btn"

@@ -15,16 +15,15 @@ const CreatePostPanel = () => {
 
         reader.readAsDataURL(file);
 
-        reader.addEventListener("load", (): void => {
+        reader.addEventListener("load", async () => {
             const data = {
                 img: reader.result,
                 description,
                 hashtag: [hashtags[1], hashtags[2], hashtags[3]],
             };
 
-            reqServer("POST", data, "/api/posts/add", true);
-
-            document.location.pathname = ""
+            const {status} = await reqServer("POST", data, "/api/posts/add", true);
+            if(status === 201) document.location.pathname = ""
         });
     };
 
