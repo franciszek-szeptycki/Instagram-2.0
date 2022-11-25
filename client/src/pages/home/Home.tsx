@@ -8,9 +8,17 @@ import { useSelector } from "react-redux";
 import allReducers from "../../redux/reducers";
 
 const Home = () => {
-    const { isLoading, data } = useQuery("all-posts", () => {
+    const { isLoading, data, dataUpdatedAt } = useQuery("all-posts", () => {
         return reqServer("GET", null, "/api/posts/get/page=1");
     });
+
+    const [posts, setPosts] = useState(null)
+    const [lastUpdate, setLastUpdate] = useState(0) 
+
+    if (lastUpdate !== dataUpdatedAt) {
+        setPosts(data)
+        setLastUpdate(dataUpdatedAt)
+    }
 
     const [inputValue, setInputValue] = useState("");
     const [searchValue, setSearchValue] = useState([]);
@@ -42,7 +50,7 @@ const Home = () => {
             hashtags[1],
             hashtags[2],
         ].filter((item) => item && item);
-        console.log(searchResults);
+        // console.log(searchResults);
         setSearchValue(searchResults);
     };
 
@@ -62,7 +70,10 @@ const Home = () => {
         if (!e.target.value) setIsSearchExtended(false);
     };
 
-    // console.log(searchValue);
+    const handleSearch = (e) => {
+        console.log(e.target)
+
+    }
 
     return (
         <div className="page page-home">
@@ -93,18 +104,30 @@ const Home = () => {
                                     />
                                 </div>
                             </li>
-                            {searchValue.map((item) => (
-                                <li className="main__label-li" id={item.id}>
-                                    {item.user_name || item.hashtag_name}
+                            {(searchValue && !searchValue.length &&
+                                <li className="main__label-li main__label-li-error">
+                                    no results...
                                 </li>
-                            ))}
+                            )}
+                        
+                            {(searchValue && searchValue.map((item) => (
+                                <li
+                                    key={item.id}
+                                    className="main__label-li main__label-li-proposition"
+                                    id={item.id}
+                                    onClick={handleSearch}
+                                >
+                                    {item.user_name ||
+                                        item.hashtag_name}
+                                </li>
+                            )))}
                         </ul>
                     </div>
                 </div>
                 {isLoading ? (
                     <LoadingPost />
                 ) : (
-                    <RenderPosts reverse={false} data={data} />
+                    <RenderPosts reverse={false} data={posts} />
                 )}
             </main>
         </div>

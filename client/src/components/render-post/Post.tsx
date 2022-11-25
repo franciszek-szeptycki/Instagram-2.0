@@ -139,10 +139,10 @@ const Post = ({ data, owner }) => {
                     </p>
                 </div>
                 <div className="post__footer-hashtags">
-                        {data.hashtags.map((item: string) => {
+                        {data.hashtags.map((item: string, index: number) => {
                             if (item)
                                 return (
-                                    <p className="post__footer-hashtags-item" id={item}>
+                                    <p key={index} className="post__footer-hashtags-item" id={item}>
                                         {item}
                                     </p>
                                 );
