@@ -53,12 +53,14 @@ const Post = ({ data, owner }) => {
         setIsUserFollowed((prev) => !prev);
         handleFollowIcon(isUserFollowed);
         const { status } = await reqServer("POST", null, `/api/followers/add/${data.owner_id}`)
+        console.log(status)
         if (status !== 201) {
             handleFollowIcon(!isUserFollowed);
             setIsUserFollowed(prev => !prev)
         }
         
     }
+    console.log(data.followed)
 
     return (
         <div className="post">

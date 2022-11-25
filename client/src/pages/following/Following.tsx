@@ -12,7 +12,7 @@ const Following = () => {
     return (
         <div className="page page-following">
             <main className="main">
-                {isLoading ? <LoadingPost /> : <RenderPosts data={data} />}
+                {isLoading ? <LoadingPost /> : <RenderPosts data={data} reverse={false} />}
             </main>
             <aside className="aside"></aside>
         </div>

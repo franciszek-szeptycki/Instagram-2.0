@@ -2,17 +2,19 @@ import Post from './Post'
 import "./RenderPost.sass";
 
 
-const RenderPosts = (props) => {
-    const data: any = props.data.data
-    const owner: any = props.owner || false
+const RenderPosts = ({data, owner = false, reverse = true }) => {
+    const postsData: any = data.data
+    const isOwner: any = owner
     const posts = [];
+    console.log(postsData)
 
     try {
-        for (const element of data) {
-            posts.push(<Post key={element.id} data={element} owner={owner}/>)
+        for (const item of postsData) {
+            posts.push(<Post key={item.id} data={item} owner={isOwner}/>)
         }
     } finally {   
-        return <>{posts ? posts.reverse() : <></>}</>;
+        if (reverse) return <>{posts ? posts.reverse() : <></>}</>;
+        else return <>{posts ? posts : <></>}</>;
     }
 };
 

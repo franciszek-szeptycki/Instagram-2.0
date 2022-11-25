@@ -75,16 +75,12 @@ const DisplayPost = () => {
                     </div>
                     <div className="display-post__item display-post__item-2">
                         {isPostReady ? (
-                            // <ProfileIdentity
-                            //     data={{
-                            //         username: post.data.data.user_name,
-                            //         image: post.data.data.image,
-                            //     }}
-                            // />
-                            <div className="loading-post__top">
-                                <div className="loading-post__top-photo loading-content"></div>
-                                <div className="loading-post__top-title loading-content"></div>
-                            </div>
+                            <ProfileIdentity
+                                data={{
+                                    username: post.data.data.user_name,
+                                    image: post.data.data.image,
+                                }}
+                            />
                         ) : (
                             <div className="loading-post__top">
                                 <div className="loading-post__top-photo loading-content"></div>
