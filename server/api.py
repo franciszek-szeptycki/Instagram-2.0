@@ -102,6 +102,9 @@ def get_posts(page):
                     "followed": True if core.models.Followers.query.filter_by(User_ID=User_ID, Follower_ID=post.User_ID).first() else False
                 })
 
+            # # Reverse the posts
+            # posts_list = posts_list[::-1]
+
             # Return posts
             return jsonify({"data": posts_list}), 200
 
