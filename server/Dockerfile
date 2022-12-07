@@ -9,9 +9,11 @@ ENV FLASK_APP=core.py
 ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_ENV=development
 ENV FLASK_DEBUG=1
-ENV FLASK_RUN_PORT=5002
+ENV FLASK_RUN_PORT=5004
 
 # Requirements & Installations
+RUN apt-get update
+RUN apt-get install python3-dev default-libmysqlclient-dev gcc  -y
 RUN pip install --upgrade pip
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
@@ -21,4 +23,4 @@ COPY . .
 
 # Run
 #CMD ["flask", "run"]
-CMD ["gunicorn", "--bind", "0.0.0.0:5002", "core:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5004", "core:app"]

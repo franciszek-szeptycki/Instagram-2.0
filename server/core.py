@@ -1,8 +1,3 @@
-import models
-import api
-import authorization
-import others
-
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
@@ -14,6 +9,11 @@ app.config.from_pyfile('config.py')
 db = SQLAlchemy(app)
 jwt = JWTManager(app)
 mail = Mail(app)
+
+import models
+import api
+import authorization
+import others
 
 app.register_blueprint(api.api_blueprint, url_prefix='/api')
 app.register_blueprint(authorization.auth_blueprint, url_prefix='/auth')

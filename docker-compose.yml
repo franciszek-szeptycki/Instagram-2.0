@@ -20,7 +20,7 @@ services:
         container_name: Instagram-backend
         restart: unless-stopped
         ports:
-            -   "5002:5002"
+            -   "3000:3004"
         networks:
             - nginx_network
             - instagram_network
