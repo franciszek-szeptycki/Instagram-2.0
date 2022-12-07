@@ -8,7 +8,7 @@ WORKDIR /frontend
 COPY package*.json ./
 
 # Installations
-RUN npm install -g npm@latest --location=global && npm install
+RUN npm install -g npm@latest && npm install
 
 
 # Copy source code
