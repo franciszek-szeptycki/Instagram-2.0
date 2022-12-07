@@ -17,7 +17,8 @@ COPY ./ ./
 # start app
 CMD ["npm", "run", "start"]
 
-
+# Expose port
+EXPOSE 3000
 
 
 ## Build
