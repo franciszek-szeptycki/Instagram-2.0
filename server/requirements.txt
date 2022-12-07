@@ -1,6 +1,7 @@
 Flask==2.2.2
 Flask-Mail==0.9.1
 Flask-SQLAlchemy==2.5.1
+Flask-JWT-Extended==4.3.0
 
 SQLAlchemy==1.4.25
 mysql==0.0.3
