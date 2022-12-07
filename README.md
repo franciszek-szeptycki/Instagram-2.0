@@ -21,4 +21,14 @@
   - **SQL**
   - **HTML**
 
-#### :star: Podgląd: Juz niebawem
+# Zdjęcia
+### Strona głowna
+![Strona głowna](https://i.imgur.com/KXlNS9P.png)
+### System logowania
+![System logowania](https://i.imgur.com/YxS2S55.jpg)
+### System rejestracji
+![System rejestracji](https://i.imgur.com/YO1odEG.png)
+### Profil
+![Profil](https://i.imgur.com/8upwzWK.png)
+### System dodawania nowych zdjęc
+![System dodawania nowych zdjęc](https://i.imgur.com/ITr7Ps1.png)
