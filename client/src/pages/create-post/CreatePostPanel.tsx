@@ -10,7 +10,8 @@ const CreatePostPanel = () => {
     const [description, setDescription] = useState("");
     const [hashtags, setHashtags] = useState({ 1: "", 2: "", 3: "" });
 
-    const handleShareButton = async () => {
+    const handleShareButton = async (e) => {
+        // e.preventDefault()
         const reader = new FileReader();
 
         reader.readAsDataURL(file);

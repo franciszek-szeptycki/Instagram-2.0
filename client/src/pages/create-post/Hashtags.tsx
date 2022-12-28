@@ -65,7 +65,7 @@ const Hashtags = (props) => {
                         ref={input3}
                     />
 				</label>
-				<button onClick={handleShareButton} className="create-post__hashtags-submit">share the post</button>
+				<button onClick={(e) => handleShareButton(e)} className="create-post__hashtags-submit">share the post</button>
             </div>
         </div>
     );
