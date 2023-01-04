@@ -1,0 +1,57 @@
+@import "../assets/styles/var"
+
+
+.search-eng-wrapper
+  height: 80px
+
+  position: relative
+
+  .search-eng
+    width: 90vw
+    max-width: $standard-max-width
+
+    position: absolute
+    top: 0
+    left: 50%
+    transform: translateX(-50%)
+    z-index: 1
+
+    border-radius: 25px
+    border: 1px solid white
+
+    background-image: linear-gradient(45deg, #85d013, cadetblue)
+
+    padding: 9px 15px
+    display: grid
+    grid-template-columns: auto 1fr
+    grid-template-rows: repeat(2, auto)
+    align-items: center
+
+    color: white
+
+    &__input
+      margin: 0 10px
+      padding: 5px 0
+      border: none
+      background-color: transparent
+      border-bottom: 1px solid white
+
+      &:focus
+        outline: none
+
+    &__ul.hidden
+      padding: 0
+      height: 0
+      overflow: hidden
+
+    &__ul
+      grid-column: 1/3
+      padding: 15px 0 6px
+      @include flex-list
+      gap: 15px
+
+      li
+        width: 100%
+        padding-left: 25px
+
+

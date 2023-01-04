@@ -1,0 +1,97 @@
+@import "../assets/styles/var"
+
+.post-footer
+  height: 100px
+  padding-top: 50px
+
+.post
+  @include standard-width
+
+  border-radius: 10px
+  box-shadow: 0 10px 50px 0 lightgray
+
+  &__top
+    height: 70px
+
+    display: flex
+    align-items: center
+    gap: 20px
+    padding-left: 10px
+
+    &-img
+      width: 50px
+      height: 50px
+      border-radius: 50%
+
+  &__mid
+    width: 100%
+    padding-top: 100%
+    background-color: pink
+
+    position: relative
+
+    &-img
+      width: 100%
+      height: 100%
+
+      position: absolute
+      top: 0
+      left: 0
+
+      object-fit: cover
+
+  &__bot
+    min-height: 50px
+    padding: 20px 20px 50px
+
+    display: grid
+    grid-template-columns: 1fr auto
+    grid-template-rows: auto 1fr
+    gap: 20px
+
+    position: relative
+
+    &-panel
+      display: flex
+      gap: 10px
+
+      .icon
+        display: flex
+        gap: 5px
+
+    &-date
+      color: gray
+
+    &-data.extended
+      max-height: 1000px !important
+
+    &-data
+      grid-column: 1/3
+      max-height: 50px
+      @include flex-list
+      gap: 10px
+      overflow: hidden
+
+      &-hashtags
+        width: 100%
+        display: flex
+        flex-wrap: wrap
+        gap: 5px
+        color: gray
+
+      &-description
+        width: 100%
+
+    &-btn
+      position: absolute
+      bottom: 5px
+      left: 50%
+      transform: translateX(-50%)
+
+      border-radius: 50%
+      width: 35px
+      height: 35px
+      border: none
+
+      color: gray
+      cursor: pointer

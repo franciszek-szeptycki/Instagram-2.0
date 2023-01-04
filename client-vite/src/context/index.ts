@@ -1,12 +1,13 @@
 import React, {createContext} from "react";
-import {Action, State} from "./reducers";
+import {ActionType, StateType} from "./reducers";
 
-export const initialState: State = {
+export const initialState: StateType = {
     USER_LOGGED: false,
+    FOLLOWED_USERS: [],
 };
 
 
-export const AppContext = createContext<{state: State, dispatch: React.Dispatch<Action>}>({
+export const AppContext = createContext<{state: StateType, dispatch: React.Dispatch<ActionType>}>({
     state: initialState,
     dispatch: () => initialState
 })

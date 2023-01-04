@@ -1,15 +1,21 @@
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 import {AppContext} from "./context";
 import ProtRoutes from "./prot-routes/ProtRoutes";
-import NonProtRoutes from "./non-prot-routes/NonProtRoutes";
+import StartRoutes from "./start-routes/StartRoutes";
+import {isTokenValid} from "./features/token";
 
 const App = () => {
-    const {state} = useContext(AppContext)
+
+    const {state, dispatch} = useContext(AppContext)
+
+    useEffect(() => {
+        isTokenValid(dispatch)
+    }, [])
 
 return (
     <div className="App">
         {state.USER_LOGGED ? (
-            <div id="a"></div>) : (<div id="b"></div>)}
+            <ProtRoutes/>) : <StartRoutes/>}
     </div>
 )}
 

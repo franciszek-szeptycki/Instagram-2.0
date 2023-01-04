@@ -1,0 +1,18 @@
+@import "../assets/styles/var"
+
+.user
+  background-color: mediumpurple
+  @include flex-list
+
+  @include standard-width
+  padding: 5%
+  gap: 20px
+
+  &__img
+    max-width: 50%
+    border-radius: 50%
+    object-fit: cover
+
+
+  &__info
+    font-size: 1.5rem

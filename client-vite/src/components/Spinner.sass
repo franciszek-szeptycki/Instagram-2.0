@@ -1,0 +1,22 @@
+@import "../assets/styles/var"
+
+
+.spinner-wrapper
+  height: 100%
+  width: 100%
+
+  @include flex-center
+
+  .spinner
+    border-radius: 5px
+    background-color: gray
+
+    animation: 1s spinner-move infinite linear
+
+@keyframes spinner-move
+  0%
+    transform: rotateX(0) rotateY(0)
+  50%
+    transform: rotateX(0) rotateY(180deg)
+  100%
+    transform: rotateX(180deg) rotateY(180deg)

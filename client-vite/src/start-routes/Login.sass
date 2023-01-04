@@ -1,0 +1,89 @@
+@import "../assets/styles/var"
+
+
+.login
+  background-image: url("assets/paint.jpg")
+  background-size: auto 52%
+  background-position-x: center
+  background-repeat: no-repeat
+
+  width: 100vw
+  height: 100vh
+
+  position: relative
+
+  .form
+    position: absolute
+    bottom: 0
+    height: 48%
+
+    width: 100%
+
+    background-color: white
+
+    @include flex-list
+    padding: 7% 10%
+    justify-content: space-evenly
+    gap: 10px
+
+    &::before
+      content: ""
+      position: absolute
+
+      bottom: 99.9%
+      left: 0
+
+      border-bottom: 0 solid transparent
+      border-right: 100vw solid white
+      border-top: 7vh solid transparent
+
+
+    label
+      max-width: 350px
+      margin: auto
+
+    &__input-label
+      height: 25%
+      max-height: 90px
+      width: 100%
+
+      color: gray
+
+      display: flex
+      flex-direction: column
+      gap: 3px
+      padding: 5px 0
+
+      input
+        border: none
+        position: relative
+        border-bottom: 1px solid lightgray
+        padding: 5px 0
+        &:focus
+          outline: none
+          border-bottom: 1px solid gray
+
+    &__submit-label
+      flex-grow: 1
+      @include flex-list
+      width: 100%
+      max-height: 180px
+
+      justify-content: center
+      gap: 5px
+
+      input
+        width: inherit
+        height: 40%
+        min-height: 40px
+
+        border: none
+        background-color: #376ce0
+        border-radius: 3px
+        color: white
+
+      a
+        align-self: flex-end
+        color: darkorange
+        text-decoration: underline
+        font-size: .8rem

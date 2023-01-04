@@ -1,0 +1,4 @@
+kamil -> usunąć img w responsie z logowania
+hsahtagi bez powtórzeń
+
+moje: <a> na NavLink
