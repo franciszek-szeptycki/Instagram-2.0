@@ -149,6 +149,54 @@ def get_post(ID):
             return jsonify({'msg': '[ERROR] get_posts : ' + str(error)}), 500
 
 
+@api_blueprint.route('/posts/get/<string:hashtag>', methods=['GET'])
+@jwt_required()
+def get_hashtag_posts(hashtag):
+    with core.app.app_context():
+        try:
+
+            # Get posts from database
+            posts = core.models.Post.query.join(core.models.Hashtags).filter(core.models.Hashtags.Hashtag == "#" + hashtag).all()
+
+            # Check if posts exist
+            if not posts:
+                return jsonify({"msg": "No posts found"}), 404
+
+            # Get the current user
+            verify_jwt_in_request()
+            JWT = get_jwt()
+            User_ID = JWT['sub']
+
+            # Create a list of posts
+            posts_list = []
+            for post in posts:
+                posts_list.append({
+                    "id": post.ID,
+                    "user_name": core.models.User.query.filter_by(ID=post.User_ID).first().Username,
+                    "owner_id": post.User_ID,
+                    "owner_image": core.models.User.query.filter_by(ID=post.User_ID).first().Image,
+                    "description": post.Description,
+                    "hashtags": [hashtag.Hashtag for hashtag in core.models.Hashtags.query.filter_by(Post_ID=post.ID).all()],
+                    "file": post.Image,
+                    "date": post.Date,
+                    "likes": core.models.Likes.query.filter_by(Post_ID=post.ID).count(),
+                    "comments": core.models.Comments.query.filter_by(Post_ID=post.ID).count(),
+                    "liked": True if core.models.Likes.query.filter_by(User_ID=User_ID, Post_ID=post.ID).first() else False,
+                    "commented": True if core.models.Comments.query.filter_by(User_ID=User_ID, Post_ID=post.ID).first() else False,
+                    "followed": True if core.models.Followers.query.filter_by(User_ID=User_ID, Follower_ID=post.User_ID).first() else False
+                })
+
+            # # Reverse the posts
+            # posts_list = posts_list[::-1]
+
+            # Return posts
+            return jsonify({"data": posts_list}), 200
+
+        except Exception as error:
+            print("[ERROR] get_hashtag_posts : ", error)
+            return jsonify({'msg': '[ERROR] get_hashtag_posts : ' + str(error)}), 500
+
+
 @api_blueprint.route('/posts/delete/<int:ID>', methods=['DELETE'])
 @jwt_required()
 def delete_post(ID):
