@@ -149,14 +149,19 @@ def get_post(ID):
             return jsonify({'msg': '[ERROR] get_posts : ' + str(error)}), 500
 
 
-@api_blueprint.route('/posts/get/<string:hashtag>', methods=['GET'])
+@api_blueprint.route('/posts/hashtags/get/<int:hashtag_id>', methods=['GET'])
 @jwt_required()
-def get_hashtag_posts(hashtag):
+def get_hashtag_posts(hashtag_id):
     with core.app.app_context():
         try:
 
+            # Get posts from database by ID
+            hashtag = core.models.Hashtags.query.filter_by(ID=hashtag_id).all()
+            hashtag_name = hashtag[0].Hashtag
+            print(hashtag_name)
+
             # Get posts from database
-            posts = core.models.Post.query.join(core.models.Hashtags).filter(core.models.Hashtags.Hashtag == "#" + hashtag).all()
+            posts = core.models.Post.query.join(core.models.Hashtags).filter(core.models.Hashtags.Hashtag == hashtag_name).all()
 
             # Check if posts exist
             if not posts:
@@ -621,18 +626,26 @@ def search_hashtag(hashtag):
         try:
 
             # Get hashtags from database and distinct them
-            hashtags = core.models.Hashtags.query.filter(core.models.Hashtags.Hashtag.like("%" + hashtag + "%")).order_by(core.models.Hashtags.ID).distinct().all()
+            hashtags = core.models.Hashtags.query.filter(core.models.Hashtags.Hashtag.like("%" + hashtag + "%")).distinct(core.models.Hashtags.Hashtag).order_by(core.models.Hashtags.ID).all()
 
             # Check if hashtags exist
             if not hashtags:
                 return jsonify({"msg": "No hashtags found"}), 404
 
-            # Create a list of hashtags
-            hashtags_list = []
+            names_list = []
+
+            # Delete duplicates
             for hashtag in hashtags:
+                if hashtag.Hashtag not in names_list:
+                    names_list.append(hashtag.Hashtag)
+
+
+            # Create a list of unique hashtags
+            hashtags_list = []
+            for hashtag in names_list:
                 hashtags_list.append({
-                    "id": hashtag.ID,
-                    "hashtag_name": hashtag.Hashtag,
+                    "id": core.models.Hashtags.query.filter_by(Hashtag=hashtag).first().ID,
+                    "hashtag_name": hashtag,
                 })
 
             # Return posts
