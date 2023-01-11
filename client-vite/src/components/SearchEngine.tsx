@@ -26,6 +26,7 @@ export default ({setHashtag}: { setHashtag?: any }) => {
     }
 
     const handleOptionClick = (id: number) => {
+        console.log(id)
         if(setHashtag) {
             setHashtag(id)
             setInputValue("")
