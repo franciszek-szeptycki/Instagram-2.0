@@ -305,13 +305,14 @@ def get_user(ID):
 
 
 @api_blueprint.route('/user/<int:ID>/posts', methods=['GET'])
+@api_blueprint.route('/user/<int:ID>/posts/<int:page>', methods=['GET'])
 @jwt_required()
-def get_user_posts(ID):
+def get_user_posts(ID, page=1):
     with core.app.app_context():
         try:
 
             # Get posts from database
-            posts = core.models.Post.query.filter_by(User_ID=ID).order_by(core.models.Post.ID).all()
+            posts = core.models.Post.query.filter_by(User_ID=ID).order_by(core.models.Post.ID).paginate(per_page=2, page=page, error_out=False).items
 
             # Check if posts exist
             if not posts:
@@ -375,8 +376,9 @@ def add_like(ID):
 
 
 @api_blueprint.route('/likes/get', methods=['GET'])
+@api_blueprint.route('/likes/get/page=<int:page>', methods=['GET'])
 @jwt_required()
-def get_likes():
+def get_likes(page=1):
     with core.app.app_context():
         try:
 
@@ -386,7 +388,7 @@ def get_likes():
             User_ID = JWT['sub']
 
             # Get likes from database
-            likes = core.models.Likes.query.filter_by(User_ID=User_ID).all()
+            likes = core.models.Likes.query.filter_by(User_ID=User_ID).order_by(core.models.Likes.ID.desc()).paginate(page=page, per_page=10)
 
             # Check if likes exist
             if not likes:
@@ -394,7 +396,7 @@ def get_likes():
 
             # Create a list of likes
             likes_list = []
-            for like in likes:
+            for like in likes.items:
                 likes_list.append({
                     "id": like.Post_ID,
                     "user_name": core.models.User.query.filter_by(ID=core.models.Post.query.filter_by(ID=like.Post_ID).first().User_ID).first().Username,
@@ -527,8 +529,9 @@ def add_follower(ID):
 
 
 @api_blueprint.route('/followers/get', methods=['GET'])
+@api_blueprint.route('/followers/get/page=<int:page>', methods=['GET'])
 @jwt_required()
-def get_followers():
+def get_follower(page=1):
     with core.app.app_context():
         try:
 
@@ -553,7 +556,7 @@ def get_followers():
 
             # Get followers posts
             for follower in followers_list:
-                follower["posts"] = core.models.Post.query.filter_by(User_ID=follower["id"]).order_by(core.models.Post.ID).all()
+                follower["posts"] = core.models.Post.query.filter_by(User_ID=follower["id"]).order_by(core.models.Post.ID).paginate(page, 10).items
 
             # Create a list of posts
             posts_list = []
