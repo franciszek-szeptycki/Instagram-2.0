@@ -14,6 +14,7 @@ const API = async (method: "GET" | "POST", path: string, body: any, token: boole
     if (token) request.headers["Authorization"] = `Bearer ${getToken()}`
 
     let status: number = 0
+
     const { msg, data, access_token } = await fetch(path, request).then(res => {
         status = res.status
         return res.json()

@@ -12,7 +12,7 @@ export default () => {
                 <li className="nav-ul__li" ><NavLink to="/"><House/></NavLink></li>
                 <li className="nav-ul__li" ><NavLink to="/favourites"><HeartFull/></NavLink></li>
                 <li className="nav-ul__li" ><NavLink to="/following"><EyeFull/></NavLink></li>
-                <li className="nav-ul__li" ><NavLink to="/"><Create/></NavLink></li>
+                <li className="nav-ul__li" ><NavLink to="/create-post"><Create/></NavLink></li>
                 <li className="nav-ul__li" ><NavLink to={`/user/${getUserInfo().id}`}><User/></NavLink></li>
             </ul>
         </nav>

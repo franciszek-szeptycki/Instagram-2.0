@@ -3,6 +3,7 @@ import './ProtRoutes.sass'
 import Nav from "../components/Nav";
 import {Route, Routes} from "react-router-dom";
 import User from "./User";
+import CreatePost from "./CreatePost";
 
 export default () => {
 
@@ -12,6 +13,7 @@ export default () => {
             <Routes>
                 <Route path="/" element={<Home/>} />
                 <Route path="/user/*" element={<User/>} />
+                <Route path="/create-post" element={<CreatePost/>} />
             </Routes>
         </div>
     )
