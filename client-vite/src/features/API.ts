@@ -22,6 +22,8 @@ const API = async (method: "GET" | "POST", path: string, body: any, token: boole
 
     if(access_token) localStorage.setItem("access_token", access_token)
 
+    console.log(status, msg, data, access_token)
+
     return { status, msg, data, access_token }
 }
 
