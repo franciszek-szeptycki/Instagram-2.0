@@ -57,3 +57,13 @@
         width: 30px
         height: 30px
         border-radius: 50%
+
+.post.loading
+  background-color: red
+  animation: post-loading 2s infinite ease-in-out
+
+@keyframes post-loading
+  0%
+    transform: rotate(-360deg) scale(0.7)
+  100%
+    transform: rotate(360deg) scale(0.7)

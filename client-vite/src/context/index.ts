@@ -4,6 +4,11 @@ import {ActionType, StateType} from "./reducers";
 export const initialState: StateType = {
     USER_LOGGED: false,
     FOLLOWED_USERS: [],
+    PAGE_NR: 1,
+    PAGES_LOADED: 0,
+    IS_LOADING: true,
+    URL: "",
+    POSTS: []
 };
 
 

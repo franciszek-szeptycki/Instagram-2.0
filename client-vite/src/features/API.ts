@@ -1,7 +1,8 @@
 import axios from 'axios'
 import {getToken} from "./token";
 
-const API = async (method: "GET" | "POST", path: string, body: any, token: boolean = true) => {
+const API = async (method: "GET" | "POST", path: string, body: any = null, token: boolean = true) => {
+
     const request: RequestType = {
         method,
         headers: {
@@ -22,7 +23,7 @@ const API = async (method: "GET" | "POST", path: string, body: any, token: boole
 
     if(access_token) localStorage.setItem("access_token", access_token)
 
-    console.log(status, msg, data, access_token)
+    // console.log(status, msg, data, access_token)
 
     return { status, msg, data, access_token }
 }
