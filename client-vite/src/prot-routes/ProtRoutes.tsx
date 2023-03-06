@@ -4,7 +4,7 @@ import Nav from "../components/Nav";
 import {Route, Routes} from "react-router-dom";
 import User from "./User";
 import CreatePost from "./CreatePost";
-import Liked from "./Liked";
+import PostList from "./PostList";
 import {useQuery} from "react-query";
 import axios from "axios";
 import API from "../features/API";
@@ -52,14 +52,16 @@ export default () => {
         PostsAPI.refetch()
     }, [PAGE_NR])
 
+    console.log("render")
+
     return (
         <div data-testid="prot-routes" className="prot-routes" ref={myRef} onScroll={handleScroll}>
             <Nav/>
             <Routes>
-                <Route path="/" element={<Home/>} />
+                <Route path="/" element={<PostList newURL="/api/posts/get"/>} />
+                <Route path="/liked" element={<PostList newURL="/api/likes/get"/>} />
                 <Route path="/user/*" element={<User/>} />
                 <Route path="/create-post" element={<CreatePost/>} />
-                {/*<Route path="favourites" element={<Liked/>} />*/}
             </Routes>
         </div>
     )
